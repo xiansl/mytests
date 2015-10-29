@@ -1,0 +1,1 @@
+cmd_/home/chuanic/fpga_platform/fpga-sim/driver/fpga.ko := ld -r -m elf_x86_64 -T /usr/src/linux-3.13.7/scripts/module-common.lds --build-id  -o /home/chuanic/fpga_platform/fpga-sim/driver/fpga.ko /home/chuanic/fpga_platform/fpga-sim/driver/fpga.o /home/chuanic/fpga_platform/fpga-sim/driver/fpga.mod.o

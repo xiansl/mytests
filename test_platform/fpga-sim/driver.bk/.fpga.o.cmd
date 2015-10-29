@@ -1,0 +1,1 @@
+cmd_/home/chuanic/fpga_platform/fpga-sim/driver/fpga.o := ld -m elf_x86_64   -r -o /home/chuanic/fpga_platform/fpga-sim/driver/fpga.o /home/chuanic/fpga_platform/fpga-sim/driver/fpgacom.o /home/chuanic/fpga_platform/fpga-sim/driver/fpgadev.o 

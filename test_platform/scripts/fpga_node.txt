@@ -1,0 +1,5 @@
+hostname	pcie_bw	if_fpga_available	section_num	rdma_bw
+r2			2.8		1					4			7
+r3			2.8		1					4			7
+r4			2.8		0					0			7	
+r5			2.8		0					0			7	
