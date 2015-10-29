@@ -1,0 +1,120 @@
+[r11:09764] MCW rank 4 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:09409] MCW rank 5 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:09409] MCW rank 7 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:09764] MCW rank 6 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:09764] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r12:09409] MCW rank 1 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r11:09764] MCW rank 2 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r12:09409] MCW rank 3 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+process 0: time per 1GB: 1.752198 secs
+process 2: time per 1GB: 1.822057 secs
+process 4: time per 1GB: 1.822070 secs
+process 6: time per 1GB: 1.822022 secs
+[r11:09851] MCW rank 6 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r12:09496] MCW rank 5 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r11:09851] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r12:09496] MCW rank 7 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:09851] MCW rank 2 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r12:09496] MCW rank 1 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r11:09851] MCW rank 4 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:09496] MCW rank 3 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+process 4: time per 1GB: 1.400837 secs
+process 0: time per 1GB: 1.432990 secs
+process 2: time per 1GB: 1.473047 secs
+process 6: time per 1GB: 1.477596 secs
+[r11:09937] MCW rank 4 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:09582] MCW rank 5 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r11:09937] MCW rank 6 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r12:09582] MCW rank 7 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:09937] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r12:09582] MCW rank 1 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r11:09937] MCW rank 2 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r12:09582] MCW rank 3 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+process 0: time per 1GB: 1.500353 secs
+process 4: time per 1GB: 1.427620 secs
+process 2: time per 1GB: 1.431977 secs
+process 6: time per 1GB: 1.462987 secs
+[r12:09668] MCW rank 5 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:09668] MCW rank 7 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r12:09668] MCW rank 1 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r12:09668] MCW rank 3 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r11:10023] MCW rank 6 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:10023] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r11:10023] MCW rank 2 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r11:10023] MCW rank 4 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+process 2: time per 1GB: 1.462353 secs
+process 6: time per 1GB: 1.381822 secs
+process 4: time per 1GB: 1.418166 secs
+process 0: time per 1GB: 1.435136 secs
+[r12:09754] MCW rank 5 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r11:10109] MCW rank 6 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r12:09754] MCW rank 7 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:10109] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r12:09754] MCW rank 1 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r11:10109] MCW rank 2 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r12:09754] MCW rank 3 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r11:10109] MCW rank 4 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+process 6: time per 1GB: 1.597424 secs
+process 2: time per 1GB: 1.709086 secs
+process 4: time per 1GB: 1.616545 secs
+process 0: time per 1GB: 1.687392 secs
+[r11:10195] MCW rank 6 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:10195] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r11:10195] MCW rank 2 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r11:10195] MCW rank 4 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:09840] MCW rank 5 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:09840] MCW rank 7 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r12:09840] MCW rank 1 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r12:09840] MCW rank 3 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+process 2: time per 1GB: 1.798756 secs
+process 4: time per 1GB: 1.744088 secs
+process 6: time per 1GB: 1.793936 secs
+process 0: time per 1GB: 1.798179 secs
+[r12:09926] MCW rank 5 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:09926] MCW rank 7 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:10281] MCW rank 6 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r12:09926] MCW rank 1 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r11:10281] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r12:09926] MCW rank 3 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r11:10281] MCW rank 2 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r11:10281] MCW rank 4 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+process 4: time per 1GB: 1.566615 secs
+process 2: time per 1GB: 1.561933 secs
+process 6: time per 1GB: 1.487808 secs
+process 0: time per 1GB: 1.539430 secs
+[r11:10369] MCW rank 6 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:10369] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r11:10369] MCW rank 2 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r11:10369] MCW rank 4 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:10012] MCW rank 5 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:10012] MCW rank 7 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r12:10012] MCW rank 1 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r12:10012] MCW rank 3 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+process 2: time per 1GB: 1.455397 secs
+process 0: time per 1GB: 1.449934 secs
+process 4: time per 1GB: 1.406028 secs
+process 6: time per 1GB: 1.483385 secs
+[r11:10457] MCW rank 6 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:10457] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r11:10457] MCW rank 2 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r11:10457] MCW rank 4 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:10098] MCW rank 5 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:10098] MCW rank 7 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r12:10098] MCW rank 1 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r12:10098] MCW rank 3 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+process 4: time per 1GB: 1.550495 secs
+process 2: time per 1GB: 1.495162 secs
+process 6: time per 1GB: 1.486807 secs
+process 0: time per 1GB: 1.487491 secs
+[r11:10543] MCW rank 6 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r11:10543] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r11:10543] MCW rank 2 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+[r11:10543] MCW rank 4 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:10184] MCW rank 5 bound to socket 0[core 2[hwt 0]]: [././B/././././.][./././././././.]
+[r12:10184] MCW rank 7 bound to socket 0[core 3[hwt 0]]: [./././B/./././.][./././././././.]
+[r12:10184] MCW rank 1 bound to socket 0[core 0[hwt 0]]: [B/././././././.][./././././././.]
+[r12:10184] MCW rank 3 bound to socket 0[core 1[hwt 0]]: [./B/./././././.][./././././././.]
+process 4: time per 1GB: 1.613240 secs
+process 2: time per 1GB: 1.531507 secs
+process 6: time per 1GB: 1.577794 secs
+process 0: time per 1GB: 1.571005 secs

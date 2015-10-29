@@ -1,0 +1,260 @@
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,tcp --mca mpi_leave_pinned 1 ./transfer
+[r1:11468] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:11468] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:11468] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:11468] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:13883] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:13883] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:13883] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:13883] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 2: time per 400MB: 1.002423 secs
+process 6: time per 400MB: 1.009556 secs
+process 4: time per 400MB: 1.287286 secs
+process 0: time per 400MB: 1.602418 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,openib --mca mpi_leave_pinned 1 ./transfer
+[r1:12317] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:12317] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:12317] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:12317] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:14709] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:14709] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:14709] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:14709] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+process 2: time per 400MB: 0.438014 secs
+process 6: time per 400MB: 0.413580 secs
+process 0: time per 400MB: 0.405076 secs
+process 4: time per 400MB: 0.411262 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,tcp --mca mpi_leave_pinned 1 ./transfer
+[r2:15047] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:15047] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:15047] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:15047] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:12654] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:12654] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:12654] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:12654] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 2: time per 400MB: 0.771815 secs
+process 6: time per 400MB: 1.004892 secs
+process 4: time per 400MB: 1.394155 secs
+process 0: time per 400MB: 1.437828 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,openib --mca mpi_leave_pinned 1 ./transfer
+[r2:15873] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:15873] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:15873] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:15873] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:13497] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:13497] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:13497] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:13497] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 6: time per 400MB: 0.432223 secs
+process 4: time per 400MB: 0.421693 secs
+process 0: time per 400MB: 0.427016 secs
+process 2: time per 400MB: 0.426761 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,tcp --mca mpi_leave_pinned 1 ./transfer
+[r1:13834] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:13834] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:13834] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:13834] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:16209] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:16209] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:16209] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:16209] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 6: time per 400MB: 0.872608 secs
+process 2: time per 400MB: 0.935780 secs
+process 4: time per 400MB: 1.367148 secs
+process 0: time per 400MB: 1.547960 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,openib --mca mpi_leave_pinned 1 ./transfer
+[r1:14678] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:14678] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:14678] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:14678] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:17036] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:17036] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:17036] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:17036] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 2: time per 400MB: 0.351104 secs
+process 6: time per 400MB: 0.335770 secs
+process 0: time per 400MB: 0.338061 secs
+process 4: time per 400MB: 0.338590 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,tcp --mca mpi_leave_pinned 1 ./transfer
+[r1:14964] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:14964] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:14964] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:14964] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:17329] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:17329] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:17329] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:17329] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 2: time per 400MB: 1.016781 secs
+process 6: time per 400MB: 0.991151 secs
+process 0: time per 400MB: 1.438225 secs
+process 4: time per 400MB: 1.510579 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,openib --mca mpi_leave_pinned 1 ./transfer
+[r1:15811] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:15811] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:15811] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:15811] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:18204] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:18204] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:18204] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:18204] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 6: time per 400MB: 0.470206 secs
+process 2: time per 400MB: 0.472051 secs
+process 0: time per 400MB: 0.455760 secs
+process 4: time per 400MB: 0.443958 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,tcp --mca mpi_leave_pinned 1 ./transfer
+[r2:18557] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:18557] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:18557] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:18557] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:16153] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:16153] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:16153] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:16153] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+process 2: time per 400MB: 1.024202 secs
+process 6: time per 400MB: 1.155507 secs
+process 0: time per 400MB: 1.357244 secs
+process 4: time per 400MB: 1.461273 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,openib --mca mpi_leave_pinned 1 ./transfer
+[r2:19494] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:19494] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:19494] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:19494] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:17101] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:17101] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:17101] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:17101] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 2: time per 400MB: 0.409810 secs
+process 6: time per 400MB: 0.408169 secs
+process 0: time per 400MB: 0.399664 secs
+process 4: time per 400MB: 0.394104 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,tcp --mca mpi_leave_pinned 1 ./transfer
+[r2:19830] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:17442] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:19830] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:17442] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:19830] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:17442] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:19830] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:17442] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+process 2: time per 400MB: 0.933306 secs
+process 6: time per 400MB: 1.033543 secs
+process 4: time per 400MB: 1.292631 secs
+process 0: time per 400MB: 1.598709 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,openib --mca mpi_leave_pinned 1 ./transfer
+[r1:18385] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:18385] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:18385] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:18385] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:20760] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:20760] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:20760] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:20760] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 6: time per 400MB: 0.425642 secs
+process 2: time per 400MB: 0.426950 secs
+process 4: time per 400MB: 0.428258 secs
+process 0: time per 400MB: 0.411640 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,tcp --mca mpi_leave_pinned 1 ./transfer
+[r2:21146] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:21146] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:21146] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:21146] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:18773] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:18773] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:18773] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:18773] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+process 6: time per 400MB: 0.855833 secs
+process 2: time per 400MB: 1.036540 secs
+process 4: time per 400MB: 1.487122 secs
+process 0: time per 400MB: 1.501832 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,openib --mca mpi_leave_pinned 1 ./transfer
+[r2:22074] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:22074] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:22074] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:22074] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:19716] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:19716] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:19716] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:19716] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+process 6: time per 400MB: 0.461768 secs
+process 2: time per 400MB: 0.447557 secs
+process 0: time per 400MB: 0.451788 secs
+process 4: time per 400MB: 0.440348 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,tcp --mca mpi_leave_pinned 1 ./transfer
+[r1:20102] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:20102] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:20102] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:20102] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:22460] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:22460] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:22460] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:22460] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+process 2: time per 400MB: 1.028253 secs
+process 6: time per 400MB: 1.131710 secs
+process 0: time per 400MB: 1.403084 secs
+process 4: time per 400MB: 1.769655 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,openib --mca mpi_leave_pinned 1 ./transfer
+[r1:21157] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:21157] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:21157] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:21157] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:23499] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:23499] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:23499] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:23499] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 6: time per 400MB: 0.449167 secs
+process 2: time per 400MB: 0.424191 secs
+process 4: time per 400MB: 0.434497 secs
+process 0: time per 400MB: 0.414699 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,tcp --mca mpi_leave_pinned 1 ./transfer
+[r1:21533] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:21533] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:21533] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:21533] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:23876] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:23876] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:23876] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:23876] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+process 2: time per 400MB: 0.774392 secs
+process 6: time per 400MB: 0.933608 secs
+process 0: time per 400MB: 1.363508 secs
+process 4: time per 400MB: 1.590509 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,openib --mca mpi_leave_pinned 1 ./transfer
+[r2:24802] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:24802] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:24802] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:24802] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:22476] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:22476] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:22476] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:22476] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+process 6: time per 400MB: 0.427411 secs
+process 2: time per 400MB: 0.416842 secs
+process 4: time per 400MB: 0.427367 secs
+process 0: time per 400MB: 0.418281 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,tcp --mca mpi_leave_pinned 1 ./transfer
+[r1:22812] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:22812] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:22812] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:22812] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:25138] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:25138] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:25138] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:25138] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 6: time per 400MB: 1.170160 secs
+process 2: time per 400MB: 1.228868 secs
+process 0: time per 400MB: 1.414272 secs
+process 4: time per 400MB: 1.600648 secs
+mpirun -np 8 -report-bindings -host r1,r2 --map-by node -bind-to socket --mca btl self,openib --mca mpi_leave_pinned 1 ./transfer
+[r1:23705] MCW rank 6 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:23705] MCW rank 0 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r1:23705] MCW rank 2 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r1:23705] MCW rank 4 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:26014] MCW rank 5 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:26014] MCW rank 7 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+[r2:26014] MCW rank 1 bound to socket 0[core 0[hwt 0]], socket 0[core 1[hwt 0]], socket 0[core 2[hwt 0]], socket 0[core 3[hwt 0]], socket 0[core 4[hwt 0]], socket 0[core 5[hwt 0]], socket 0[core 6[hwt 0]], socket 0[core 7[hwt 0]]: [B/B/B/B/B/B/B/B][./././././././.]
+[r2:26014] MCW rank 3 bound to socket 1[core 8[hwt 0]], socket 1[core 9[hwt 0]], socket 1[core 10[hwt 0]], socket 1[core 11[hwt 0]], socket 1[core 12[hwt 0]], socket 1[core 13[hwt 0]], socket 1[core 14[hwt 0]], socket 1[core 15[hwt 0]]: [./././././././.][B/B/B/B/B/B/B/B]
+process 6: time per 400MB: 0.405194 secs
+process 2: time per 400MB: 0.407641 secs
+process 4: time per 400MB: 0.403977 secs
+process 0: time per 400MB: 0.416007 secs

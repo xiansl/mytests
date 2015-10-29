@@ -1,0 +1,1155 @@
+./client1 r2 41604 1
+[Pre_Setup] takes 11173 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 175 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 208 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =4096
+[Wriet] takes 161 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 258 micro_secs.
+disconnected.
+[Derigester] takes 1247 micro_secs.
+dt1 = 30473
+dt2 = 174
+dt3 = 3610
+time used for a whole transfer job_usec=34257
+./client1 r2 41604 1
+[Pre_Setup] takes 8275 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 151 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 69 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =4096
+[Wriet] takes 121 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 229 micro_secs.
+disconnected.
+[Derigester] takes 1219 micro_secs.
+dt1 = 25232
+dt2 = 122
+dt3 = 3332
+time used for a whole transfer job_usec=28686
+./client1 r2 41604 1
+[Pre_Setup] takes 8919 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 165 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 157 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =4096
+[Wriet] takes 61 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 211 micro_secs.
+disconnected.
+[Derigester] takes 1207 micro_secs.
+dt1 = 25511
+dt2 = 61
+dt3 = 3311
+time used for a whole transfer job_usec=28883
+./client1 r2 41604 1
+[Pre_Setup] takes 8699 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 153 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 190 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =4096
+[Wriet] takes 182 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 227 micro_secs.
+disconnected.
+[Derigester] takes 1227 micro_secs.
+dt1 = 25998
+dt2 = 183
+dt3 = 3415
+time used for a whole transfer job_usec=29596
+./client1 r2 41604 1
+[Pre_Setup] takes 8263 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 156 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 66 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =4096
+[Wriet] takes 77 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 285 micro_secs.
+disconnected.
+[Derigester] takes 1233 micro_secs.
+dt1 = 25226
+dt2 = 77
+dt3 = 3381
+time used for a whole transfer job_usec=28684
+./client1 r2 41604 2
+[Pre_Setup] takes 9808 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 169 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 70 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =8192
+[Wriet] takes 109 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 415 micro_secs.
+disconnected.
+[Derigester] takes 1229 micro_secs.
+dt1 = 27118
+dt2 = 110
+dt3 = 3512
+time used for a whole transfer job_usec=30740
+./client1 r2 41604 2
+[Pre_Setup] takes 8667 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 160 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 54 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =8192
+[Wriet] takes 64 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 224 micro_secs.
+disconnected.
+[Derigester] takes 1228 micro_secs.
+dt1 = 26785
+dt2 = 65
+dt3 = 3301
+time used for a whole transfer job_usec=30151
+./client1 r2 41604 2
+[Pre_Setup] takes 8720 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 164 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 161 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =8192
+[Wriet] takes 189 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 398 micro_secs.
+disconnected.
+[Derigester] takes 1195 micro_secs.
+dt1 = 25047
+dt2 = 190
+dt3 = 3480
+time used for a whole transfer job_usec=28717
+./client1 r2 41604 2
+[Pre_Setup] takes 8117 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 157 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 160 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =8192
+[Wriet] takes 189 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 363 micro_secs.
+disconnected.
+[Derigester] takes 1184 micro_secs.
+dt1 = 25126
+dt2 = 190
+dt3 = 3580
+time used for a whole transfer job_usec=28896
+./client1 r2 41604 2
+[Pre_Setup] takes 8528 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 152 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 160 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =8192
+[Wriet] takes 179 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 278 micro_secs.
+disconnected.
+[Derigester] takes 1201 micro_secs.
+dt1 = 26380
+dt2 = 180
+dt3 = 3469
+time used for a whole transfer job_usec=30029
+./client1 r2 41604 4
+[Pre_Setup] takes 8230 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 158 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 156 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =16384
+[Wriet] takes 201 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 299 micro_secs.
+disconnected.
+[Derigester] takes 1213 micro_secs.
+dt1 = 24560
+dt2 = 201
+dt3 = 3459
+time used for a whole transfer job_usec=28220
+./client1 r2 41604 4
+[Pre_Setup] takes 8655 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 161 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 163 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =16384
+[Wriet] takes 185 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 236 micro_secs.
+disconnected.
+[Derigester] takes 1220 micro_secs.
+dt1 = 25112
+dt2 = 186
+dt3 = 3443
+time used for a whole transfer job_usec=28741
+./client1 r2 41604 4
+[Pre_Setup] takes 8170 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 182 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 159 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =16384
+[Wriet] takes 195 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 209 micro_secs.
+disconnected.
+[Derigester] takes 1216 micro_secs.
+dt1 = 24634
+dt2 = 209
+dt3 = 3399
+time used for a whole transfer job_usec=28242
+./client1 r2 41604 4
+[Pre_Setup] takes 10030 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 153 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 162 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =16384
+[Wriet] takes 142 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 222 micro_secs.
+disconnected.
+[Derigester] takes 1222 micro_secs.
+dt1 = 26866
+dt2 = 143
+dt3 = 3296
+time used for a whole transfer job_usec=30305
+./client1 r2 41604 4
+[Pre_Setup] takes 8258 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 169 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 194 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =16384
+[Wriet] takes 155 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 308 micro_secs.
+disconnected.
+[Derigester] takes 1243 micro_secs.
+dt1 = 26023
+dt2 = 156
+dt3 = 3442
+time used for a whole transfer job_usec=29621
+./client1 r2 41604 8
+[Pre_Setup] takes 8782 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 193 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 158 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =32768
+[Wriet] takes 138 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 343 micro_secs.
+disconnected.
+[Derigester] takes 1212 micro_secs.
+dt1 = 25885
+dt2 = 139
+dt3 = 3558
+time used for a whole transfer job_usec=29582
+./client1 r2 41604 8
+[Pre_Setup] takes 8266 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 204 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 159 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =32768
+[Wriet] takes 200 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 225 micro_secs.
+disconnected.
+[Derigester] takes 1180 micro_secs.
+dt1 = 24890
+dt2 = 201
+dt3 = 3300
+time used for a whole transfer job_usec=28391
+./client1 r2 41604 8
+[Pre_Setup] takes 7530 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 191 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 121 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =32768
+[Wriet] takes 188 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 221 micro_secs.
+disconnected.
+[Derigester] takes 1213 micro_secs.
+dt1 = 23813
+dt2 = 189
+dt3 = 3261
+time used for a whole transfer job_usec=27263
+./client1 r2 41604 8
+[Pre_Setup] takes 8476 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 178 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 189 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =32768
+[Wriet] takes 131 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 396 micro_secs.
+disconnected.
+[Derigester] takes 1211 micro_secs.
+dt1 = 25967
+dt2 = 131
+dt3 = 3449
+time used for a whole transfer job_usec=29547
+./client1 r2 41604 8
+[Pre_Setup] takes 8145 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 177 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 164 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =32768
+[Wriet] takes 136 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 219 micro_secs.
+disconnected.
+[Derigester] takes 1259 micro_secs.
+dt1 = 25931
+dt2 = 137
+dt3 = 3390
+time used for a whole transfer job_usec=29458
+./client1 r2 41604 16
+[Pre_Setup] takes 8314 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 232 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 168 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =65536
+[Wriet] takes 150 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 260 micro_secs.
+disconnected.
+[Derigester] takes 1265 micro_secs.
+dt1 = 24922
+dt2 = 151
+dt3 = 3452
+time used for a whole transfer job_usec=28525
+./client1 r2 41604 16
+[Pre_Setup] takes 8252 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 215 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 159 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =65536
+[Wriet] takes 265 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 226 micro_secs.
+disconnected.
+[Derigester] takes 1223 micro_secs.
+dt1 = 24550
+dt2 = 267
+dt3 = 3314
+time used for a whole transfer job_usec=28131
+./client1 r2 41604 16
+[Pre_Setup] takes 8467 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 209 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 161 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =65536
+[Wriet] takes 203 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 271 micro_secs.
+disconnected.
+[Derigester] takes 1245 micro_secs.
+dt1 = 25217
+dt2 = 204
+dt3 = 3482
+time used for a whole transfer job_usec=28903
+./client1 r2 41604 16
+[Pre_Setup] takes 7968 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 207 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 173 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =65536
+[Wriet] takes 356 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 316 micro_secs.
+disconnected.
+[Derigester] takes 1289 micro_secs.
+dt1 = 25292
+dt2 = 357
+dt3 = 3474
+time used for a whole transfer job_usec=29123
+./client1 r2 41604 16
+[Pre_Setup] takes 8499 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 205 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 159 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =65536
+[Wriet] takes 174 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 303 micro_secs.
+disconnected.
+[Derigester] takes 1242 micro_secs.
+dt1 = 24969
+dt2 = 175
+dt3 = 3422
+time used for a whole transfer job_usec=28566
+./client1 r2 41604 32
+[Pre_Setup] takes 8044 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 277 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 168 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =131072
+[Wriet] takes 104 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 231 micro_secs.
+disconnected.
+[Derigester] takes 1196 micro_secs.
+dt1 = 24785
+dt2 = 105
+dt3 = 3234
+time used for a whole transfer job_usec=28124
+./client1 r2 41604 32
+[Pre_Setup] takes 8380 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 251 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 140 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =131072
+[Wriet] takes 761 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 254 micro_secs.
+disconnected.
+[Derigester] takes 1273 micro_secs.
+dt1 = 24715
+dt2 = 761
+dt3 = 3473
+time used for a whole transfer job_usec=28949
+./client1 r2 41604 32
+[Pre_Setup] takes 8046 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 257 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 155 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =131072
+[Wriet] takes 230 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 250 micro_secs.
+disconnected.
+[Derigester] takes 1292 micro_secs.
+dt1 = 25063
+dt2 = 231
+dt3 = 3466
+time used for a whole transfer job_usec=28760
+./client1 r2 41604 32
+[Pre_Setup] takes 8312 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 270 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 202 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =131072
+[Wriet] takes 161 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 311 micro_secs.
+disconnected.
+[Derigester] takes 1201 micro_secs.
+dt1 = 25262
+dt2 = 162
+dt3 = 3510
+time used for a whole transfer job_usec=28934
+./client1 r2 41604 32
+[Pre_Setup] takes 8549 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 262 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 113 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =131072
+[Wriet] takes 348 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 424 micro_secs.
+disconnected.
+[Derigester] takes 1263 micro_secs.
+dt1 = 24928
+dt2 = 349
+dt3 = 3632
+time used for a whole transfer job_usec=28909
+./client1 r2 41604 64
+[Pre_Setup] takes 8147 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 371 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 110 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =262144
+[Wriet] takes 243 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 226 micro_secs.
+disconnected.
+[Derigester] takes 1305 micro_secs.
+dt1 = 25171
+dt2 = 244
+dt3 = 3594
+time used for a whole transfer job_usec=29009
+./client1 r2 41604 64
+[Pre_Setup] takes 8220 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 342 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 159 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =262144
+[Wriet] takes 885 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 278 micro_secs.
+disconnected.
+[Derigester] takes 1326 micro_secs.
+dt1 = 24856
+dt2 = 886
+dt3 = 3614
+time used for a whole transfer job_usec=29356
+./client1 r2 41604 64
+[Pre_Setup] takes 8043 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 332 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 113 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =262144
+[Wriet] takes 308 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 279 micro_secs.
+disconnected.
+[Derigester] takes 1308 micro_secs.
+dt1 = 24776
+dt2 = 309
+dt3 = 3594
+time used for a whole transfer job_usec=28679
+./client1 r2 41604 64
+[Pre_Setup] takes 8435 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 318 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 159 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =262144
+[Wriet] takes 387 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 218 micro_secs.
+disconnected.
+[Derigester] takes 1304 micro_secs.
+dt1 = 25211
+dt2 = 388
+dt3 = 3494
+time used for a whole transfer job_usec=29093
+./client1 r2 41604 64
+[Pre_Setup] takes 8033 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 337 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 138 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =262144
+[Wriet] takes 1053 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 214 micro_secs.
+disconnected.
+[Derigester] takes 1256 micro_secs.
+dt1 = 26091
+dt2 = 1067
+dt3 = 3521
+time used for a whole transfer job_usec=30679
+./client1 r2 41604 128
+[Pre_Setup] takes 8502 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 611 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 204 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =524288
+[Wriet] takes 1755 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 431 micro_secs.
+disconnected.
+[Derigester] takes 1364 micro_secs.
+dt1 = 25227
+dt2 = 1769
+dt3 = 3815
+time used for a whole transfer job_usec=30811
+./client1 r2 41604 128
+[Pre_Setup] takes 8276 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 567 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 156 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =524288
+[Wriet] takes 1526 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 230 micro_secs.
+disconnected.
+[Derigester] takes 1335 micro_secs.
+dt1 = 25190
+dt2 = 1528
+dt3 = 3521
+time used for a whole transfer job_usec=30239
+./client1 r2 41604 128
+[Pre_Setup] takes 8412 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 598 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 158 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =524288
+[Wriet] takes 1586 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 210 micro_secs.
+disconnected.
+[Derigester] takes 1354 micro_secs.
+dt1 = 25245
+dt2 = 1599
+dt3 = 3623
+time used for a whole transfer job_usec=30467
+./client1 r2 41604 128
+[Pre_Setup] takes 7989 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 566 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 159 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =524288
+[Wriet] takes 1454 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 222 micro_secs.
+disconnected.
+[Derigester] takes 1355 micro_secs.
+dt1 = 24571
+dt2 = 1455
+dt3 = 3632
+time used for a whole transfer job_usec=29658
+./client1 r2 41604 128
+[Pre_Setup] takes 8292 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 580 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 157 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =524288
+[Wriet] takes 1667 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 273 micro_secs.
+disconnected.
+[Derigester] takes 1362 micro_secs.
+dt1 = 24929
+dt2 = 1668
+dt3 = 3549
+time used for a whole transfer job_usec=30146
+./client1 r2 41604 256
+[Pre_Setup] takes 8392 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 999 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 123 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =1048576
+[Wriet] takes 2788 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 309 micro_secs.
+disconnected.
+[Derigester] takes 1471 micro_secs.
+dt1 = 24898
+dt2 = 2789
+dt3 = 3614
+time used for a whole transfer job_usec=31301
+./client1 r2 41604 256
+[Pre_Setup] takes 8673 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 979 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 99 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =1048576
+[Wriet] takes 1669 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 203 micro_secs.
+disconnected.
+[Derigester] takes 1401 micro_secs.
+dt1 = 25900
+dt2 = 1670
+dt3 = 3536
+time used for a whole transfer job_usec=31106
+./client1 r2 41604 256
+[Pre_Setup] takes 11377 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 1070 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 163 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =1048576
+[Wriet] takes 618 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 212 micro_secs.
+disconnected.
+[Derigester] takes 1522 micro_secs.
+dt1 = 28403
+dt2 = 620
+dt3 = 3660
+time used for a whole transfer job_usec=32683
+./client1 r2 41604 256
+[Pre_Setup] takes 8614 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 1010 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 160 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =1048576
+[Wriet] takes 4083 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 352 micro_secs.
+disconnected.
+[Derigester] takes 1476 micro_secs.
+dt1 = 25049
+dt2 = 4083
+dt3 = 3845
+time used for a whole transfer job_usec=32977
+./client1 r2 41604 256
+[Pre_Setup] takes 8838 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 1072 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 182 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =1048576
+[Wriet] takes 3120 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 239 micro_secs.
+disconnected.
+[Derigester] takes 1541 micro_secs.
+dt1 = 26012
+dt2 = 3122
+dt3 = 3794
+time used for a whole transfer job_usec=32928
+./client1 r2 41604 512
+[Pre_Setup] takes 8181 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 2113 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 189 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =2097152
+[Wriet] takes 10905 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 256 micro_secs.
+disconnected.
+[Derigester] takes 1755 micro_secs.
+dt1 = 25214
+dt2 = 10905
+dt3 = 4078
+time used for a whole transfer job_usec=40197
+./client1 r2 41604 512
+[Pre_Setup] takes 8928 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 2184 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 142 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =2097152
+[Wriet] takes 6238 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 262 micro_secs.
+disconnected.
+[Derigester] takes 1648 micro_secs.
+dt1 = 25850
+dt2 = 6251
+dt3 = 3856
+time used for a whole transfer job_usec=35957
+./client1 r2 41604 512
+[Pre_Setup] takes 8428 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 2109 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 158 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =2097152
+[Wriet] takes 5824 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 259 micro_secs.
+disconnected.
+[Derigester] takes 1612 micro_secs.
+dt1 = 25413
+dt2 = 5837
+dt3 = 3945
+time used for a whole transfer job_usec=35195
+./client1 r2 41604 512
+[Pre_Setup] takes 665562 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 2148 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 217 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =2097152
+[Wriet] takes 5612 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 315 micro_secs.
+disconnected.
+[Derigester] takes 1646 micro_secs.
+dt1 = 1673223
+dt2 = 5613
+dt3 = 4033
+time used for a whole transfer job_usec=1682869
+./client1 r2 41604 512
+[Pre_Setup] takes 8569 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 2121 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 180 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =2097152
+[Wriet] takes 5564 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 280 micro_secs.
+disconnected.
+[Derigester] takes 1629 micro_secs.
+dt1 = 26177
+dt2 = 5564
+dt3 = 3829
+time used for a whole transfer job_usec=35570
+./client1 r2 41604 1024
+[Pre_Setup] takes 8736 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 4111 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 68 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =4194304
+[Wriet] takes 22344 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 406 micro_secs.
+disconnected.
+[Derigester] takes 2097 micro_secs.
+dt1 = 25779
+dt2 = 22345
+dt3 = 4575
+time used for a whole transfer job_usec=52699
+./client1 r2 41604 1024
+[Pre_Setup] takes 8690 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 3936 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 169 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =4194304
+[Wriet] takes 19886 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 283 micro_secs.
+disconnected.
+[Derigester] takes 2060 micro_secs.
+dt1 = 26879
+dt2 = 19887
+dt3 = 4358
+time used for a whole transfer job_usec=51124
+./client1 r2 41604 1024
+[Pre_Setup] takes 8907 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 3899 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 122 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =4194304
+[Wriet] takes 17583 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 262 micro_secs.
+disconnected.
+[Derigester] takes 2104 micro_secs.
+dt1 = 26268
+dt2 = 17583
+dt3 = 4524
+time used for a whole transfer job_usec=48375
+./client1 r2 41604 1024
+[Pre_Setup] takes 8318 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 3847 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 203 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =4194304
+[Wriet] takes 20208 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 417 micro_secs.
+disconnected.
+[Derigester] takes 2105 micro_secs.
+dt1 = 26129
+dt2 = 20208
+dt3 = 4612
+time used for a whole transfer job_usec=50949
+./client1 r2 41604 1024
+[Pre_Setup] takes 8704 micro_secs.
+address resolved.
+route resolved.
+[Register] takes 3863 micro_secs.
+send completed successfully
+received MR from server
+[RDMA Send & Recv] takes 170 micro_secs.
+received remote write from server
+message from passive/server side with pid 9335
+recv_size =4194304
+[Wriet] takes 18262 micro_secs.
+ready to disconnect
+send disconnect
+[rdma_disconnect] takes 362 micro_secs.
+disconnected.
+[Derigester] takes 2102 micro_secs.
+dt1 = 26107
+dt2 = 18262
+dt3 = 4694
+time used for a whole transfer job_usec=49063

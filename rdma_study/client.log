@@ -1,0 +1,1100 @@
+./client r2 34135 1
+address resolved.
+build context and connection struct
+[Register] takes 185 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =4096
+[Write] takes 135 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1256 micro_secs.
+dt1 = 31996
+dt2 = 136
+dt3 = 3542
+time used for a whole transfer job_usec=35674
+./client r2 34135 1
+address resolved.
+build context and connection struct
+[Register] takes 180 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =4096
+[Write] takes 119 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1210 micro_secs.
+dt1 = 28484
+dt2 = 132
+dt3 = 3501
+time used for a whole transfer job_usec=32117
+./client r2 34135 1
+address resolved.
+build context and connection struct
+[Register] takes 175 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =4096
+[Write] takes 177 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1192 micro_secs.
+dt1 = 27060
+dt2 = 177
+dt3 = 3382
+time used for a whole transfer job_usec=30619
+./client r2 34135 1
+address resolved.
+build context and connection struct
+[Register] takes 188 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =4096
+[Write] takes 189 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1219 micro_secs.
+dt1 = 27481
+dt2 = 190
+dt3 = 3391
+time used for a whole transfer job_usec=31062
+./client r2 34135 1
+address resolved.
+build context and connection struct
+[Register] takes 185 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =4096
+[Write] takes 166 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1201 micro_secs.
+dt1 = 27507
+dt2 = 166
+dt3 = 3289
+time used for a whole transfer job_usec=30962
+./client r2 34135 2
+address resolved.
+build context and connection struct
+[Register] takes 173 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =8192
+[Write] takes 180 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1177 micro_secs.
+dt1 = 27853
+dt2 = 181
+dt3 = 3452
+time used for a whole transfer job_usec=31486
+./client r2 34135 2
+address resolved.
+build context and connection struct
+[Register] takes 189 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =8192
+[Write] takes 194 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1237 micro_secs.
+dt1 = 27273
+dt2 = 208
+dt3 = 3341
+time used for a whole transfer job_usec=30822
+./client r2 34135 2
+address resolved.
+build context and connection struct
+[Register] takes 176 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =8192
+[Write] takes 152 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1219 micro_secs.
+dt1 = 26931
+dt2 = 152
+dt3 = 3428
+time used for a whole transfer job_usec=30511
+./client r2 34135 2
+address resolved.
+build context and connection struct
+[Register] takes 182 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =8192
+[Write] takes 156 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1174 micro_secs.
+dt1 = 26917
+dt2 = 157
+dt3 = 3337
+time used for a whole transfer job_usec=30411
+./client r2 34135 2
+address resolved.
+build context and connection struct
+[Register] takes 180 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =8192
+[Write] takes 173 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1170 micro_secs.
+dt1 = 27067
+dt2 = 175
+dt3 = 3325
+time used for a whole transfer job_usec=30567
+./client r2 34135 4
+address resolved.
+build context and connection struct
+[Register] takes 180 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =16384
+[Write] takes 136 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1216 micro_secs.
+dt1 = 27191
+dt2 = 137
+dt3 = 3378
+time used for a whole transfer job_usec=30706
+./client r2 34135 4
+address resolved.
+build context and connection struct
+[Register] takes 186 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =16384
+[Write] takes 156 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1202 micro_secs.
+dt1 = 27083
+dt2 = 157
+dt3 = 3489
+time used for a whole transfer job_usec=30729
+./client r2 34135 4
+address resolved.
+build context and connection struct
+[Register] takes 186 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =16384
+[Write] takes 198 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1215 micro_secs.
+dt1 = 26886
+dt2 = 200
+dt3 = 3443
+time used for a whole transfer job_usec=30529
+./client r2 34135 4
+address resolved.
+build context and connection struct
+[Register] takes 196 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =16384
+[Write] takes 198 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1226 micro_secs.
+dt1 = 25861
+dt2 = 200
+dt3 = 3450
+time used for a whole transfer job_usec=29511
+./client r2 34135 4
+address resolved.
+build context and connection struct
+[Register] takes 184 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =16384
+[Write] takes 190 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1187 micro_secs.
+dt1 = 26267
+dt2 = 191
+dt3 = 3441
+time used for a whole transfer job_usec=29899
+./client r2 34135 8
+address resolved.
+build context and connection struct
+[Register] takes 184 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =32768
+[Write] takes 151 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1205 micro_secs.
+dt1 = 27253
+dt2 = 151
+dt3 = 3481
+time used for a whole transfer job_usec=30885
+./client r2 34135 8
+address resolved.
+build context and connection struct
+[Register] takes 191 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =32768
+[Write] takes 152 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1187 micro_secs.
+dt1 = 26581
+dt2 = 153
+dt3 = 3346
+time used for a whole transfer job_usec=30080
+./client r2 34135 8
+address resolved.
+build context and connection struct
+[Register] takes 217 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =32768
+[Write] takes 86 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1176 micro_secs.
+dt1 = 27025
+dt2 = 86
+dt3 = 3273
+time used for a whole transfer job_usec=30384
+./client r2 34135 8
+address resolved.
+build context and connection struct
+[Register] takes 211 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =32768
+[Write] takes 198 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1227 micro_secs.
+dt1 = 26101
+dt2 = 199
+dt3 = 3462
+time used for a whole transfer job_usec=29762
+./client r2 34135 8
+address resolved.
+build context and connection struct
+[Register] takes 184 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =32768
+[Write] takes 191 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1225 micro_secs.
+dt1 = 26981
+dt2 = 192
+dt3 = 3279
+time used for a whole transfer job_usec=30452
+./client r2 34135 16
+address resolved.
+build context and connection struct
+[Register] takes 235 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =65536
+[Write] takes 235 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1222 micro_secs.
+dt1 = 25830
+dt2 = 238
+dt3 = 3337
+time used for a whole transfer job_usec=29405
+./client r2 34135 16
+address resolved.
+build context and connection struct
+[Register] takes 242 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =65536
+[Write] takes 269 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1223 micro_secs.
+dt1 = 27281
+dt2 = 270
+dt3 = 3463
+time used for a whole transfer job_usec=31014
+./client r2 34135 16
+address resolved.
+build context and connection struct
+[Register] takes 233 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =65536
+[Write] takes 149 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1233 micro_secs.
+dt1 = 26794
+dt2 = 149
+dt3 = 3505
+time used for a whole transfer job_usec=30448
+./client r2 34135 16
+address resolved.
+build context and connection struct
+[Register] takes 244 micro_secs.
+route resolved.
+[RDMA Send] takes 4 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =65536
+[Write] takes 201 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1249 micro_secs.
+dt1 = 27521
+dt2 = 202
+dt3 = 3302
+time used for a whole transfer job_usec=31025
+./client r2 34135 16
+address resolved.
+build context and connection struct
+[Register] takes 250 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =65536
+[Write] takes 311 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1238 micro_secs.
+dt1 = 27343
+dt2 = 313
+dt3 = 3543
+time used for a whole transfer job_usec=31199
+./client r2 34135 32
+address resolved.
+build context and connection struct
+[Register] takes 282 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =131072
+[Write] takes 152 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1307 micro_secs.
+dt1 = 26924
+dt2 = 152
+dt3 = 3389
+time used for a whole transfer job_usec=30465
+./client r2 34135 32
+address resolved.
+build context and connection struct
+[Register] takes 289 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =131072
+[Write] takes 558 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1269 micro_secs.
+dt1 = 26842
+dt2 = 560
+dt3 = 3391
+time used for a whole transfer job_usec=30793
+./client r2 34135 32
+address resolved.
+build context and connection struct
+[Register] takes 266 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =131072
+[Write] takes 379 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1221 micro_secs.
+dt1 = 26796
+dt2 = 392
+dt3 = 3438
+time used for a whole transfer job_usec=30626
+./client r2 34135 32
+address resolved.
+build context and connection struct
+[Register] takes 293 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =131072
+[Write] takes 265 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1218 micro_secs.
+dt1 = 26811
+dt2 = 266
+dt3 = 3386
+time used for a whole transfer job_usec=30463
+./client r2 34135 32
+address resolved.
+build context and connection struct
+[Register] takes 291 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =131072
+[Write] takes 237 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1266 micro_secs.
+dt1 = 27955
+dt2 = 251
+dt3 = 3476
+time used for a whole transfer job_usec=31682
+./client r2 34135 64
+address resolved.
+build context and connection struct
+[Register] takes 355 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =262144
+[Write] takes 201 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1238 micro_secs.
+dt1 = 27215
+dt2 = 202
+dt3 = 3327
+time used for a whole transfer job_usec=30744
+./client r2 34135 64
+address resolved.
+build context and connection struct
+[Register] takes 387 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =262144
+[Write] takes 379 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1301 micro_secs.
+dt1 = 27277
+dt2 = 392
+dt3 = 3276
+time used for a whole transfer job_usec=30945
+./client r2 34135 64
+address resolved.
+build context and connection struct
+[Register] takes 346 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =262144
+[Write] takes 613 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1314 micro_secs.
+dt1 = 26887
+dt2 = 614
+dt3 = 3636
+time used for a whole transfer job_usec=31137
+./client r2 34135 64
+address resolved.
+build context and connection struct
+[Register] takes 351 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =262144
+[Write] takes 197 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1259 micro_secs.
+dt1 = 26850
+dt2 = 198
+dt3 = 3332
+time used for a whole transfer job_usec=30380
+./client r2 34135 64
+address resolved.
+build context and connection struct
+[Register] takes 374 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =262144
+[Write] takes 501 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1162 micro_secs.
+dt1 = 26723
+dt2 = 503
+dt3 = 3287
+time used for a whole transfer job_usec=30513
+./client r2 34135 128
+address resolved.
+build context and connection struct
+[Register] takes 593 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =524288
+[Write] takes 1477 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1362 micro_secs.
+dt1 = 26322
+dt2 = 1478
+dt3 = 3476
+time used for a whole transfer job_usec=31276
+./client r2 34135 128
+address resolved.
+build context and connection struct
+[Register] takes 550 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =524288
+[Write] takes 1354 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1348 micro_secs.
+dt1 = 26624
+dt2 = 1355
+dt3 = 3479
+time used for a whole transfer job_usec=31458
+./client r2 34135 128
+address resolved.
+build context and connection struct
+[Register] takes 571 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =524288
+[Write] takes 531 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1350 micro_secs.
+dt1 = 26412
+dt2 = 532
+dt3 = 3495
+time used for a whole transfer job_usec=30439
+./client r2 34135 128
+address resolved.
+build context and connection struct
+[Register] takes 559 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =524288
+[Write] takes 1874 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1354 micro_secs.
+dt1 = 28393
+dt2 = 1877
+dt3 = 3571
+time used for a whole transfer job_usec=33841
+./client r2 34135 128
+address resolved.
+build context and connection struct
+[Register] takes 568 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =524288
+[Write] takes 2358 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1363 micro_secs.
+dt1 = 26483
+dt2 = 2359
+dt3 = 3605
+time used for a whole transfer job_usec=32447
+./client r2 34135 256
+address resolved.
+build context and connection struct
+[Register] takes 958 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =1048576
+[Write] takes 3082 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1414 micro_secs.
+dt1 = 26784
+dt2 = 3083
+dt3 = 3553
+time used for a whole transfer job_usec=33420
+./client r2 34135 256
+address resolved.
+build context and connection struct
+[Register] takes 875 micro_secs.
+route resolved.
+[RDMA Send] takes 4 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =1048576
+[Write] takes 1501 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1398 micro_secs.
+dt1 = 28569
+dt2 = 1503
+dt3 = 3526
+time used for a whole transfer job_usec=33598
+./client r2 34135 256
+address resolved.
+build context and connection struct
+[Register] takes 934 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =1048576
+[Write] takes 3118 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1390 micro_secs.
+dt1 = 26808
+dt2 = 3118
+dt3 = 3477
+time used for a whole transfer job_usec=33403
+./client r2 34135 256
+address resolved.
+build context and connection struct
+[Register] takes 904 micro_secs.
+route resolved.
+[RDMA Send] takes 4 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =1048576
+[Write] takes 610 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1404 micro_secs.
+dt1 = 26866
+dt2 = 611
+dt3 = 3529
+time used for a whole transfer job_usec=31006
+./client r2 34135 256
+address resolved.
+build context and connection struct
+[Register] takes 859 micro_secs.
+route resolved.
+[RDMA Send] takes 4 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =1048576
+[Write] takes 3265 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1397 micro_secs.
+dt1 = 26851
+dt2 = 3266
+dt3 = 3498
+time used for a whole transfer job_usec=33615
+./client r2 34135 512
+address resolved.
+build context and connection struct
+[Register] takes 2089 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =2097152
+[Write] takes 6117 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1705 micro_secs.
+dt1 = 29940
+dt2 = 6131
+dt3 = 3873
+time used for a whole transfer job_usec=39944
+./client r2 34135 512
+address resolved.
+build context and connection struct
+[Register] takes 2107 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =2097152
+[Write] takes 6274 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1628 micro_secs.
+dt1 = 28922
+dt2 = 6275
+dt3 = 3785
+time used for a whole transfer job_usec=38982
+./client r2 34135 512
+address resolved.
+build context and connection struct
+[Register] takes 2124 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =2097152
+[Write] takes 6386 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1576 micro_secs.
+dt1 = 29714
+dt2 = 6387
+dt3 = 3855
+time used for a whole transfer job_usec=39956
+./client r2 34135 512
+address resolved.
+build context and connection struct
+[Register] takes 2019 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =2097152
+[Write] takes 5922 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1743 micro_secs.
+dt1 = 29518
+dt2 = 5922
+dt3 = 4100
+time used for a whole transfer job_usec=39540
+./client r2 34135 512
+address resolved.
+build context and connection struct
+[Register] takes 1964 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =2097152
+[Write] takes 11248 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1814 micro_secs.
+dt1 = 24955
+dt2 = 11249
+dt3 = 4146
+time used for a whole transfer job_usec=40350
+./client r2 34135 1024
+address resolved.
+build context and connection struct
+[Register] takes 4106 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =4194304
+[Write] takes 21559 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 2154 micro_secs.
+dt1 = 31799
+dt2 = 21559
+dt3 = 4519
+time used for a whole transfer job_usec=57877
+./client r2 34135 1024
+address resolved.
+build context and connection struct
+[Register] takes 4020 micro_secs.
+route resolved.
+[RDMA Send] takes 4 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =4194304
+[Write] takes 12703 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 2015 micro_secs.
+dt1 = 31814
+dt2 = 12704
+dt3 = 4351
+time used for a whole transfer job_usec=48869
+./client r2 34135 1024
+address resolved.
+build context and connection struct
+[Register] takes 3988 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =4194304
+[Write] takes 13282 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 1976 micro_secs.
+dt1 = 31116
+dt2 = 13283
+dt3 = 4299
+time used for a whole transfer job_usec=48698
+./client r2 34135 1024
+address resolved.
+build context and connection struct
+[Register] takes 3981 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =4194304
+[Write] takes 12587 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 2130 micro_secs.
+dt1 = 31689
+dt2 = 12589
+dt3 = 4516
+time used for a whole transfer job_usec=48794
+./client r2 34135 1024
+address resolved.
+build context and connection struct
+[Register] takes 3930 micro_secs.
+route resolved.
+[RDMA Send] takes 3 micro_secs.
+send completed successfully
+received MR from server
+received remote write from server
+message from passive/server side with pid 8640
+recv_size =4194304
+[Write] takes 23863 micro_secs.
+ready to disconnect
+send disconnect
+disconnected.
+[Derigester] takes 2072 micro_secs.
+dt1 = 32305
+dt2 = 23864
+dt3 = 4767
+time used for a whole transfer job_usec=60936

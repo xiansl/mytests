@@ -1,0 +1,54 @@
+address resolved.
+route resolved.
+send completed successfully.
+received MSG_MR. writing message to remote memory...
+send completed successfully.
+send completed successfully.
+remote buffer: message from passive/server side with pid 123967
+disconnected.
+time used for a whole transfer job_usec=27354
+address resolved.
+route resolved.
+send completed successfully.
+received MSG_MR. writing message to remote memory...
+send completed successfully.
+send completed successfully.
+remote buffer: message from passive/server side with pid 123967
+disconnected.
+time used for a whole transfer job_usec=29619
+address resolved.
+route resolved.
+send completed successfully.
+received MSG_MR. writing message to remote memory...
+send completed successfully.
+send completed successfully.
+remote buffer: message from passive/server side with pid 123967
+disconnected.
+time used for a whole transfer job_usec=35284
+address resolved.
+route resolved.
+send completed successfully.
+received MSG_MR. writing message to remote memory...
+send completed successfully.
+send completed successfully.
+remote buffer: message from passive/server side with pid 123967
+disconnected.
+time used for a whole transfer job_usec=24936
+address resolved.
+route resolved.
+send completed successfully.
+received MSG_MR. writing message to remote memory...
+send completed successfully.
+send completed successfully.
+remote buffer: message from passive/server side with pid 123967
+disconnected.
+time used for a whole transfer job_usec=30266
+address resolved.
+route resolved.
+send completed successfully.
+received MSG_MR. writing message to remote memory...
+send completed successfully.
+send completed successfully.
+remote buffer: message from passive/server side with pid 123967
+disconnected.
+time used for a whole transfer job_usec=29192
