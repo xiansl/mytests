@@ -16,7 +16,7 @@ struct acc_context_t {
 };
 
 
-void * fpga_acc_open(struct acc_context_t * acc_context, char * acc_name, unsigned int in_buf_size, unsigned int out_buf_size, unsigned int real_in_size);
+void * fpga_acc_open(struct acc_context_t * acc_context, char * acc_name, unsigned int in_buf_size, unsigned int out_buf_size, unsigned int real_in_size, char * fpga_scheduler_url);
 
 unsigned long fpga_acc_do_job (struct acc_context_t * acc_context, const char * param, unsigned int job_len, void ** result_buf);
 
