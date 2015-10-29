@@ -107,20 +107,21 @@ void client_test(char *ip, char *port) {
     struct rdma_cm_event *event = NULL;
     struct rdma_cm_id *conn= NULL;
     struct rdma_event_channel *ec = NULL;
-    struct timeval start, end, dt;
-    struct timeval s, e, d;
+    struct timeval t1, t2, t3, t11, t12;
+    struct timeval dt, dt1, dt2, dt11, dt12, dt13;
 
-    gettimeofday(&start, NULL);
+    gettimeofday(&t1, NULL);
 
     TEST_NZ(getaddrinfo(ip, port, NULL, &addr));
     TEST_Z(ec = rdma_create_event_channel());
+    gettimeofday(&t11, NULL);
+
     TEST_NZ(rdma_create_id(ec, &conn, NULL, RDMA_PS_TCP));
+    gettimeofday(&t12, NULL);
+
     TEST_NZ(rdma_resolve_addr(conn, NULL, addr->ai_addr, TIMEOUT_IN_MS));
-    gettimeofday(&end, NULL);
-    timersub(&end, &start, &dt);
-    long usec = dt.tv_usec + 10000 * dt.tv_sec;
     freeaddrinfo(addr);
-    printf("[Pre_Setup] takes %ld micro_secs.\n", usec);
+    gettimeofday(&t2, NULL);
 
     while (rdma_get_cm_event(ec, &event) == 0) {
         struct rdma_cm_event event_copy;
@@ -132,19 +133,33 @@ void client_test(char *ip, char *port) {
             s_ctx->ec = ec;
             s_ctx->id = conn;
 
-            gettimeofday(&s, NULL);
 
             on_connection(event_copy.id);//send our memory information to server using post_send
             poll_cq(NULL);//wait for send_completion
             poll_cq(NULL);//wait for recv_completion
 
-            gettimeofday(&e, NULL);
-            timersub(&e, &s, &d);
-            usec = d.tv_usec + 10000 * d.tv_sec;
-            printf("[RDMA Send & Recv] takes %ld micro_secs.\n", usec);
             break;
         }
     }
+
+    gettimeofday(&t3, NULL);
+    timersub(&t3, &t1, &dt);
+    timersub(&t3, &t2, &dt2);
+    timersub(&t2, &t1, &dt1);
+    timersub(&t2, &t12, &dt13);
+    timersub(&t12, &t11, &dt12);
+    timersub(&t11, &t1, &dt11);
+    long usec = dt.tv_usec + 10000 * dt.tv_sec;
+
+    printf("[dt]:\t%ld us.\n", usec);
+    printf("[dt1]:\t%ld us.\n", dt1.tv_usec+1000000 *dt1.tv_sec);
+    printf("Including the following steps: \n");
+    printf("[dt11]:\t%ld us.\n", dt11.tv_usec+1000000 *dt11.tv_sec);
+    printf("[dt12]:\t%ld us.\n", dt12.tv_usec+1000000 *dt12.tv_sec);
+    printf("[dt13]:\t%ld us.\n", dt13.tv_usec+1000000 *dt13.tv_sec);
+    printf("[dt2] takes %ld micro_secs.\n", dt2.tv_usec+1000000*dt2.tv_sec);
+    printf("[dt]:total time\t[dt1]:pre_setup\t[dt2]:send/recv\t.\n");
+    printf("[dt11]:create_event_channel\t[dt12]:create_id\t[dt13]:resolve_address.\n");
     return;
 
 };
@@ -197,7 +212,6 @@ int main(int argc, char **argv)
 
 
         gettimeofday(&start, NULL);
-
         client_test(argv[1], argv[2]);//set up connection and exchange buffer_key and buffer_addr;
         gettimeofday(&t1, NULL);
 
@@ -208,7 +222,6 @@ int main(int argc, char **argv)
         gettimeofday(&end, NULL);
 
         timersub(&end, &start, &dt); 
-
         timersub(&t1, &start, &dt1); 
         timersub(&t2, &t1, &dt2); 
         timersub(&end, &t2, &dt3); 
