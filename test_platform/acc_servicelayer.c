@@ -6,7 +6,7 @@
 
 #define NAME       "fpga_rdma"
 #define VERSION    "0.1"
-const char * fpga_scheduler_url = "http://10.0.0.50:9000";
+//const char * fpga_scheduler_url = "http://10.0.0.50:9000";
 void die_if_fault_occurred (xmlrpc_env *env);
 void client_rpc_request(void *rpc_param, char * job_id);
 void client_rpc_notify(void *acc_context);
