@@ -7,7 +7,7 @@ job_num=$JOB_NUM
 mean=$MEAN
 node=`hostname`
 
-export LD_LIBRARY_PATH=/home/900/lxs900/zzd/fpga_platform:/home/900/lxs900/zzd/fpga_platform/fpga-sim/driver:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/home/900/lxs900/zzd/test_platform:/home/900/lxs900/zzd/test_platform/fpga-sim/driver:$LD_LIBRARY_PATH
 
 # print and execute command string
 # comment out eval while debugging

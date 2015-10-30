@@ -8,8 +8,6 @@
 #include <sys/time.h>
 #include "acc_servicelayer.h"
 
-#define SURL "http:\/\/r7:9000/"
-
 int main(int argc, char **argv)
 {	
 	long ret;
@@ -46,7 +44,7 @@ int main(int argc, char **argv)
 		out_buffer_size = 1024 * sysconf(_SC_PAGESIZE);
 	}
 	gettimeofday(&start, NULL);
-    in_buffer = fpga_acc_open(&(my_context), acc_name, in_buffer_size, out_buffer_size, real_in_size, SURL);
+    in_buffer = fpga_acc_open(&(my_context), acc_name, in_buffer_size, out_buffer_size, real_in_size, "http://10.9.1.7:9000");
 	gettimeofday(&end, NULL);
 	timersub(&end, &start, &dt);
 	long open_usec = dt.tv_usec + 1000000 * dt.tv_sec;

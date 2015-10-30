@@ -17,8 +17,8 @@ acc_servicelayer.so: acc_servicelayer.c client.c fpga-sim/driver/fpga-libacc.c
 test_bench: test_bench.c
 	$(CC) $(CFLAGS) -o test_bench test_bench.c -lacc_servicelayer $(LOCAL_LIBS) 
 demo.so : demo.c server.c
-	python setup.py build 
-	cp build/lib.linux-x86_64-2.7/demo.so .
+	$(CC) $(CFLAGS )-c -fPIC demo.c server.c 
+	$(CC) -o demo.so -pthread -shared demo.o server.o -lrdmacm -lpthread -libverbs -lfpga -lpython2.7 $(LOCAL_LIBS)
 
 all: ${APPS}
 
