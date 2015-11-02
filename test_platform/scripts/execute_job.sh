@@ -6,11 +6,12 @@ processLine(){
   	arg2=$(echo $line | awk '{ print $2 }')
   	arg3=$(echo $line | awk '{ print $3 }')
 
-	echo $arg1
-	echo $arg2
-	echo $arg3
+#	echo $arg1
+#	echo $arg2
+#	echo $arg3
 	usleep $arg3
-	../test_bench $arg1 $arg2
+	cmd="../test_bench $arg1 $arg2"
+	echo $cmd; eval $cmd
 }
 
 node=$1

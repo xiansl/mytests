@@ -5,7 +5,7 @@ APPS    := acc_servicelayer.so test_bench demo.so
 CLIENT_CFLAGS := -I/usr/include -I./xmlrpc
 CLIENT_LIBS := -L/usr/lib/x86_64-linux-gnu -L./xmlrpc
 CFLAGS  := -Wall -g
-LOCAL_LIBS := -L. -L./fpga-sim/driver
+LOCAL_LIBS := -L.
 
 RPC_LIBS := -lxmlrpc_client -lxmlrpc -lxmlrpc_util
 RDMA_LIBS := -lrdmacm -libverbs -lpthread
@@ -18,7 +18,7 @@ test_bench: test_bench.c
 	$(CC) $(CFLAGS) -o test_bench test_bench.c -lacc_servicelayer $(LOCAL_LIBS) 
 demo.so : demo.c server.c
 	python setup.py build 
-	cp build/lib.linux-x86_64-2.7/demo.so .
+	cp build/lib.linux-x86_64-2.6/demo.so .
 
 all: ${APPS}
 

@@ -107,14 +107,14 @@ run_scheduler() {
 		echo "$cmd"; eval "$cmd"
 		
 	elif [[ $pattern = "Remote" ]]; then
-		cmd='pdsh -w $fpga_nodes "cd $path; ../xmlrpclib_server.py -a $node -p 8000 &"'
+		cmd="pdsh -w $fpga_nodes \"cd $path; ../xmlrpclib_server.py -a $node -p 8000 &\""
 		echo "$cmd"; eval "$cmd"
-		cmd='pdsh -w $other_nodes "cd $path; ./other_node.sh &"'
+		cmd="pdsh -w $other_nodes \"cd $path; ./other_node.sh &\""
 		echo "$cmd"; eval "$cmd"
 	else
-		cmd='pdsh -w $fpga_nodes "cd $path; ./fpga_node.sh &"'
+		cmd="pdsh -w $fpga_nodes \"cd $path; ./fpga_node.sh &\""
 		echo "$cmd"; eval "$cmd"
-		cmd='pdsh -w $other_nodes "cd $path; ./other_node.sh &"'
+		cmd="pdsh -w $other_nodes \"cd $path; ./other_node.sh &\""
 		echo "$cmd"; eval "$cmd"
 	fi
 }
