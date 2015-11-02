@@ -1,0 +1,36 @@
+#!/bin/bash
+cd `dirname $0`
+
+if [[ x$1 == xtool ]]; then
+	echo "recompile tools"
+	rm fpga-ls fpga-lsacc fpga-addacc fpga-rmacc fpga-top fpga-bwctrl fpga-priority;
+	gcc -o fpga-ls fpga-ls.c;
+	gcc -o fpga-lsacc fpga-lsacc.c;
+	gcc -o fpga-addacc fpga-addacc.c;
+	gcc -o fpga-rmacc fpga-rmacc.c;
+	gcc -o fpga-top fpga-top.c;
+	gcc -o fpga-bwctrl fpga-bwctrl.c;
+	gcc -o fpga-priority fpga-priority.c;
+else
+	rm fpga-ls fpga-lsacc fpga-addacc fpga-rmacc fpga-top fpga-bwctrl fpga-priority;
+	make clean; make;
+	gcc -o fpga-ls fpga-ls.c;
+	gcc -o fpga-lsacc fpga-lsacc.c;
+	gcc -o fpga-addacc fpga-addacc.c;
+	gcc -o fpga-rmacc fpga-rmacc.c;
+	gcc -o fpga-top fpga-top.c;
+	gcc -o fpga-bwctrl fpga-bwctrl.c;
+	gcc -o fpga-priority fpga-priority.c;
+
+	#gcc -c fpga-libacc.c
+	#ar -r libfpga.a fpga-libacc.o
+	#sudo cp libfpga.a /lib64/
+
+	gcc -c -fpic fpga-libacc.c
+	gcc -shared fpga-libacc.o -o libfpga.so
+	sudo cp libfpga.so /lib64/
+	sudo cp libfpga.so /lib/
+	sudo cp wukong.conf /etc
+fi
+
+sudo cp fpga-addacc fpga-lsacc /usr/bin/
