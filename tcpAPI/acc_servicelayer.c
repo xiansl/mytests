@@ -25,7 +25,7 @@ void * fpga_acc_open(struct acc_context_t *acc_context, char *acc_name, unsigned
     switch(status){
         case 0: {//remote ACC is available
             if (DEBUG)
-                printf("open a remote acc...\n");
+                printf("open a REMOTE Acc...\n");
             to_server_fd = build_connection_to_server((void *)acc_context);
             TEST_NEG(to_server_fd);
             break;
@@ -42,9 +42,9 @@ void * fpga_acc_open(struct acc_context_t *acc_context, char *acc_name, unsigned
                }
         case 3:{ //local ACC is available
             if (DEBUG)
-                printf("open a local acc...\n");
+                printf("open a LOCAL Acc...\n");
             int section_id = atoi(socket_ctx->section_id);
-            printf("in_buf_size=%u, out_buf_size=%u, section_id=%d\n", acc_context->in_buf_size, acc_context->out_buf_size, section_id);
+            //printf("in_buf_size=%u, out_buf_size=%u, section_id=%d\n", acc_context->in_buf_size, acc_context->out_buf_size, section_id);
             acc_context->in_buf = pri_acc_open(&(acc_context->acc_handler), acc_context->acc_name, acc_context->in_buf_size, acc_context->out_buf_size, section_id);
             socket_ctx->in_buf = acc_context->in_buf;
             break;
@@ -62,7 +62,6 @@ void * fpga_acc_open(struct acc_context_t *acc_context, char *acc_name, unsigned
     socket_ctx->open_time = open_usec;
     socket_ctx->execution_time = 0;
 
-    printf("open, exe: %ld, %ld\n", socket_ctx->open_time, socket_ctx->execution_time);
     return acc_context->in_buf;
 }
 
@@ -74,26 +73,26 @@ unsigned long fpga_acc_do_job (struct acc_context_t * acc_context, const char * 
     int status = atoi(socket_ctx->status);
     switch (status){
         case 0 :{//remote ACC is available;
-            printf("do REMOTE Job...\n");
+            //printf("do REMOTE Job...\n");
             result_buf_size = remote_acc_do_job((void *)acc_context, param, job_len, result_buf); 
             break;
         }
         case 3 :{//local ACC is available;
             if (DEBUG)
-                printf("do LOCAL job...\n");
+                //printf("do LOCAL job...\n");
             result_buf_size = acc_do_job(&(acc_context->acc_handler), param, job_len, result_buf); 
             break;
 }           
         case '?':
             break;
     }
-    printf("result buf size=%ld\n", result_buf_size);
+    //printf("result buf size=%ld\n", result_buf_size);
     gettimeofday(&t2, NULL);
     timersub(&t2, &t1, &dt);
     long usec = dt.tv_usec + 1000000 *dt.tv_sec;
     
     socket_ctx->execution_time += usec;
-    printf("open, exe: %ld, %ld\n", socket_ctx->open_time, socket_ctx->execution_time);
+    //printf("open, exe: %ld, %ld\n", socket_ctx->open_time, socket_ctx->execution_time);
 
     return result_buf_size;
 }
@@ -107,12 +106,12 @@ void fpga_acc_close(struct acc_context_t * acc_context) {
     int status = atoi(socket_ctx->status); 
     switch (status){
         case 3:{
-            printf("close loal acc\n");
+            printf("close LOCAL acc\n");
             acc_close(&(acc_context->acc_handler));
             break;
             }
         case 0:{
-            printf("close remote acc\n");
+            printf("close REMOTE acc\n");
             disconnect_with_server((void *)acc_context);
             break;
             }
@@ -125,10 +124,9 @@ void fpga_acc_close(struct acc_context_t * acc_context) {
     timersub(&t2, &t1, &dt);
     long close_usec = dt.tv_usec + 1000000 *dt.tv_sec;
     
-    printf("LINE %d\n", __LINE__);
     socket_ctx->close_time = close_usec;
     socket_ctx->total_time = socket_ctx->open_time + socket_ctx->execution_time + socket_ctx->close_time;
-    printf("open, exe, close: %ld, %ld, %ld, %ld\n", socket_ctx->open_time, socket_ctx->execution_time, socket_ctx->close_time, socket_ctx->total_time);
+    //printf("open, exe, close: %ld, %ld, %ld, %ld\n", socket_ctx->open_time, socket_ctx->execution_time, socket_ctx->close_time, socket_ctx->total_time);
 
     report_to_scheduler((void *)acc_context);
     free_memory((void *)acc_context);
@@ -177,11 +175,9 @@ void report_to_scheduler(void *acc_ctx){
 
 
 
-    printf("LINE %d\n", __LINE__);
     send(client_fd, (char *)&debug_ctx, sizeof(struct debug_context_t), 0);
-    printf("LINE %d\n", __LINE__);
     recv(client_fd, response, 16, 0);
-    printf("response from schduler: %s\n", response);
+    //printf("response from schduler: %s\n", response);
     return;
 }
 

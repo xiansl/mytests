@@ -44,7 +44,6 @@ int main(int argc, char **argv)
 	timersub(&t2, &t1, &dt);
 
 	if (in_buffer == NULL) {
-        printf("LINE %d\n", __LINE__);
 		printf ("Open %s fail.\n", acc_name);
 	}
 	else {
@@ -53,8 +52,7 @@ int main(int argc, char **argv)
         sent_block_size = 0;
         left_block_size = in_buf_size;
         chunk_size = my_context.in_buf_size;
-        printf("chunk_size = %lu\n", chunk_size);
-        printf("LINE %d\n", __LINE__);
+        //printf("chunk_size = %lu\n", chunk_size);
         memset(in_buffer, 0, chunk_size);
         printf("LINE %d\n", __LINE__);
         while(sent_block_size < in_buf_size){

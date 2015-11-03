@@ -8,15 +8,15 @@ size_t send_msg(int fd, void *buffer, size_t len, size_t chunk)
     size_t block = chunk, left_block = len, sent_block = 0;
 
     if (len < chunk){ 
-        printf("send small message ........\n");
+        //printf("send small message ........\n");
         return send(fd, buffer, len, 0);
     }
 
     while(sent_block < len) {
-        printf("send.....\n");
+        //printf("send.....\n");
         block = send(fd, c_ptr, chunk, 0);
         if (block <= 0){
-            printf("nothing to send\n");
+            //printf("nothing to send\n");
             break;
         }
         sent_block += block;
@@ -33,18 +33,18 @@ size_t recv_msg(int fd, void *buffer, size_t len, size_t chunk)
     size_t block = chunk, left_block = len, recv_block = 0;
 
     if (len < chunk){ 
-        printf("recv small message ........\n");
+        //printf("recv small message ........\n");
         return recv(fd, buffer, len, 0);
     }
 
     while (recv_block < len) {
-        printf("recv.....\n");
+        //printf("recv.....\n");
         block = recv(fd, c_ptr, chunk, 0);
         if (block <= 0){
-            printf("nothing to recv\n");
+            //printf("nothing to recv\n");
             break;
         }
-        printf("recv block %zu\n", block);
+        //printf("recv block %zu\n", block);
         recv_block += block;
         left_block -= block;
         chunk = left_block > chunk ? chunk : left_block;
@@ -77,7 +77,7 @@ int build_connection_to_scheduler(void *acc_ctx) {
         return -1;
     }
 
-    printf("port=%d, host=%s\n", socket_ctx->scheduler_port, socket_ctx->scheduler_host );
+    //printf("port=%d, host=%s\n", socket_ctx->scheduler_port, socket_ctx->scheduler_host );
     memset((char *)scheduler_addr, 0, sizeof(struct sockaddr));
     scheduler_addr->sin_family = AF_INET;
     scheduler_addr->sin_port = htons(socket_ctx->scheduler_port);
@@ -108,8 +108,6 @@ int build_connection_to_server(void *acc_ctx) {
     int client_fd;
     unsigned int in_buf_size = acc_context->in_buf_size;
     unsigned int out_buf_size = acc_context->out_buf_size;
-    printf("Line %d, in_buf_size=%u, out_buf_size=%u\n", __LINE__, in_buf_size, out_buf_size);
-    //char *host = socket_ctx->server_host;
     int port = socket_ctx->server_port;
     struct sockaddr_in *my_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
     struct sockaddr_in *server_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
@@ -149,7 +147,7 @@ int build_connection_to_server(void *acc_ctx) {
     socket_ctx->in_buf = malloc(in_buf_size);
     socket_ctx->out_buf = malloc(out_buf_size);
     acc_context->in_buf = socket_ctx->in_buf;
-    printf("acc_context->in_buf_size:%d\n", in_buf_size);
+    //printf("acc_context->in_buf_size:%d\n", in_buf_size);
     return client_fd;
 }
 
@@ -198,13 +196,13 @@ int request_to_scheduler(void *acc_ctx) {
     strcpy(socket_ctx->section_id, recv_ctx.section_id);
     strcpy(socket_ctx->status, recv_ctx.status);
     socket_ctx->server_port = atoi(recv_ctx.port);
-    if (DEBUG)
-        printf("socket_ctx->status:%s\n", socket_ctx->status);
-
     status = atoi(recv_ctx.status);
-    if (DEBUG)
-        printf("status=%d\n", status);
     close(fd);
+   /* if (DEBUG){
+        printf("socket_ctx->status:%s\n", socket_ctx->status);
+        printf("status=%d\n", status);
+    }
+    */
     return status;
 }
 
@@ -215,38 +213,27 @@ unsigned int remote_acc_do_job(void *acc_ctx, const char *param, unsigned int jo
     *result_buf = socket_ctx->out_buf; 
     char *in_buf = (char *)socket_ctx->in_buf;
     int fd = socket_ctx->to_server_fd;
-    printf("job_len = %d\n", job_len);
+    //printf("job_len = %d\n", job_len);
     size_t len = send_msg(fd, in_buf, job_len, MTU); 
-    printf("send len = %zu !!!!!!!!!!!!!!!!!!!!!!\n", len);
-    printf("LINE %d\n", __LINE__);
-    printf("send to remote server...\n");
+    //printf("send to remote server...\n");
     recv_buf_size = recv_msg(fd, *result_buf, job_len, MTU);
 
-    printf("recv buf size = %u\n", recv_buf_size);
+    //printf("recv buf size = %u\n", recv_buf_size);
 
     return recv_buf_size; 
 } 
 
 void free_memory(void *acc_ctx){
-    printf("LINE %d.......\n", __LINE__);
     struct acc_context_t *acc_context = (struct acc_context_t *)acc_ctx;
     struct socket_context_t *socket_ctx = (struct socket_context_t *)(acc_context->socket_context);
-    printf("LINE %d.......\n", __LINE__);
     free(socket_ctx->scheduler_addr);
-    printf("LINE %d.......\n", __LINE__);
     free(socket_ctx->server_addr);
-    printf("LINE %d.......\n", __LINE__);
     free(socket_ctx->to_scheduler_addr);
-    printf("LINE %d.......\n", __LINE__);
     free(socket_ctx->to_server_addr);
-    printf("LINE %d.......\n", __LINE__);
-    printf("LINE %d.......\n", __LINE__);
     if (atoi(socket_ctx->status) == 0){ 
-        printf("LINE %d.......\n", __LINE__);
         free(socket_ctx->out_buf);
         free(socket_ctx->in_buf);
     }
-    printf("LINE %d.......\n", __LINE__);
     free(socket_ctx);
 
 }
@@ -292,7 +279,7 @@ void * tcp_server_data_transfer(void * server_param) {
     strcpy(server_context.acc_name, my_param->acc_name);
     server_context.in_buf_size = my_param->in_buf_size;
     server_context.out_buf_size = my_param->out_buf_size;
-    printf("my_param->in_buf_size=%u, out_buf_size=%u\n",my_param->in_buf_size, my_param->out_buf_size);
+    //printf("my_param->in_buf_size=%u, out_buf_size=%u\n",my_param->in_buf_size, my_param->out_buf_size);
 
 
     int status = local_fpga_open((void *)&server_context);
@@ -334,7 +321,6 @@ void * tcp_server_data_transfer(void * server_param) {
     getsockname(server_fd, (struct sockaddr *)&server_addr, &alen);
     server_port = ntohs(server_addr.sin_port);
     strcpy(server_host, inet_ntoa(server_addr.sin_addr));
-    printf(" port is ........%d \n", server_port);
     sprintf(my_param->port, "%d", server_port);
     write(my_param->pipe[1], &status, sizeof(int));
 
@@ -347,8 +333,8 @@ void * tcp_server_data_transfer(void * server_param) {
     size_t recv_len = (size_t) server_context.in_buf_size;
     size_t send_len = (size_t) server_context.out_buf_size;
     size_t recv_size, send_size;
-    printf("recv_len = %zu, send_len=%zu\n", recv_len, send_len);
-    printf("server_context->in_buf_size=%u, out_buf_size=%u\n",server_context.in_buf_size, server_context.out_buf_size);
+    //printf("recv_len = %zu, send_len=%zu\n", recv_len, send_len);
+    //printf("server_context->in_buf_size=%u, out_buf_size=%u\n",server_context.in_buf_size, server_context.out_buf_size);
 
     char *send_buff = (char *)memset(malloc(send_len),0, send_len); //buffer
     char *recv_buff = (char *)memset(malloc(recv_len),0, recv_len); //buffer
@@ -366,14 +352,14 @@ void * tcp_server_data_transfer(void * server_param) {
         /*do jo*/ 
         memcpy(server_context.in_buf, recv_buff, recv_len);
         unsigned long ret = local_fpga_do_job((void *)&server_context);
-        printf("ret = %lu\n", ret);
+        //printf("ret = %lu\n", ret);
         memcpy(send_buff, server_context.out_buf, send_len);
         
         if ( (send_size = send_msg(rqst_fd, send_buff, send_len, MTU))< 0){
             printf("fail to send\n");
             exit(1);
         }
-        printf("send size from server:%zu\n", send_size);
+        //printf("send size from server:%zu\n", send_size);
     }
     close(rqst_fd);
     close(server_fd);

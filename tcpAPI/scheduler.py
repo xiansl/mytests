@@ -20,7 +20,7 @@ print sys.argv
 
 global mutex, debug, BUFFER_SIZE, recv_fmt, send_fmt, scheduler
 mutex = thread.allocate_lock()
-debug = 1
+debug = 0
 BUFFER_SIZE = 1024
 recv_fmt = "!16s16s16s16s16s16s"
 send_fmt = "!16s16s16s16s16s"
@@ -46,6 +46,7 @@ class MyRequestHandler(BRH):
 
 		#handle client's request, and return the value
 		schedule_ret = self.on_receive_request(self.client_address, data)
+
 		#serialize the value
 		response = self.on_send_response(schedule_ret)
 
@@ -74,7 +75,6 @@ class MyRequestHandler(BRH):
 			send_data = struct.pack(send_fmt,str(ret[0][0]), str(ret[0][1]), str(ret[0][2]), str(ret[0][3]), str(ret[0][4]))
 
 		elif ret[1] == "close":
-			print "should be close"
 			send_data = "closed"
 
 		return send_data
@@ -211,7 +211,6 @@ class FpgaScheduler(object):
 
 
 	def conduct_locality_scheduling(self, job_id, event_type):
-		print "LOCALITY SCHEDULE"
 		if event_type == "JOB_ARRIVAL":
 			job_node_ip = self.job_list[job_id].job_node_ip
 			print job_node_ip
@@ -289,8 +288,6 @@ class FpgaScheduler(object):
 		self.job_waiting_list[current_job_id] = time
 
 
-	def close_acc(self, job_id):
-		print "close acc", job_id
 
 	def handle_open_request(self, client_addr, data):
 		#-- in-come data contains: status, real_in_size, in_buf_size, out_buf_size, acc_name, job_id(vacant) --#
@@ -335,7 +332,6 @@ class FpgaScheduler(object):
 			status.append(i.strip('\x00'))
 		#data contains: status, job_id, open_time, execution_time, close_time, total_time
 		job_id = int(data[1])
-		print "job_id", job_id
 		job_open_time = float(data[2])
 		job_execution_time = float(data[3])
 		job_close_time = float(data[4])
@@ -345,6 +341,7 @@ class FpgaScheduler(object):
 		self.update_section_info(job_id)
 		self.update_job_info(job_id, job_open_time, job_execution_time, job_total_time, job_complete_time)
 		self.execute_scheduling(job_id, "JOB_COMPLETE")
+		print "[job %r] COMPLETES" %job_id
 
 	def update_section_info(self, job_id):
 		mutex.acquire()
@@ -431,5 +428,8 @@ if __name__ == "__main__":
 		print "Example: ./scheduler 9000 FIFO"
 	else:
 		algorithm = sys.argv[2]
-		print "Using %r algorithm ...." %algorithm
+		if algorithm == "FIFO":
+			print "Using algorithm FIFO ...."
+		else:
+			print "Using algorithm LOCALITY Sensitive ...."
 		run_scheduler(int(sys.argv[1]), algorithm)

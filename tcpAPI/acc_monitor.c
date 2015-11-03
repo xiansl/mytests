@@ -25,7 +25,6 @@ static PyObject* start_service(PyObject *self, PyObject *args)
     	return NULL;
     }
 
-    printf("LINE %d\n.......", __LINE__);
     struct server_param_t server_param;
     memset((void *) &server_param, 0, sizeof(server_param));
 
@@ -40,7 +39,6 @@ static PyObject* start_service(PyObject *self, PyObject *args)
     //open a socket server and local acc_slot;
     socket_server_open((void *) &server_param);
 
-    printf("LINE %d.......\n", __LINE__);
 
     //return port number and open_status(success or failure)back to client.
     ret = Py_BuildValue("{s:s, s:s, s:s}", "ip", server_param.ipaddr, "port", server_param.port, "ifuse", server_param.status);
