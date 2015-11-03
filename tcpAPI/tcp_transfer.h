@@ -41,6 +41,13 @@ struct socket_context_t {
 	char status[16];
     void * in_buf;
     void * out_buf;
+
+    /* for debug only */
+    long open_time;
+    long execution_time;
+    long close_time;
+    long total_time;
+    /* for debug only */
 };
 struct server_context_t {
 	char section_id[16];
@@ -53,6 +60,14 @@ struct server_context_t {
     void * server_addr;
     void * server_fd;
 
+};
+struct debug_context_t{
+    char status[16];
+    char job_id[16];
+    char open_time[16];
+    char execution_time[16];
+    char close_time[16];
+    char total_time[16];
 };
 struct client_to_scheduler{
     char status[16];//"open" or "close";

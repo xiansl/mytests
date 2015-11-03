@@ -1,12 +1,5 @@
 #include "fpga-sim/driver/fpga-libacc.h"
 
-struct debug_context_t{
-    long open_time;
-    long execution_time;
-    long close_time;
-    long total_time;
-
-};
 
 struct acc_context_t {
     char acc_name [16];
@@ -19,8 +12,6 @@ struct acc_context_t {
     struct acc_handler_t acc_handler;
     void * socket_context;
     void * debug_context;
-    //struct socket_context_t socket_context;  
-    //struct debug_context_t debug_context;
 };
 
 

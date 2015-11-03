@@ -1,60 +1,6 @@
 #include "acc_servicelayer.h"
 #include "tcp_transfer.h"
 
-//size_t send_msg(int fd, void *buffer, size_t len, size_t chunk)
-//{
-//    char *c_ptr = (char *) buffer;
-//    size_t block = chunk, left_block = len, sent_block = 0;
-//    char flag[1];
-//
-//    if (len < chunk){ 
-//        printf("send small message ........\n");
-//        return send(fd, buffer, len, 0);
-//    }
-//
-//    while(sent_block < len) {
-//        printf("send.....\n");
-//        block = send(fd, c_ptr, chunk, 0);
-//        if (block < 0)
-//            return block;
-//        sent_block += block;
-//        left_block -= block;
-//        chunk = left_block > chunk ? chunk : left_block;
-//        c_ptr += block;
-//    }
-//    send(fd, flag, 1,0);
-//    return sent_block; 
-//}
-//    
-//size_t recv_msg(int fd, void *buffer, size_t len, size_t chunk)
-//{
-//    char *c_ptr = buffer;
-//    size_t block = 0, left_block = len, recv_block = 0;
-//    char flag[1];
-//
-//    if (len < chunk){ 
-//        printf("recv small message ........\n");
-//        return recv(fd, buffer, len, 0);
-//    }
-//
-//    while (recv_block < len) {
-//        printf("recv.....\n");
-//        block = recv(fd, c_ptr, chunk, 0);
-//        if (block <= 1)
-//            break;
-//        c_ptr += block;
-//        recv_block += block;
-//        left_block -= chunk;
-//        chunk = left_block > chunk ? chunk : left_block;
-//    }
-//    if (block < 0)
-//        return block;
-//    if (block > 1)
-//        recv(fd, flag, 1, 0);
-//    return recv_block; 
-//}
-
-
 
 size_t send_msg(int fd, void *buffer, size_t len, size_t chunk)
 {
@@ -98,6 +44,7 @@ size_t recv_msg(int fd, void *buffer, size_t len, size_t chunk)
             printf("nothing to recv\n");
             break;
         }
+        printf("recv block %zu\n", block);
         recv_block += block;
         left_block -= block;
         chunk = left_block > chunk ? chunk : left_block;
@@ -161,6 +108,7 @@ int build_connection_to_server(void *acc_ctx) {
     int client_fd;
     unsigned int in_buf_size = acc_context->in_buf_size;
     unsigned int out_buf_size = acc_context->out_buf_size;
+    printf("Line %d, in_buf_size=%u, out_buf_size=%u\n", __LINE__, in_buf_size, out_buf_size);
     //char *host = socket_ctx->server_host;
     int port = socket_ctx->server_port;
     struct sockaddr_in *my_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
@@ -198,10 +146,10 @@ int build_connection_to_server(void *acc_ctx) {
     socket_ctx->to_server_addr = (void *)my_addr;
     socket_ctx->server_addr = (void *)server_addr;
     socket_ctx->to_server_fd = client_fd;
-    socket_ctx->in_buf = malloc(sizeof(in_buf_size));
-    socket_ctx->out_buf = malloc(sizeof(out_buf_size));
+    socket_ctx->in_buf = malloc(in_buf_size);
+    socket_ctx->out_buf = malloc(out_buf_size);
     acc_context->in_buf = socket_ctx->in_buf;
-    printf("open fd:%d\n", client_fd);
+    printf("acc_context->in_buf_size:%d\n", in_buf_size);
     return client_fd;
 }
 
@@ -256,6 +204,7 @@ int request_to_scheduler(void *acc_ctx) {
     status = atoi(recv_ctx.status);
     if (DEBUG)
         printf("status=%d\n", status);
+    close(fd);
     return status;
 }
 
@@ -279,12 +228,26 @@ unsigned int remote_acc_do_job(void *acc_ctx, const char *param, unsigned int jo
 } 
 
 void free_memory(void *acc_ctx){
+    printf("LINE %d.......\n", __LINE__);
     struct acc_context_t *acc_context = (struct acc_context_t *)acc_ctx;
     struct socket_context_t *socket_ctx = (struct socket_context_t *)(acc_context->socket_context);
+    printf("LINE %d.......\n", __LINE__);
     free(socket_ctx->scheduler_addr);
+    printf("LINE %d.......\n", __LINE__);
     free(socket_ctx->server_addr);
+    printf("LINE %d.......\n", __LINE__);
     free(socket_ctx->to_scheduler_addr);
+    printf("LINE %d.......\n", __LINE__);
     free(socket_ctx->to_server_addr);
+    printf("LINE %d.......\n", __LINE__);
+    printf("LINE %d.......\n", __LINE__);
+    if (atoi(socket_ctx->status) == 0){ 
+        printf("LINE %d.......\n", __LINE__);
+        free(socket_ctx->out_buf);
+        free(socket_ctx->in_buf);
+    }
+    printf("LINE %d.......\n", __LINE__);
+    free(socket_ctx);
 
 }
 
@@ -333,7 +296,6 @@ void * tcp_server_data_transfer(void * server_param) {
 
 
     int status = local_fpga_open((void *)&server_context);
-    printf("LINE %d\n.......", __LINE__);
     sprintf(my_param->status, "%d", status);
     if (status) {
         printf("Fail to open %s.\n", my_param->acc_name);

@@ -42,18 +42,21 @@ int main(int argc, char **argv)
     in_buffer = fpga_acc_open(&(my_context), acc_name, in_buf_size, out_buf_size, host, port);
 	gettimeofday(&t2, NULL);
 	timersub(&t2, &t1, &dt);
-	printf("[OPEN] %s takes %ld microseconds.\n", acc_name,dt.tv_usec + 1000000 * dt.tv_sec);
 
 	if (in_buffer == NULL) {
+        printf("LINE %d\n", __LINE__);
 		printf ("Open %s fail.\n", acc_name);
 	}
 	else {
+	    printf("[OPEN] %s takes %ld microseconds.\n", acc_name,dt.tv_usec + 1000000 * dt.tv_sec);
 		gettimeofday(&t1, NULL);
         sent_block_size = 0;
         left_block_size = in_buf_size;
         chunk_size = my_context.in_buf_size;
         printf("chunk_size = %lu\n", chunk_size);
+        printf("LINE %d\n", __LINE__);
         memset(in_buffer, 0, chunk_size);
+        printf("LINE %d\n", __LINE__);
         while(sent_block_size < in_buf_size){
             ret = fpga_acc_do_job(&my_context, param, chunk_size, &result_buf);
             sent_block_size += ret;
