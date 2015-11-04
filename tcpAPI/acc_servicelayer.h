@@ -11,9 +11,18 @@ struct acc_context_t {
     void ** result_buf;
     struct acc_handler_t acc_handler;
     void * socket_context;
-    void * debug_context;
+    void * rdma_context;
 };
 
+/*for debug only. this struct will send to scheduler when a job finishes, and the content will be printed out on the scheduler side*/
+struct debug_context_t{
+    char status[16];
+    char job_id[16];
+    char open_time[16];
+    char execution_time[16];
+    char close_time[16];
+    char total_time[16];
+};
 
 void * fpga_acc_open(struct acc_context_t * acc_context, char * acc_name, unsigned int in_buf_size, unsigned int out_buf_size, char * scheduler_host, int scheduler_port);
 

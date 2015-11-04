@@ -2,11 +2,8 @@
 #include "tcp_transfer.h"
 #include "acc_servicelayer.h"
 
-
-void * build_socket_context(void *acc_context, char *host, int port);
-int build_connection_to_scheduler(void *scheduler_socket_context);
-int build_connection_to_server(void *server_socket_context);
-
+int build_connection_to_scheduler(void *acc_context);
+void report_to_scheduler(void *acc_ctx);
 
 
 void * fpga_acc_open(struct acc_context_t *acc_context, char *acc_name, unsigned int in_buf_size, unsigned int out_buf_size, char *scheduler_host, int scheduler_port){
@@ -120,6 +117,7 @@ void fpga_acc_close(struct acc_context_t * acc_context) {
             break;
             }
     }
+
     gettimeofday(&t2, NULL);
     timersub(&t2, &t1, &dt);
     long close_usec = dt.tv_usec + 1000000 *dt.tv_sec;
@@ -133,13 +131,92 @@ void fpga_acc_close(struct acc_context_t * acc_context) {
     
 }
 
-void disconnect_with_server(void *acc_ctx){
-    struct acc_context_t *acc_context = (struct acc_context_t *) acc_ctx;
+int build_connection_to_scheduler(void *acc_ctx) { 
+    struct acc_context_t *acc_context = (struct acc_context_t *)acc_ctx;
     struct socket_context_t *socket_ctx = (struct socket_context_t *)acc_context->socket_context;
-    int fd = socket_ctx->to_server_fd;
-    close(fd);
-    return;
+    struct hostent *hp;	/* host information */
+	int sockoptval = 1;
+    int client_fd;
+    struct sockaddr_in *my_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
+    struct sockaddr_in *scheduler_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
+    client_fd = socket(AF_INET, SOCK_STREAM, 0);
+    TEST_NEG(client_fd);
+	setsockopt(client_fd, SOL_SOCKET, SO_REUSEADDR, &sockoptval, sizeof(int));
+    memset((char *)my_addr, 0, sizeof(struct sockaddr));
+    my_addr->sin_family = AF_INET;
+    my_addr->sin_addr.s_addr = htonl(INADDR_ANY);
+    my_addr->sin_port = htons(0);
+
+    if(bind(client_fd, (struct sockaddr *)my_addr, sizeof(struct sockaddr)) < 0){
+        perror("bind failed");
+        close(client_fd);
+        return -1;
+    }
+
+    //printf("port=%d, host=%s\n", socket_ctx->scheduler_port, socket_ctx->scheduler_host );
+    memset((char *)scheduler_addr, 0, sizeof(struct sockaddr));
+    scheduler_addr->sin_family = AF_INET;
+    scheduler_addr->sin_port = htons(socket_ctx->scheduler_port);
+    hp = gethostbyname(socket_ctx->scheduler_host);
+    if (!hp) {
+        printf("wrong host name\n");
+        close(client_fd);
+        return -1;
+    }
+    memcpy((void *) &(scheduler_addr->sin_addr), hp->h_addr_list[0], hp->h_length);
+
+    if (connect(client_fd, (struct sockaddr *)scheduler_addr, sizeof(struct sockaddr)) <0){
+        perror("connect failed");
+        close(client_fd);
+        return -1;
+    }
+    socket_ctx->to_scheduler_fd = client_fd;
+    socket_ctx->to_scheduler_addr = (void *)my_addr; 
+    socket_ctx->scheduler_addr = (void *)scheduler_addr;
+    return client_fd;
 }
+
+
+
+int request_to_scheduler(void *acc_ctx) {
+    int fd, status;
+    struct acc_context_t *acc_context = (struct acc_context_t *)acc_ctx;
+    struct socket_context_t *socket_ctx = (struct socket_context_t *)acc_context->socket_context;
+
+    unsigned int real_in_size = acc_context->real_in_buf_size;
+    unsigned int in_buf_size = acc_context->in_buf_size;
+    unsigned int out_buf_size = acc_context->out_buf_size;
+    char *acc_name = acc_context->acc_name;
+
+    struct client_to_scheduler send_ctx;
+    struct scheduler_to_client recv_ctx;
+    fd = socket_ctx->to_scheduler_fd;
+    memset((void *)&send_ctx, 0, sizeof(send_ctx));
+    memset((void *)&recv_ctx, 0, sizeof(recv_ctx));
+    sprintf(send_ctx.real_in_size, "%u", real_in_size);
+    sprintf(send_ctx.in_buf_size, "%u", in_buf_size);
+    sprintf(send_ctx.out_buf_size, "%u", out_buf_size);
+    memcpy(send_ctx.acc_name, acc_name, strlen(acc_name));
+
+    memcpy(send_ctx.status, "open", strlen("open"));
+    send(fd, (char *)&send_ctx, sizeof(send_ctx), 0);//send_request;
+    recv(fd, (char *)&recv_ctx, sizeof(recv_ctx), 0);//recv_response 
+
+    strcpy(socket_ctx->server_host, recv_ctx.host);
+    strcpy(socket_ctx->job_id, recv_ctx.job_id);
+    strcpy(socket_ctx->section_id, recv_ctx.section_id);
+    strcpy(socket_ctx->status, recv_ctx.status);
+    socket_ctx->server_port = atoi(recv_ctx.port);
+    status = atoi(recv_ctx.status);
+    close(fd);
+   /* if (DEBUG){
+        printf("socket_ctx->status:%s\n", socket_ctx->status);
+        printf("status=%d\n", status);
+    }
+    */
+    return status;
+}
+
 
 void report_to_scheduler(void *acc_ctx){
 

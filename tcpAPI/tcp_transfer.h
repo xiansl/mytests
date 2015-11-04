@@ -61,14 +61,8 @@ struct server_context_t {
     void * server_fd;
 
 };
-struct debug_context_t{
-    char status[16];
-    char job_id[16];
-    char open_time[16];
-    char execution_time[16];
-    char close_time[16];
-    char total_time[16];
-};
+
+
 struct client_to_scheduler{
     char status[16];//"open" or "close";
     char real_in_size[16];
@@ -87,12 +81,10 @@ struct scheduler_to_client{
 };
 
 void build_context(void *acc_context, char *acc_name, unsigned int in_buf_size, unsigned int out_buf_size, const char *scheduler_host, int scheduler_port);
-int build_connection_to_scheduler(void *acc_context);
 int request_to_scheduler(void *acc_context);
 int build_connection_to_server(void *acc_context);
 unsigned int remote_acc_do_job(void *acc_ctx, const char *param, unsigned int job_len, void ** result_buf);
 void disconnect_with_server(void *acc_ctx);
-void report_to_scheduler(void *acc_ctx);
 void free_memory(void *acc_ctx);
 void socket_server_open(void *server_param);
 void * tcp_server_data_transfer(void * server_param);
