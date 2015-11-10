@@ -1,9 +1,13 @@
 from distutils.core import setup, Extension
 
 module1 = Extension('acc_monitor',
-                    sources = ['acc_monitor.c', 'tcp_transfer.c'],
+                    sources = ['acc_monitor.c', 'tcp_transfer.c', 'rdma_server.c'],
 		    include_dirs = ['.'],
-		    libraries = ['pthread','fpga'],
+		    libraries = [
+                'rdmacm',
+                'pthread',
+                'ibverbs',
+                'fpga'],
                     library_dirs = ['/usr/lib'] )
 setup (name = 'PackageName',
        version = '1.0',

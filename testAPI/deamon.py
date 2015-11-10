@@ -30,14 +30,14 @@ def run_deamon(port):
 			scheduler,address=s.accept()#receive request from scheduler
 			raw_data=scheduler.recv(size)
 			scheduler_context=json.loads(raw_data)
-
+			status = scheduler_context["status"]
 			section_id = scheduler_context["section_id"]
 			in_buf_size = scheduler_context["in_buf_size"]
 			out_buf_size = scheduler_context["out_buf_size"]
 			acc_name = scheduler_context["acc_name"]
 			for i,j in scheduler_context.items():
 				print i,j
-			ret_context = acc_monitor.start_service(section_id, in_buf_size, out_buf_size, acc_name)
+			ret_context = acc_monitor.start_service(status, section_id, in_buf_size, out_buf_size, acc_name)
 			for i,j in ret_context.items():
 				print i,j
 

@@ -10,8 +10,31 @@ struct acc_context_t {
     void * in_buf;
     void ** result_buf;
     struct acc_handler_t acc_handler;
-    void * socket_context;
+    void * tcp_context;
     void * rdma_context;
+    void * scheduler_context;
+};
+
+struct scheduler_context_t {
+    char scheduler_host[16];
+    char server_host[16];
+    int scheduler_port;
+    int server_port;
+    int to_scheduler_fd;
+
+    void * scheduler_addr;
+    void * to_scheduler_addr;
+
+    char job_id[16];
+	char section_id[16];/*this indicates which FPGA slot will be used*/
+	char status[16]; /* this indicates the job is local, or remote TCP, or remote RDMA*/
+
+    /* for debug only */
+    long open_time;
+    long execution_time;
+    long close_time;
+    long total_time;
+    /* for debug only */
 };
 
 /*for debug only. this struct will send to scheduler when a job finishes, and the content will be printed out on the scheduler side*/

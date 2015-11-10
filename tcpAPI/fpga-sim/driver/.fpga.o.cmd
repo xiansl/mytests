@@ -1,1 +1,0 @@
-cmd_/home/wlquan/tcpAPI/fpga-sim/driver/fpga.o := ld -m elf_x86_64   -r -o /home/wlquan/tcpAPI/fpga-sim/driver/fpga.o /home/wlquan/tcpAPI/fpga-sim/driver/fpgacom.o /home/wlquan/tcpAPI/fpga-sim/driver/fpgadev.o 

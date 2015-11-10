@@ -1,4 +1,4 @@
 id		hostname 			port		pcie_bw		if_fpga_available		section_num		rdma_bw
 0		114.212.20.146		5000			2.8			1						4				7
-1		127.0.0.1			5000			2.8			1						4				7
+1		127.0.0.1			5000			2.8			0						0				7
 2		114.212.22.90		5000			2.8			0						0				7

@@ -219,22 +219,6 @@ struct acc_handler_t {
 	unsigned long long des_key;
 };
 
-struct rpc_param_t { 
-	char ipaddr[16];
-	char port[16];
-	char section_id[16];
-	char status[64];
-	char url[64];
-	char acc_name[64]; 
-    unsigned int in_buf_size;
-    unsigned int out_buf_size;
-	unsigned int real_in_buf_size;
-    void * in_buf;
-    void * out_buf;
-    void *rdma_context;
-    struct acc_handler_t acc_handler;
-};
-
 
 struct server_param_t { 
 	char ipaddr[16];

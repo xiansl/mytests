@@ -13,15 +13,16 @@
 #include <memory.h>
 #include <Python.h>
 #include "tcp_transfer.h"
+#include "rdma_server.h"
 #include "fpga-sim/driver/fpga-libacc.h"
 
 
 static PyObject* start_service(PyObject *self, PyObject *args)
 {
     PyObject * ret;
-    const char *section_id, *c_in_buf_size, *c_out_buf_size, *c_acc_name;
+    const char *status, *section_id, *c_in_buf_size, *c_out_buf_size, *c_acc_name;
 
-    if (!PyArg_ParseTuple(args, "ssss", &section_id, &c_in_buf_size, &c_out_buf_size, &c_acc_name)){
+    if (!PyArg_ParseTuple(args, "sssss", &status, &section_id, &c_in_buf_size, &c_out_buf_size, &c_acc_name)){
     	return NULL;
     }
 
@@ -34,15 +35,18 @@ static PyObject* start_service(PyObject *self, PyObject *args)
 
     strcpy(server_param.section_id, section_id); 
 
-    
 
-    //open a socket server and local acc_slot;
-    socket_server_open((void *) &server_param);
+    if (atoi(status) == 2)
+        //open an RDMA server and local acc_slot;
+        rdma_server_open((void *)&server_param);
+    else if (atoi(status) == 0) 
+        //open a socket server and local acc_slot;
+        socket_server_open((void *) &server_param);
 
 
     //return port number and open_status(success or failure)back to client.
     ret = Py_BuildValue("{s:s, s:s, s:s}", "ip", server_param.ipaddr, "port", server_param.port, "ifuse", server_param.status);
-    //printf("ip = %s, port =%s, ifuse = %s\n", server_param.ipaddr, server_param.port, server_param.status);
+    printf("ip = %s, port =%s, ifuse = %s\n", server_param.ipaddr, server_param.port, server_param.status);
     return ret;
 }
 

@@ -15,8 +15,7 @@
 
 #include "acc_servicelayer.h"
 
-#define TEST_NZ(x) do { if ( (x)) die("error: " #x " failed (returned non-zero)." ); } while (0)
-#define TEST_Z(x)  do { if (!(x)) die("error: " #x " failed (returned zero/null)."); } while (0)
+
 char * get_local_ip_addr(void);
 void client_rdma_setup_connection(void *acc_context);
 
