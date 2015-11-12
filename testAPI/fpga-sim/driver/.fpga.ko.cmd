@@ -1,0 +1,1 @@
+cmd_/home/tian/fpga-sim/driver/fpga.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/tian/fpga-sim/driver/fpga.ko /home/tian/fpga-sim/driver/fpga.o /home/tian/fpga-sim/driver/fpga.mod.o

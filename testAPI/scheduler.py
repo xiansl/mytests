@@ -173,21 +173,23 @@ class FpgaScheduler(object):
             self.acc_type_list[name] = acc_bws[i]
 
     def initiate_node_status(self):
-        f = open("fpga_node.txt", 'r')
+        f = open("/home/tian/testAPI/fpga_node.txt", "r")
         lines = f.readlines()
         f.close()
         lines.pop(0)
-        for line in lines:
+        for i, line in enumerate(lines):
             node_info = line.split()
-            node_id = int(node_info[0])
-            node_ip = node_info[1]
-            server_port = node_info[2]
-            pcie_bw = float(node_info[3])
-            if_fpga_available = int(node_info[4])
-            section_num = int(node_info[5])
-            roce_bw = float(node_info[6] * 1024)
-            self.node_list[node_ip] = PowerNode(node_id, node_ip, server_port, pcie_bw, if_fpga_available, section_num,
-                                                roce_bw)
+            node_id = i
+            node_ip = node_info[0]
+            server_port = node_info[1]
+            pcie_bw = float(node_info[2])
+            if_fpga_available = int(node_info[3])
+            if if_fpga_available == 1:
+                section_num = 1
+            else:
+                section_num = 0
+            roce_bw = float(node_info[4] * 1024)
+            self.node_list[node_ip] = PowerNode(node_id, node_ip, server_port, pcie_bw, if_fpga_available, section_num, roce_bw)
             if if_fpga_available == 1:
                 for i in range(section_num):
                     section_id = node_ip + ":section" + str(i)
@@ -207,7 +209,7 @@ class FpgaScheduler(object):
         self.initiate_acc_type_list()
         self.initiate_node_status()
         self.initiate_section_status()
-        print "[1] Information oaded. Begin running simulator ..."
+        print "[1] Information loaded. Begin running simulator ..."
 
     def execute_scheduling(self, job_id, event_type):
         if self.scheduling_algorithm == "FIFO":

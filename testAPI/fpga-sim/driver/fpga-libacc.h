@@ -224,8 +224,8 @@ struct server_param_t {
 	char ipaddr[16];
 	char port[16];
 	char section_id[16];
-	char status[64];
-	char acc_name[64]; 
+	char status[16];
+	char acc_name[16]; 
     	int pipe[2];
     	unsigned int in_buf_size;
     	unsigned int out_buf_size;

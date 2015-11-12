@@ -211,8 +211,8 @@ class FpgaScheduler(object):
 
 	print "finally return port id is %r", return_port_id
 	return return_port_id
-		
-    	
+
+
 
     def execute_scheduling(self, job_id):
 	print "begin scheduling"

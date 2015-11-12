@@ -164,7 +164,7 @@ void create_acc_list (void) {
 		return;
 	}
 
-	inode = filp->f_dentry->d_inode;
+	inode = filp->f_path.dentry->d_inode;
 	fsize=inode->i_size;
 	buf = (char *) kmalloc(fsize+1,GFP_ATOMIC);
 
@@ -192,7 +192,7 @@ void create_acc_list (void) {
 		if (tail == NULL)
 			break;
 		tail[0] = '\0';
-		if (strict_strtoul (head, 0, &hard_id))
+		if (kstrtoul (head, 0, &hard_id))
 			break;
 
 		head = tail + 1;
@@ -200,7 +200,7 @@ void create_acc_list (void) {
 		if (tail == NULL)
 			break;
 		tail[0] = '\0';
-		if (strict_strtoull (head, 0, &acc_id))
+		if (kstrtoull (head, 0, &acc_id))
 			break;
 
 		head = tail + 1;
@@ -217,7 +217,7 @@ void create_acc_list (void) {
 		if (tail == NULL)
 			break;
 		tail [0] = '\0';
-		if (strict_strtoul(head, 0, &bandwidth))
+		if (kstrtoul(head, 0, &bandwidth))
 			break;
 
 		head = tail + 1;
