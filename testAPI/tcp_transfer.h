@@ -28,14 +28,16 @@ struct tcp_client_context_t {
     int to_server_fd;
     void * server_addr;
     void * to_server_addr;
-
     void * in_buf;
     void * out_buf;
 };
 
 struct tcp_server_context_t {
+    char job_id[16];
 	char section_id[16];
 	char acc_name[16]; 
+    char scheduler_host[16];
+    char scheduler_port[16];
     unsigned int in_buf_size;
     unsigned int out_buf_size;
     void * in_buf;
@@ -70,12 +72,13 @@ int build_connection_to_tcp_server(void *acc_context);
 unsigned int remote_tcp_do_job(void *acc_ctx, const char *param, unsigned int job_len, void ** result_buf);
 void disconnect_with_tcp_server(void *acc_ctx);
 void free_tcp_memory(void *acc_ctx);
-void socket_server_open(void *server_param);
+int socket_server_open(void *server_param); /*return 0 on success */
 void * tcp_server_data_transfer(void * server_param);
 
 int tcp_local_fpga_open(void * server_param);
 unsigned long tcp_local_fpga_do_job(void * server_context);
 void tcp_local_fpga_close(void * server_context);
+void server_report_to_scheduler(void * server_context);
 size_t send_msg(int fd, void *buffer, size_t len, size_t chunk);
 size_t recv_msg(int fd, void *buffer, size_t len, size_t chunk);
 #endif

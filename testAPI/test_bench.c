@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 	void * in_buffer;
     	void *result_buf;
 	unsigned long ret, in_buf_size, out_buf_size, chunk_size, sent_block_size, left_block_size;
+    unsigned long open_sec, exe_sec, close_sec;
 	char param[16];
 	int port, count;
 	param[0] = 0x24;
@@ -37,7 +38,7 @@ int main(int argc, char **argv)
 	
 	printf("job_size = %d K bytes, result_size=%d K bytes.\n", count*4, count*4);
 
-	printf("Request to open FPGA device:\n");
+	//printf("Request to open FPGA device:\n");
 	gettimeofday(&t1, NULL);
     in_buffer = fpga_acc_open(&(my_context), acc_name, in_buf_size, out_buf_size, host, port);
 	gettimeofday(&t2, NULL);
@@ -47,14 +48,14 @@ int main(int argc, char **argv)
 		printf ("Open %s fail.\n", acc_name);
 	}
 	else {
-	    printf("[OPEN] %s takes %ld microseconds.\n", acc_name,dt.tv_usec + 1000000 * dt.tv_sec);
+        open_sec = dt.tv_usec + 1000000 * dt.tv_sec;
+	    //printf("[OPEN] %s takes %ld microseconds.\n", acc_name, open_sec);
 		gettimeofday(&t1, NULL);
         sent_block_size = 0;
         left_block_size = in_buf_size;
         chunk_size = my_context.in_buf_size;
         //printf("chunk_size = %lu\n", chunk_size);
         memset(in_buffer, 0, chunk_size);
-        printf("LINE %d\n", __LINE__);
         while(sent_block_size < in_buf_size){
             ret = fpga_acc_do_job(&my_context, param, chunk_size, &result_buf);
             sent_block_size += ret;
@@ -65,16 +66,21 @@ int main(int argc, char **argv)
                 break;
             }
         }
-    }
+
 	gettimeofday(&t2, NULL);
 	timersub(&t2, &t1, &dt);
-	printf("[EXECUTION] %s takes %ld microseconds.\n", acc_name, dt.tv_usec + 1000000 * dt.tv_sec);
+    exe_sec = dt.tv_usec + 1000000 * dt.tv_sec;
+	//printf("[EXECUTION] %s takes %ld microseconds.\n", acc_name, exe_sec);
 
     gettimeofday(&t1, NULL);
     fpga_acc_close(&my_context);
     gettimeofday(&t2, NULL);
     timersub(&t2, &t1, &dt);
-	printf("[CLOSE] %s takes %ld microseconds.\n", acc_name, dt.tv_usec + 1000000 * dt.tv_sec);
+    close_sec = dt.tv_usec + 1000000 * dt.tv_sec;
+	//printf("[CLOSE] %s takes %ld microseconds.\n", acc_name, close_sec);
+    printf("[%d Kbytes]: [OPEN]: %ld [EXE]: %ld [CLOSE]: %ld\n", count, open_sec, exe_sec, close_sec);
+
+    }
 	return 0;
 }
 

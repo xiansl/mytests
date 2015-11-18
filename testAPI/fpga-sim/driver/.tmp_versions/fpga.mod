@@ -1,2 +1,2 @@
-/home/tian/fpga-sim/driver/fpga.ko
-/home/tian/fpga-sim/driver/fpgacom.o /home/tian/fpga-sim/driver/fpgadev.o
+/home/tian/testAPI/fpga-sim/driver/fpga.ko
+/home/tian/testAPI/fpga-sim/driver/fpgacom.o /home/tian/testAPI/fpga-sim/driver/fpgadev.o

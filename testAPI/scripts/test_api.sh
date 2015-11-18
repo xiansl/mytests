@@ -121,10 +121,9 @@ run_scheduler() {
 	cmd="/home/tian/testAPI/scheduler.py 9000 ${algorithm} >> $pattern-f$mean-${algorithm}-$datetime.log &"
 	exe "$cmd"
 	echo "  pattern=$pattern"
-	echo "  pattern=$pattern"
 	
 	if [[ $pattern = "Local" ]]; then
-		cmd=' pdsh -w $fpga_nodes "cd $path; ./fpga_node.sh &"'
+		cmd="pdsh -w $fpga_nodes \"cd $path; ./fpga_node.sh &\""
 		echo "$cmd"; eval "$cmd"
 
 	elif [[ $pattern = "Remote" ]]; then

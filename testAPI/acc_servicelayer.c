@@ -5,7 +5,7 @@
 void build_scheduler_context(void *acc_ctx, char *acc_name, unsigned int in_buf_size, unsigned int out_buf_size, const char *scheduler_host, int scheduler_port);
 int build_connection_to_scheduler(void *acc_context);
 int request_to_scheduler(void *acc_ctx);
-void report_to_scheduler(void *acc_ctx);
+void client_report_to_scheduler(void *acc_ctx);
 void free_memory(void *acc_ctx);
 
 
@@ -54,12 +54,11 @@ void * fpga_acc_open(struct acc_context_t *acc_context, char *acc_name, unsigned
             acc_context->in_buf = pri_acc_open(&(acc_context->acc_handler), acc_context->acc_name, acc_context->in_buf_size, acc_context->out_buf_size, section_id);
             //socket_ctx->in_buf = acc_context->in_buf;
             break;
-               }
+            }
         case '?':{
-            if (DEBUG)
-                printf("Error: unknown status.\n");
+            printf("Fail to open remote ACC\n.");
             break;
-                 }
+            }
     }
 
     gettimeofday(&t2, NULL);
@@ -75,7 +74,7 @@ unsigned long fpga_acc_do_job (struct acc_context_t * acc_context, const char * 
     struct timeval t1, t2, dt;
     gettimeofday(&t1, NULL);
     struct scheduler_context_t * scheduler_ctx = (struct scheduler_context_t * ) (acc_context->scheduler_context);
-    unsigned long result_buf_size;
+    unsigned long result_buf_size = 0;
     int status = atoi(scheduler_ctx->status);
     switch (status){
         case 0 :{//remote ACC is available;
@@ -143,7 +142,8 @@ void fpga_acc_close(struct acc_context_t * acc_context) {
     scheduler_ctx->total_time = scheduler_ctx->open_time + scheduler_ctx->execution_time + scheduler_ctx->close_time;
     //printf("open, exe, close: %ld, %ld, %ld, %ld\n", socket_ctx->open_time, socket_ctx->execution_time, socket_ctx->close_time, socket_ctx->total_time);
 
-    report_to_scheduler((void *)acc_context);
+    if(status == 3)
+        client_report_to_scheduler((void *)acc_context);
     free_memory((void *)acc_context);
     
 }
@@ -262,7 +262,7 @@ int request_to_scheduler(void *acc_ctx) {
 }
 
 
-void report_to_scheduler(void *acc_ctx){
+void client_report_to_scheduler(void *acc_ctx){
 
     struct debug_context_t debug_ctx;
     char response[16];
@@ -309,15 +309,15 @@ void free_memory(void *acc_ctx){
     free(scheduler_ctx->scheduler_addr);
     free(scheduler_ctx->to_scheduler_addr);
     if (atoi(scheduler_ctx->status) == 0){
-        printf("close Remote ACC(TCP).\n");
+        //printf("close Remote ACC(TCP).\n");
         free_tcp_memory((void *)acc_context);
     }
     else if (atoi(scheduler_ctx->status) == 2){
-        printf("close Remote ACC(RDMA).\n");
+        //printf("close Remote ACC(RDMA).\n");
         free_rdma_memory((void *)acc_context);
     }
     else if (atoi(scheduler_ctx->status) == 3){
-            printf("close LOCAL ACC\n");
+            //printf("close LOCAL ACC\n");
     }
 
     free(scheduler_ctx);

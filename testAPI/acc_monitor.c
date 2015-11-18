@@ -20,29 +20,34 @@
 static PyObject* start_service(PyObject *self, PyObject *args)
 {
     PyObject * ret;
-    const char *status, *section_id, *c_in_buf_size, *c_out_buf_size, *c_acc_name;
+    const char *job_id, *status, *section_id, *c_in_buf_size, *c_out_buf_size, *c_acc_name, *scheduler_host, *scheduler_port;
 
-    if (!PyArg_ParseTuple(args, "sssss", &status, &section_id, &c_in_buf_size, &c_out_buf_size, &c_acc_name)){
+    if (!PyArg_ParseTuple(args, "ssssssss", &job_id, &status, &section_id, &c_in_buf_size, &c_out_buf_size, &c_acc_name, &scheduler_host, &scheduler_port)){
     	return NULL;
     }
 
     struct server_param_t server_param;
     memset((void *) &server_param, 0, sizeof(server_param));
 
-    strcpy(server_param.acc_name, c_acc_name);
+    strcpy(server_param.job_id, job_id);
+    strcpy(server_param.section_id, section_id); 
     server_param.in_buf_size = atoi(c_in_buf_size);
     server_param.out_buf_size = atoi(c_out_buf_size);
-
-    strcpy(server_param.section_id, section_id); 
+    strcpy(server_param.acc_name, c_acc_name);
+    strcpy(server_param.scheduler_host, scheduler_host);
+    strcpy(server_param.scheduler_port, scheduler_port);
 
 
     if (atoi(status) == 2)
         //open an RDMA server and local acc_slot;
         rdma_server_open((void *)&server_param);
-    else if (atoi(status) == 0) 
+    else if (atoi(status) == 0){ 
         //open a socket server and local acc_slot;
-        socket_server_open((void *) &server_param);
-
+        int tcp_status = socket_server_open((void *) &server_param);
+        if(tcp_status != 0){
+            sprintf(server_param.status,"%d",tcp_status); 
+        }
+    }
 
     //return port number and open_status(success or failure)back to client.
     ret = Py_BuildValue("{s:s, s:s, s:s}", "ip", server_param.ipaddr, "port", server_param.port, "ifuse", server_param.status);

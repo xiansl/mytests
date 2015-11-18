@@ -221,14 +221,17 @@ struct acc_handler_t {
 
 
 struct server_param_t { 
+    char job_id[16];
 	char ipaddr[16];
 	char port[16];
 	char section_id[16];
 	char status[16];
 	char acc_name[16]; 
-    	int pipe[2];
-    	unsigned int in_buf_size;
-    	unsigned int out_buf_size;
+    char scheduler_host[16];
+    char scheduler_port[16];
+    int pipe[2];
+    unsigned int in_buf_size;
+    unsigned int out_buf_size;
 };
 
 int __acc_open(struct acc_handler_t * acc_handler, int port_id);

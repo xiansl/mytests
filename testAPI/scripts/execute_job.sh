@@ -1,24 +1,23 @@
 #!/bin/bash
-scheduler_host="tian01"
+
+node=$1
+scheduler_host=$2
+rm -rf ${node}-l.log
+touch ${node}-l.log
 scheduler_port="9000"
 
 processLine(){
 	line="$@" # get all args
   	arg1=$(echo $line | awk '{ print $1 }')
   	arg2=$(echo $line | awk '{ print $2 }')
-  	arg3=$(echo $line | awk '{ print $3 }')
+    arg3=$(echo $line | awk '{ print $3 }')
 
-#	echo $arg1
-#	echo $arg2
-#	echo $arg3
-	usleep $arg3
-	cmd="/home/tian/testAPI/test_bench $arg1 $arg2 $scheduler_host $scheduler_port"
-	echo $cmd; eval $cmd
+	sleep $arg3
+	/home/tian/testAPI/test_bench $arg1 $arg2 $scheduler_host $scheduler_port & 
 }
 
-node=$1
 
-FILE="job_$node.txt"
+FILE="job-$node.txt"
 if [ ! -f $FILE ]; then
 	echo "$FILE: does not exists"
 	exit 1
@@ -31,10 +30,13 @@ BAKIFS=$IFS
 IFS=$(echo -en "\n\b")
 exec 3<&0
 exec 0<"$FILE"
+SHELLPID=$$
 while read -r line
 do
-	processLine $line
+	processLine $line >>${node}-l.log
+	#processLine $line
 done
 exec 0<&3
 IFS=$BAKIFS
+kill $SHELLPID
 exit 0

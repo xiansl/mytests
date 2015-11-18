@@ -32,7 +32,7 @@ size_t recv_msg(int fd, void *buffer, size_t len, size_t chunk)
     char *c_ptr = buffer;
     size_t block = chunk, left_block = len, recv_block = 0;
 
-    if (len < chunk){ 
+    if (len <= chunk){ 
         //printf("recv small message ........\n");
         return recv(fd, buffer, len, 0);
     }
@@ -45,8 +45,8 @@ size_t recv_msg(int fd, void *buffer, size_t len, size_t chunk)
             break;
         }
         //printf("recv block %zu\n", block);
-        recv_block += block;
-        left_block -= block;
+        recv_block += chunk;
+        left_block -= chunk;
         chunk = left_block > chunk ? chunk : left_block;
         c_ptr += block;
     }
@@ -65,7 +65,7 @@ void build_socket_context(void *acc_ctx){
 
     strcpy(tcp_ctx->server_host, scheduler_ctx->server_host);
     tcp_ctx->server_port = scheduler_ctx-> server_port;
-    printf("host=%s, port=%d\n", tcp_ctx->server_host, tcp_ctx->server_port);
+    //printf("host=%s, port=%d\n", tcp_ctx->server_host, tcp_ctx->server_port);
     return;
 
 }
@@ -80,7 +80,7 @@ int build_connection_to_tcp_server(void *acc_ctx) {
     unsigned int out_buf_size = acc_context->out_buf_size;
     int port = tcp_ctx->server_port;
     char *host = tcp_ctx->server_host;
-    printf("host=%s\n",host);
+    //printf("host=%s\n",host);
     struct sockaddr_in *my_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
     struct sockaddr_in *server_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
     client_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -102,7 +102,6 @@ int build_connection_to_tcp_server(void *acc_ctx) {
     server_addr->sin_port = htons(port);
     hp = gethostbyname(host);
     if (!hp) {
-        printf("LINE %d\n", __LINE__);
         close(client_fd);
         return -1;
     }
@@ -153,33 +152,40 @@ void free_tcp_memory(void *acc_ctx){
 
 }
 
-void socket_server_open(void *server_param){
+int socket_server_open(void *server_param){
     struct server_param_t * my_param = (struct server_param_t *)server_param;
     pthread_t server_thread;
     int thread_status;
     if (pipe(my_param->pipe) < 0) {
-        printf("Open pipe error.\n");
+        //printf("Open pipe error.\n");
         strcpy(my_param->status, "1");
-        return;
+        return -1;
     }
     if(pthread_create(&server_thread, NULL, tcp_server_data_transfer, my_param)!=0) {
         fprintf(stderr, "Error creating thread\n");
         strcpy(my_param->status,"1");
-        return;
+        return -2;
     }
     if (read(my_param->pipe[0], &thread_status, sizeof(int))== -1){
         printf("Fail to read status from thread\n");
         strcpy(my_param->status,"1");
-        return;
+        return -3;
     }
-    pthread_detach(server_thread);
+
     sprintf(my_param->status, "%d", thread_status);
-    if (DEBUG){
-        printf("status from server:%s\n", my_param->status);
-        printf("server listening to %s, port %d\n", my_param->ipaddr, (atoi)(my_param->port));
+
+    if (thread_status == 0){
+        pthread_detach(server_thread);
         printf("thread created successfully.\n");
+        if (DEBUG){
+            //printf("server listening to %s, port %d\n", my_param->ipaddr, (atoi)(my_param->port));
+        }
+        return 0;
     }
-    return;
+    else{
+        printf("Fail to open local ACC.\n");
+        return 4;
+    }
 
 }
 
@@ -190,8 +196,11 @@ void * tcp_server_data_transfer(void * server_param) {
     struct acc_handler_t acc_handler;
     memset((void *)&server_context,0,sizeof(server_context));
     server_context.acc_handler = &(acc_handler);
+    strcpy(server_context.job_id, my_param->job_id);
     strcpy(server_context.section_id, my_param->section_id);
     strcpy(server_context.acc_name, my_param->acc_name);
+    strcpy(server_context.scheduler_host, my_param->scheduler_host);
+    strcpy(server_context.scheduler_port, my_param->scheduler_port);
     server_context.in_buf_size = my_param->in_buf_size;
     server_context.out_buf_size = my_param->out_buf_size;
     //printf("my_param->in_buf_size=%u, out_buf_size=%u\n",my_param->in_buf_size, my_param->out_buf_size);
@@ -201,6 +210,7 @@ void * tcp_server_data_transfer(void * server_param) {
     sprintf(my_param->status, "%d", status);
     if (status) {
         printf("Fail to open %s.\n", my_param->acc_name);
+        write(my_param->pipe[1], &status, sizeof(int));
         return NULL;
     }
 
@@ -241,11 +251,12 @@ void * tcp_server_data_transfer(void * server_param) {
     write(my_param->pipe[1], &status, sizeof(int));
 
 
-    if ((rqst_fd = accept(server_fd, (struct sockaddr *)&client_addr, &alen)) <0 ) {
+    while ((rqst_fd = accept(server_fd, (struct sockaddr *)&client_addr, &alen)) <0 ) {
         printf("accept failed\n");
-        exit (1);
+        //exit (1);
     }
-    printf("received connection from: %s, port: %d\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+    //printf("received connection from: %s, port: %d\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+    //size_t recv_len;
     size_t recv_len = (size_t) server_context.in_buf_size;
     size_t send_len = (size_t) server_context.out_buf_size;
     size_t recv_size, send_size;
@@ -262,7 +273,9 @@ void * tcp_server_data_transfer(void * server_param) {
             exit(1);
         }
         if (recv_size == 0){
-            printf("disconnect\n");
+            printf("recv size = 0, disconnect\n");
+            tcp_local_fpga_close((void *)&server_context);
+            server_report_to_scheduler((void *)&server_context);
             break;
         }
         /*do jo*/ 
@@ -277,9 +290,9 @@ void * tcp_server_data_transfer(void * server_param) {
         }
         //printf("send size from server:%zu\n", send_size);
     }
+
     close(rqst_fd);
     close(server_fd);
-    tcp_local_fpga_close((void *)&server_context);
     return NULL;
 }
 
@@ -304,6 +317,7 @@ int tcp_local_fpga_open(void * server_context){
 
     return 0;//return status;
 }
+
 unsigned long tcp_local_fpga_do_job(void * server_context){
     struct tcp_server_context_t * my_context = (struct tcp_server_context_t *)server_context;
     char param[16];
@@ -318,6 +332,56 @@ unsigned long tcp_local_fpga_do_job(void * server_context){
 void tcp_local_fpga_close(void * server_context){
     struct tcp_server_context_t * my_context = (struct tcp_server_context_t *)server_context;
     acc_close((struct acc_handler_t *)(my_context->acc_handler));
+    printf("tcp local fpga close\n");
     return;
 }
     
+void server_report_to_scheduler(void * server_ctx){
+    struct debug_context_t debug_ctx;
+    char response[16];
+    struct tcp_server_context_t *server_context = server_ctx;
+    struct hostent *hp;	/* host information */
+
+    struct sockaddr_in *my_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
+    struct sockaddr_in *scheduler_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
+    int my_fd = socket(AF_INET, SOCK_STREAM, 0);
+    TEST_NEG(my_fd);
+
+    int sockoptval = 1;
+	setsockopt(my_fd, SOL_SOCKET, SO_REUSEADDR, &sockoptval, sizeof(int));
+
+    memset((char *)my_addr, 0, sizeof(struct sockaddr));
+    my_addr->sin_family = AF_INET;
+    my_addr->sin_addr.s_addr = htonl(INADDR_ANY);
+    my_addr->sin_port = htons(0);
+    if(bind(my_fd, my_addr, sizeof(struct sockaddr)) < 0){
+        perror("bind failed");
+        close(my_fd);
+        return;
+    }
+
+    memset((char *)scheduler_addr, 0, sizeof(struct sockaddr));
+    scheduler_addr->sin_family = AF_INET;
+    scheduler_addr->sin_port = htons(atoi(server_context->scheduler_port));
+    hp = gethostbyname(server_context->scheduler_host);
+    //printf("scheduler host, port:%s,%s\n", server_context->scheduler_host, server_context->scheduler_port);
+    memcpy((void *) &(scheduler_addr->sin_addr), hp->h_addr_list[0], hp->h_length);
+
+    if (connect(my_fd, (struct sockaddr *)scheduler_addr, sizeof(struct sockaddr)) <0){
+        perror("connect failed");
+        close(my_fd);
+        return;
+    }
+
+
+    memset(response,0, 16);
+
+    memset((char *)&debug_ctx, 0, sizeof(debug_ctx));
+    strcpy(debug_ctx.status,"close");
+    strcpy(debug_ctx.job_id, server_context->job_id);
+    send(my_fd, (char *)&debug_ctx, sizeof(struct debug_context_t), 0);
+    recv(my_fd, response, 16, 0);
+    //printf("response from schduler: %s\n", response);
+    return;
+
+}
