@@ -43,15 +43,16 @@ class FpgaJob(object):
                  node_ip):
         self.job_id = job_id
         self.real_in_buf_size = real_in_buf_size
+
         self.job_in_buf_size = min(real_in_buf_size, CHUNK_SIZE)
-        self.job_out_buf_size = job_out_buf_size
+        self.job_out_buf_size = self.job_in_buf_size
         self.job_finished_buf_size = 0
 
         self.job_acc_id = job_acc_id
         self.job_execution_time = job_execution_time
         self.node_ip = node_ip
-
         self.section_id = 0
+
         self.job_configuration_time = 0.0
         self.job_arrival_time = job_arrival_time
         self.job_begin_time = 0
@@ -70,6 +71,10 @@ class FpgaJob(object):
         self.job_if_local = True
         self.if_configured = 0
         self.current_roce_bw = 0
+
+        self.job_total_transfer_time = 0
+        self.job_total_execution_time = 0
+        self.job_waiting_time = 0
 
     def set_job_arrival_event(self, event_id):
         self.job_associate_event_list[0]=(event_id, self.job_arrival_time)
@@ -359,8 +364,26 @@ class FpgaSimulator(object):
 
 
     def update_job_info(self, job_id):
-        pass
+        job_acc_id = self.fpga_job_list[job_id].job_acc_id
+        job_acc_bw = self.acc_type_list[job_acc_id].acc_peak_bw
 
+        chunk = min(CHUNK_SIZE,
+                    self.fpga_job_list[job_id].real_in_buf_size
+                    - self.fpga_job_list[job_id].job_finished_buf_size)
+
+        self.fpga_job_list[job_id].job_in_buf_size = chunk
+        self.fpga_job_list[job_id].job_out_buf_size = chunk
+        self.fpga_job_list[job_id].job_execution_tim = chunk/job_acc_bw
+
+        self.fpga_job_list[job_id].job_start_time = 0
+        self.fpga_job_list[job_id].job_finish_time = 0
+        self.fpga_job_list[job_id].job_complete_time = 0
+        self.fpga_job_list[job_id].job_source_transfer_time = 0
+        self.fpga_job_list[job_id].job_result_transfer_time = 0
+
+        self.fpga_job_list[job_id].job_total_execution_time += self.fpga_job_list[job_id].job_execution_time
+        self.fpga_job_list[job_id].job_total_transfer_time += self.fpga_job_list[job_id].job_source_transfer_time
+        self.fpga_job_list[job_id].job_total_transfer_time += self.fpga_job_list[job_id].job_result_transfer_time
 
 
     def conduct_fifo_scheduling(self):
@@ -948,6 +971,7 @@ class FpgaSimulator(object):
 
     def handle_job_complete(self, job_id):
         #print "job complete time is %r" %self.fpga_job_list[job_id].job_complete_time
+        self.remove_current_event()
         section_id = self.fpga_job_list[job_id].section_id
         section_node_ip = self.fpga_section_list[section_id].node_ip
         section_node_id = self.node_list[section_node_ip].node_id
@@ -956,21 +980,42 @@ class FpgaSimulator(object):
         job_node_ip = self.fpga_job_list[job_id].node_ip
         job_node_id = self.node_list[job_node_ip].node_id
 
+        self.fpga_job_list[job_id].job_finished_buf_size += self.fpga_job_list[job_id].job_in_buf_size
 
-        if (job_node_id != section_node_id):
-            global remote_close
-            job_end_time = self.fpga_job_list[job_id].job_complete_time + remote_close
+        if self.fpga_job_list[job_id].job_finished_buf_size >= self.fpga_job_list[job_id].real_in_buf_size:
+            if (job_node_id != section_node_id):
+                global remote_close
+                job_end_time = self.fpga_job_list[job_id].job_complete_time + remote_close
+
+            else:
+                global local_close
+                job_end_time = self.fpga_job_list[job_id].job_complete_time + local_close
+
+            job_end_event_id = uuid.uuid4()
+            self.fpga_job_list[job_id].job_end_time = job_end_time
+            self.fpga_job_list[job_id].job_associate_event_list[5] = (job_end_event_id, job_end_time)
+            self.insert_event(job_id, EventType.JOB_END)
 
         else:
-            global local_close
-            job_end_time = self.fpga_job_list[job_id].job_complete_time + local_close
+            self.update_job_info(job_id)
+            if job_node_ip != section_node_ip:
+                #insert JOB_START
+                in_buf_size = self.fpga_job_list[job_id].job_in_buf_size
+                roce_latency = self.node_list[job_node_ip].roce_latency
 
-        job_end_event_id = uuid.uuid4()
-        self.fpga_job_list[job_id].job_end_time = job_end_time
-        self.fpga_job_list[job_id].job_associate_event_list[5] = (job_end_event_id, job_end_time)
-        self.insert_event(job_id, EventType.JOB_END)
-        self.remove_current_event()
-        self.update_job_info(job_id)
+                bw = self.get_bw(in_buf_size)
+
+                self.fpga_job_list[job_id].current_roce_bw = bw
+                self.fpga_job_list[job_id].job_source_transfer_time = in_buf_size/(bw) + roce_latency + roce_latency
+
+            self.fpga_job_list[job_id].job_start_time = self.current_time + self.fpga_job_list[job_id].job_source_transfer_time
+            job_start_event_id = uuid.uuid4()
+            job_start_time = self.fpga_job_list[job_id].job_start_time
+            self.fpga_job_list[job_id].job_associate_event_list[2] = (job_start_event_id, job_start_time)
+
+            self.insert_event(job_id, EventType.JOB_START)
+
+
 
     def handle_job_end(self, job_id):
         self.remove_current_event()
