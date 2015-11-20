@@ -121,6 +121,7 @@ class FpgaSimulator(object):
         self.node_list = dict()#indexed by node_ip
         self.fpga_node_list = dict()#indexed by node_ip, value is the num of waiting jobs
         self.node_waiting_remote_job = dict()#indexed by node_ip, value is the num of waiting remote jobs
+        self.network_topology = list()
         self.job_count = 0
         self.last_time = 0
         self.current_time = 0
@@ -136,13 +137,77 @@ class FpgaSimulator(object):
         self.ideal_execution_average = 0
         self.reconfiguration_num = 0
 
+        self.bw = list()
         self.scheduling_algorithm = scheduling_algorithm
         self.dbconfig = read_db_config()
         self.conn = MySQLConnection(**self.dbconfig)
 
+    def update_bw(self, source, dest):
+        n = len(self.network_topology)
+        B = [([0]*n) for i in range(n)]
+        self.bw = [[0 for j in range(n)] for i in range(n)]
+        row = [1 for i in range(n)]
+        coloum = [1 for i in range(n)]
+        flow = 1
 
-    def get_bw(self, in_buf_size):
-        return 80
+        for i in range(n):
+            for j in range(n):
+                B[i][j] = self.network_topology[i][j]
+                if B[i][j] < 0:
+                    print "WRONG INPUT "
+                    return
+        while (flow > 0):
+            flow = 0
+            #update bw for flow (x,y) where x = source or y = dest
+            row_min_bw = 1.1
+            co_min_bw = 1.1
+            row_id = 0
+            co_id = 0
+            for i in range(n):
+                row_flow_num = 0
+                for j in range(n):
+                    row_flow_num += B[i][j]
+                if row_flow_num != 0:
+                    c_bw = row[i]/row_flow_num
+                    if c_bw < row_min_bw:
+                        row_min_bw = c_bw
+                        row_id = i
+
+            for j in range(n):
+                co_flow_num = 0
+                for i in range(n):
+                    co_flow_num += B[i][j]
+                if co_flow_num != 0:
+                    c_bw = coloum[j]/co_flow_num
+                    if c_bw < co_min_bw:
+                        co_min_bw = c_bw
+                        co_id = j
+
+            if row_min_bw < co_min_bw:
+                row[row_id] = 0
+                for j in range(n):
+                    if B[row_id][j] != 0:
+                        self.bw[row_id][j] = row_min_bw
+                        if row_min_bw == 0:
+                            print "err1"
+                        coloum[j] -= row_min_bw * B[row_id][j]
+                        B[row_id][j] = 0
+
+            else:
+                coloum[co_id] = 0
+                for i in range(n):
+                    if B[i][co_id] != 0:
+                        self.bw[i][co_id] = co_min_bw
+                        if co_min_bw == 0:
+                            print "err2"
+                        row[i] -= co_min_bw * B[i][co_id]
+                        B[i][co_id] = 0
+            for i in range(n):
+                for j in range(n):
+                    flow += B[i][j]
+
+        return self.bw[source][dest]
+
     def get_debug_info(self):
         try:
             raise Exception
@@ -328,12 +393,9 @@ class FpgaSimulator(object):
             query = "SELECT * FROM fpga_jobs"
             cursor.execute(query)
             job_list = cursor.fetchall()
-            i = 0
-            for job in job_list:
-                i += 1
-                job_id = job[0]
+            for i, job in enumerate(job_list):
+                job_id = i+1
                 in_buf_size = float(job[1]) #M bytes
-                #out_buf_size = float(job[2])#M bytes
                 acc_id = job[3]
                 arrival_time = float(job[4]) #secs
                 execution_time = float(1)
@@ -363,6 +425,12 @@ class FpgaSimulator(object):
             self.insert_event(job_id, EventType.JOB_ARRIVAL)
 
 
+    def initiate_network_topology(self):
+        node_num = len(self.node_list)
+        self.network_topology = [([0]* node_num)for i in range(node_num)]
+        self.bw = [[0 for j in range(node_num)] for i in range(node_num)]
+
+
     def update_job_info(self, job_id):
         job_acc_id = self.fpga_job_list[job_id].job_acc_id
         job_acc_bw = self.acc_type_list[job_acc_id].acc_peak_bw
@@ -377,7 +445,7 @@ class FpgaSimulator(object):
 
         self.fpga_job_list[job_id].job_start_time = 0
         self.fpga_job_list[job_id].job_finish_time = 0
-        self.fpga_job_list[job_id].job_complete_time = 0
+        #self.fpga_job_list[job_id].job_complete_time = 0
         self.fpga_job_list[job_id].job_source_transfer_time = 0
         self.fpga_job_list[job_id].job_result_transfer_time = 0
 
@@ -397,6 +465,8 @@ class FpgaSimulator(object):
                     if self.fpga_section_list[section_id].if_idle == True:
                         return_section_id = section_id
                         break
+                if return_section_id != None:
+                    print "execute job[%r] on %r" %(job_id,return_section_id)
                 return return_section_id
             else:
                 idle_sec_list = list()
@@ -406,7 +476,8 @@ class FpgaSimulator(object):
                             idle_sec_list.append(section_id)
                 if len(idle_sec_list):
                     return_section_id = random.sample(idle_sec_list,1)[0]
-                return return_section_id
+
+            return return_section_id
 
         elif self.current_event_type == EventType.JOB_END:
             if len(self.waiting_job_list):
@@ -419,6 +490,8 @@ class FpgaSimulator(object):
                         return_job_id = job_id
                         self.waiting_job_list.remove(job_id)
                         return return_job_id
+                if return_job_id != None:
+                    print "execute job[%r] on %r" %(return_job_id,section_id)
                 return return_job_id
 
             else:
@@ -575,17 +648,44 @@ class FpgaSimulator(object):
                     #print 'job_id = %r, start_time = %r' %(job_id, self.fpga_job_list[job_id].job_start_time)
                     section_list.append(section_id)
 
-        section_list.append(c_section_id)
         return section_list# return a list of section_id
 
 
+    def update_complete_time(self, job_list):
+        return_list = dict()
+        for job_id, job in job_list.items():
+            job_node_ip = job.node_ip
+            job_node_id = self.node_list[job_node_ip].node_id
 
-    def update_finish_status(self, job_id):#update sections, job_finish_times, event_lists/sequences
+            job_section_id = job.section_id
+            section_node_ip = self.fpga_section_list[job_section_id].node_ip
+            section_node_id = self.node_list[section_node_ip].node_id
+
+            new_bw = self.bw[section_node_id][job_node_id]
+            if new_bw == 0:
+                print "error, job_id=%r" %job_id
+            new_complete_time = job.current_roce_bw * (job.job_complete_time - self.current_time)/new_bw + self.current_time
+
+            return_list[job_id] = job.job_complete_time
+
+            self.fpga_job_list[job_id].job_complete_time = new_complete_time
+            self.fpga_job_list[job_id].current_roce_bw = new_bw
+
+            complete_event_id = self.fpga_job_list[job_id].job_associate_event_list[4][0]
+
+            self.fpga_job_list[job_id].job_associate_event_list[4] = (complete_event_id, new_complete_time)
+
+        return return_list
+
+
+    def update_finish_status(self, job_id, event_type):#update sections, job_finish_times, event_lists/sequences
         section_id = self.fpga_job_list[job_id].section_id
         node_ip = self.fpga_section_list[section_id].node_ip
         total_pcie_bw = self.node_list[node_ip].pcie_bw
         associate_section_list = list()
         associate_section_list = self.find_associate_sections(job_id)#return a list of section_id
+        if event_type == EventType.JOB_START:
+            associate_section_list.append(section_id)
         #print 'associate section list length is %r' %len(associate_section_list)
 
         associate_acc_real_bw_list = dict()
@@ -692,54 +792,6 @@ class FpgaSimulator(object):
                 self.insert_event(job_id, EventType.JOB_START)
 
 
-    def update_complete_status(self,section_id, job_id_list):
-        return_list = dict()
-        for job_id in job_id_list:
-            old_job_complete_time = self.fpga_job_list[job_id].job_complete_time
-            new_job_finish_time = self.fpga_job_list[job_id].job_finish_time
-
-            self.fpga_job_list[job_id].job_complete_time = new_job_finish_time + self.fpga_job_list[job_id].job_result_transfer_time
-            c_job_complete_time = self.fpga_job_list[job_id].job_complete_time
-            return_list[job_id] = old_job_complete_time # return a dict of <job_id: old_job_complete_time>
-            c_event_id = self.fpga_job_list[job_id].job_associate_event_list[3][0]
-            self.fpga_job_list[job_id].job_associate_event_list[3] = (c_event_id, c_job_complete_time)# update (event_id, finish_time)
-
-        return return_list
-
-
-
-
-        associate_acc_real_bw_list = dict()
-        associate_acc_peak_bw_list = dict()
-        associate_job_list = dict()
-        new_event_time_list = dict()
-
-        earlier_acc_real_bw_list = dict()
-
-
-        if len(associate_section_list) == 0:
-            #print 'associate_section_list is empty'
-            return new_event_time_list #no associate sections
-        else:
-            for sec_id in associate_section_list:
-                current_section = self.fpga_section_list[sec_id]
-                current_acc_id = current_section.current_acc_id
-                current_acc_peak_bw = self.acc_type_list[current_acc_id].acc_peak_bw
-                associate_acc_peak_bw_list[sec_id] = current_acc_peak_bw# a dict of tuple  sec_id: peak_bw
-                earlier_acc_real_bw_list[sec_id] = current_section.current_acc_bw
-
-            acc_real_bw_list = self.update_acc_real_bw(total_pcie_bw,associate_acc_peak_bw_list)# return a dict of sec_id: real_bw
-
-            for sec_id, real_bw in acc_real_bw_list.items():
-                self.fpga_section_list[sec_id].current_acc_bw = real_bw#update fpga_section_list
-                job_id = self.fpga_section_list[sec_id].current_job_id
-
-                associate_job_list[job_id] = (real_bw, earlier_acc_real_bw_list[sec_id])# return a dict of tuple, tuple = (real_bw,earlier_bw)
-                #next, update fpga_job_list
-
-            old_finish_time_list = self.update_job_finish_time(associate_job_list)#return a dict of job_id: new_job_finish_time
-
-            return old_finish_time_list #return a dict of tuples, tuples=(job_id, old_finish_time)
 
 
 
@@ -793,36 +845,6 @@ class FpgaSimulator(object):
 
 
 
-    def update_section(self, section_id):
-        if len(self.fpga_section_list[section_id].job_queue):
-            if self.fpga_section_list[section_id].if_idle == True:#get this section work
-                new_job_id = self.fpga_section_list[section_id].job_queue[0]
-                self.start_new_job(new_job_id, section_id)
-
-
-    def insert_job_to_queue(self, section_id, job_id):
-        job_execution_time = self.fpga_job_list[job_id].job_execution_time
-        queue_len = len(self.fpga_section_list[section_id].job_queue)
-
-        if self.scheduling_algorithm != SchedulingAlgorithm.FIFO:
-            if queue_len == 0:
-                self.fpga_section_list[section_id].job_queue.append(job_id)
-
-            else:
-                for i in range(queue_len):
-                    c_job_id = self.fpga_section_list[section_id].job_queue[i]
-                    c_job_execution_time = self.fpga_job_list[c_job_id].job_execution_time
-                    if job_execution_time < c_job_execution_time:
-                        self.fpga_section_list[section_id].job_queue.insert(i, job_id)
-                        break
-
-                if job_id not in self.fpga_section_list[section_id].job_queue:
-                    self.fpga_section_list[section_id].job_queue.append(job_id)
-
-        else:
-            self.fpga_section_list[section_id].job_queue.append(job_id)
-
-
 
 
     def add_job_to_waiting_queue(self, job_id):
@@ -843,30 +865,100 @@ class FpgaSimulator(object):
 
     def handle_job_begin(self, job_id):
         self.remove_current_event()
-        section_id = self.fpga_job_list[job_id].section_id
-        job_acc_id = self.fpga_job_list[job_id].job_acc_id
-        in_buf_size = self.fpga_job_list[job_id].job_in_buf_size
-        job_node_ip = self.fpga_job_list[job_id].node_ip
+
+        c_job = self.fpga_job_list[job_id]
+        section_id = c_job.section_id
+        job_acc_id = c_job.job_acc_id
+        in_buf_size = c_job.job_in_buf_size
+        job_node_ip = c_job.node_ip
         section_node_ip = self.fpga_section_list[section_id].node_ip
 
         if job_node_ip != section_node_ip:
             job_node_id = self.node_list[job_node_ip].node_id
             section_node_id = self.node_list[section_node_ip].node_id
-            roce_latency = self.node_list[job_node_ip].roce_latency
+            self.network_topology[job_node_id][section_node_id] += 1
 
-            bw = self.get_bw(in_buf_size)
-            self.fpga_job_list[job_id].current_roce_bw = bw
-            self.fpga_job_list[job_id].job_source_transfer_time = in_buf_size/(bw) + roce_latency
+            roce_latency = self.node_list[job_node_ip].roce_latency
+            roce_bw = self.node_list[job_node_ip].roce_bw# bw is in Megabytes
+
+            bw = self.update_bw(job_node_id, section_node_id)#percentage
+            self.fpga_job_list[job_id].current_roce_bw = bw #percentage
+            self.fpga_job_list[job_id].job_source_transfer_time = in_buf_size/(roce_bw * bw) + roce_latency
 
         self.fpga_job_list[job_id].job_start_time = self.current_time + self.fpga_job_list[job_id].job_source_transfer_time
         job_start_event_id = uuid.uuid4()
         job_start_time = self.fpga_job_list[job_id].job_start_time
         self.fpga_job_list[job_id].job_associate_event_list[2] = (job_start_event_id, job_start_time)
-
         self.insert_event(job_id, EventType.JOB_START)
+
+        if job_node_ip != section_node_ip:
+            job_list = self.find_associate_transfer_jobs(job_id, EventType.JOB_BEGIN) #excluding the current job
+            #for i in job_list:
+                #print i
+
+            job_obsolete_start_time = self.update_start_time(job_list)
+            self.update_associate_events(job_obsolete_start_time, EventType.JOB_START)
+
+
+    def find_associate_transfer_jobs(self, job_id, event_type):
+        section_id = self.fpga_job_list[job_id].section_id
+        job_node_ip = self.fpga_job_list[job_id].node_ip
+        section_node_ip = self.fpga_section_list[section_id].node_ip
+        job_list = dict()#return <job_id: job_object>
+
+        if event_type == EventType.JOB_BEGIN or event_type == EventType.JOB_START:
+            for c_job_id, c_job in self.fpga_job_list.items():
+                if c_job.job_begin_time < self.current_time < c_job.job_start_time or (c_job.job_complete_time < self.current_time < c_job.job_start_time):
+                    destination_node_ip = self.fpga_section_list[c_job.section_id].node_ip
+                    if c_job.job_if_local == False:
+                        if c_job.node_ip == job_node_ip or destination_node_ip == section_node_ip:
+                            job_list[c_job_id] = c_job
+
+        elif event_type == EventType.JOB_FINISH or event_type == EventType.JOB_COMPLETE:
+            for c_job_id, c_job in self.fpga_job_list.items():
+                if c_job.job_finish_time < self.current_time < c_job.job_complete_time:
+                    source_node_ip = self.fpga_section_list[c_job.section_id].node_ip
+                    if c_job.job_if_local == False:
+                        if c_job.node_ip == job_node_ip or source_node_ip == section_node_ip:
+                            #print "finish_time, current time, complete_time", c_job.job_finish_time, self.current_time, c_job.job_complete_time
+                            job_list[c_job_id] = c_job
+
+        if job_id in job_list:
+            del(job_list[job_id])
+            #print "[%r] BEGIN/START delete current job" %job_id
+
+            #print "[%r] %r associate job id is" %(event_type,job_id,)
+            #for i in job_list:
+            #    print i
+        return job_list
+
+    def update_start_time(self, job_list):
+        return_list = dict()
+        for job_id, job in job_list.items():
+            job_node_ip = job.node_ip
+            job_node_id = self.node_list[job_node_ip].node_id
+
+            job_section_id = job.section_id
+            section_node_ip = self.fpga_section_list[job_section_id].node_ip
+            section_node_id = self.node_list[section_node_ip].node_id
+
+            new_bw = self.bw[job_node_id][section_node_id]
+            new_start_time = job.current_roce_bw * (job.job_start_time - self.current_time)/new_bw + self.current_time
+            return_list[job_id] = job.job_start_time
+
+            self.fpga_job_list[job_id].current_roce_bw = new_bw
+            self.fpga_job_list[job_id].job_start_time = new_start_time
+
+            start_event_id = self.fpga_job_list[job_id].job_associate_event_list[2][0]
+
+            self.fpga_job_list[job_id].job_associate_event_list[2] = (start_event_id, new_start_time)
+
+        return return_list
+
 
 
     def start_new_job(self,job_id,section_id):
+        #print "job_id, section_id", job_id, section_id
 
         job_acc_id = self.fpga_job_list[job_id].job_acc_id
         job_execution_time = self.fpga_job_list[job_id].job_execution_time
@@ -912,8 +1004,6 @@ class FpgaSimulator(object):
 
 
     def handle_job_start(self, job_id):
-        #print "job start time is %r" %self.fpga_job_list[job_id].job_start_time
-
         self.remove_current_event()
         section_id = self.fpga_job_list[job_id].section_id
         section_node_ip = self.fpga_section_list[section_id].node_ip
@@ -921,6 +1011,13 @@ class FpgaSimulator(object):
 
         job_node_ip = self.fpga_job_list[job_id].node_ip
         job_node_id = self.node_list[job_node_ip].node_id
+
+        if (job_node_id != section_node_id):
+            self.network_topology[job_node_id][section_node_id] -= 1
+            bw = self.update_bw(job_node_id, section_node_id)
+            job_list = self.find_associate_transfer_jobs(job_id, EventType.JOB_START)
+            job_old_start_time = self.update_start_time(job_list)
+            self.update_associate_events(job_old_start_time, EventType.JOB_START)
 
         job_execution_time = self.fpga_job_list[job_id].job_execution_time
         job_finish_event_id = uuid.uuid4()
@@ -930,13 +1027,13 @@ class FpgaSimulator(object):
         self.fpga_job_list[job_id].job_associate_event_list[3] = (job_finish_event_id, job_finish_time)
         self.insert_event(job_id, EventType.JOB_FINISH)
 
-        old_finish_time_list = self.update_finish_status(job_id)#return a dict of job_id: old_finish_time
+        old_finish_time_list = self.update_finish_status(job_id, EventType.JOB_START)#return a dict of job_id: old_finish_time
         self.update_associate_events(old_finish_time_list, EventType.JOB_FINISH)
 
 
 
     def handle_job_finish(self, job_id):
-        #print "job finish time is %r" %self.fpga_job_list[job_id].job_finish_time
+        self.remove_current_event()
         section_id = self.fpga_job_list[job_id].section_id
         section_node_ip = self.fpga_section_list[section_id].node_ip
         section_node_id = self.node_list[section_node_ip].node_id
@@ -944,33 +1041,38 @@ class FpgaSimulator(object):
         job_node_ip = self.fpga_job_list[job_id].node_ip
         job_node_id = self.node_list[job_node_ip].node_id
 
+        old_finish_time_list = self.update_finish_status(job_id, EventType.JOB_FINISH)#return a dict of job_id: old_finish_time
+        self.update_associate_events(old_finish_time_list, EventType.JOB_FINISH)
 
         if (job_node_id != section_node_id):
             #begin data transfer
+            self.network_topology[section_node_id][job_node_id] += 1
             out_buf_size = self.fpga_job_list[job_id].job_out_buf_size
 
             #add complete event
             roce_bw = self.node_list[section_node_ip].roce_bw# bw is in Megabytes
             roce_latency = self.node_list[section_node_ip].roce_latency
-            bw = self.get_bw(out_buf_size)
-            self.fpga_job_list[job_id].job_result_transfer_time = out_buf_size/bw + roce_latency
-            #self.fpga_job_list[job_id].current_roce_bw = bw
+            bw = self.update_bw(section_node_id, job_node_id)
+            #print "[job%r], bw %r . from %r to %r" %(job_id, bw, section_node_id, job_node_id)
+            self.fpga_job_list[job_id].job_result_transfer_time = out_buf_size/(bw*roce_bw) + roce_latency
+            self.fpga_job_list[job_id].current_roce_bw = bw
 
-            old_finish_time_list = self.update_finish_status(job_id)#return a dict of job_id: old_finish_time
-            self.update_associate_events(old_finish_time_list, EventType.JOB_FINISH)
+            job_list = self.find_associate_transfer_jobs(job_id, EventType.JOB_FINISH)
+            job_obsolete_complete_time = self.update_complete_time(job_list)
+            self.update_associate_events(job_obsolete_complete_time, EventType.JOB_COMPLETE)
+
 
         job_complete_event_id = uuid.uuid4()
         job_complete_time = self.fpga_job_list[job_id].job_finish_time + self.fpga_job_list[job_id].job_result_transfer_time
 
-        self.fpga_job_list[job_id].job_complete_time += job_complete_time
+        self.fpga_job_list[job_id].job_complete_time = job_complete_time
         self.fpga_job_list[job_id].job_associate_event_list[4] = (job_complete_event_id, job_complete_time)
         self.insert_event(job_id, EventType.JOB_COMPLETE)
-        self.remove_current_event()
+
 
 
 
     def handle_job_complete(self, job_id):
-        #print "job complete time is %r" %self.fpga_job_list[job_id].job_complete_time
         self.remove_current_event()
         section_id = self.fpga_job_list[job_id].section_id
         section_node_ip = self.fpga_section_list[section_id].node_ip
@@ -981,6 +1083,13 @@ class FpgaSimulator(object):
         job_node_id = self.node_list[job_node_ip].node_id
 
         self.fpga_job_list[job_id].job_finished_buf_size += self.fpga_job_list[job_id].job_in_buf_size
+
+        if (job_node_id != section_node_id):
+            self.network_topology[section_node_id][job_node_id] -= 1
+            bw = self.update_bw(section_node_id, job_node_id)
+            job_list = self.find_associate_transfer_jobs(job_id, EventType.JOB_COMPLETE)
+            job_obsolete_complete_time = self.update_complete_time(job_list)
+            self.update_associate_events(job_obsolete_complete_time, EventType.JOB_COMPLETE)
 
         if self.fpga_job_list[job_id].job_finished_buf_size >= self.fpga_job_list[job_id].real_in_buf_size:
             if (job_node_id != section_node_id):
@@ -1000,19 +1109,24 @@ class FpgaSimulator(object):
             self.update_job_info(job_id)
             if job_node_ip != section_node_ip:
                 #insert JOB_START
+                self.network_topology[job_node_id][section_node_id] += 1
                 in_buf_size = self.fpga_job_list[job_id].job_in_buf_size
                 roce_latency = self.node_list[job_node_ip].roce_latency
 
-                bw = self.get_bw(in_buf_size)
+                bw = self.update_bw(job_node_id, section_node_id)
+                roce_bw = self.node_list[job_node_ip].roce_bw
 
                 self.fpga_job_list[job_id].current_roce_bw = bw
-                self.fpga_job_list[job_id].job_source_transfer_time = in_buf_size/(bw) + roce_latency + roce_latency
+                self.fpga_job_list[job_id].job_source_transfer_time = in_buf_size/(bw*roce_bw) + roce_latency
+
+                job_list = self.find_associate_transfer_jobs(job_id, EventType.JOB_BEGIN)
+                job_obsolete_start_time = self.update_start_time(job_list)
+                self.update_associate_events(job_obsolete_start_time, EventType.JOB_START)
 
             self.fpga_job_list[job_id].job_start_time = self.current_time + self.fpga_job_list[job_id].job_source_transfer_time
             job_start_event_id = uuid.uuid4()
             job_start_time = self.fpga_job_list[job_id].job_start_time
             self.fpga_job_list[job_id].job_associate_event_list[2] = (job_start_event_id, job_start_time)
-
             self.insert_event(job_id, EventType.JOB_START)
 
 
@@ -1032,6 +1146,7 @@ class FpgaSimulator(object):
     def initiate_fpga_system(self):
         self.initiate_available_acc_type_list()
         self.initiate_node_status()
+        self.initiate_network_topology()
         self.initiate_fpga_resources()
         self.initiate_job_status()
         self.initiate_event()
@@ -1072,11 +1187,11 @@ class FpgaSimulator(object):
             #print ''
 
         #self.snp = self.snp**(1.0/n)
-        self.snp /= n
-        self.ssp /= n
-        self.execution_average /= n
-        self.ideal_execution_average /= n
-        self.make_span -= self.fpga_job_list[0].job_arrival_time
+        #self.snp /= n
+        #self.ssp /= n
+        #self.execution_average /= n
+        #self.ideal_execution_average /= n
+        #self.make_span -= self.fpga_job_list[0].job_arrival_time
         #self.reconfiguration_num /= n
         #print '[%r] SNP = %.5f Makespan = %.5f Average = %.5f Ideal = %.5f' % (self.scheduling_algorithm, self.snp, self.make_span, self.execution_average, self.ideal_execution_average)
         #if self.network_real_workload != 0:
