@@ -445,6 +445,7 @@ def run_scheduler(port, algorithm):
     server = Server(address, MyRequestHandler)
     try:
         server.serve_forever()
+
     except KeyboardInterrupt:
         print 'Existing ...'
         server.server_close()
