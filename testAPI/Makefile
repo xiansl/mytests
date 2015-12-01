@@ -17,6 +17,9 @@ accServicelayer.so: acc_servicelayer.c tcp_transfer.c rdma_client.c fpga-sim/dri
 test_bench: test_bench.c
 	$(CC) $(CFLAGS) -o test_bench test_bench.c -laccServicelayer 
 
+hybrid-job: hybrid-job.c software-service.c
+	$(CC) $(CFLAGS) -o hybrid-job hybrid-job.c software-service.c -laccServicelayer
+
 acc_monitor.so: acc_monitor.c 
 	python setup.py build 
 	cp build/lib.linux-x86_64-2.7/acc_monitor.so .

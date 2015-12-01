@@ -123,6 +123,7 @@ int on_disconnect_event(struct rdma_cm_event *event, struct rdma_server_context_
 int on_disconnect(struct rdma_cm_id *id, struct rdma_server_context_t *server_context);
 void local_fpga_close(void *server_context);
 char * get_server_ip_addr(char * interface);
+void report_to_scheduler(void *server_param);
 
 
 void die(const char *reason)
@@ -218,14 +219,58 @@ void * rdma_server_data_transfer(void * server_param){
         }
         printf("Disconnect ... \n");
         rdma_destroy_event_channel(rdma_context->ec);
-        //free(&server_context);
+        report_to_scheduler(server_param);
         return NULL;
+}
+
+void report_to_scheduler(void *server_param){
+    struct debug_context_t debug_ctx;
+    char response[16];
+    struct server_param_t *my_param = server_param;
+    struct hostent *hp;	/* host information */
+
+    struct sockaddr_in *my_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
+    struct sockaddr_in *scheduler_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
+    int my_fd = socket(AF_INET, SOCK_STREAM, 0);
+    TEST_NEG(my_fd);
+
+    int sockoptval = 1;
+	setsockopt(my_fd, SOL_SOCKET, SO_REUSEADDR, &sockoptval, sizeof(int));
+
+    memset((char *)my_addr, 0, sizeof(struct sockaddr));
+    my_addr->sin_family = AF_INET;
+    my_addr->sin_addr.s_addr = htonl(INADDR_ANY);
+    my_addr->sin_port = htons(0);
+    if(bind(my_fd, my_addr, sizeof(struct sockaddr)) < 0){
+        perror("bind failed");
+        close(my_fd);
+        return;
+    }
+
+    memset((char *)scheduler_addr, 0, sizeof(struct sockaddr));
+    scheduler_addr->sin_family = AF_INET;
+    scheduler_addr->sin_port = htons(atoi(my_param->scheduler_port));
+    hp = gethostbyname(my_param->scheduler_host);
+    //printf("scheduler host, port:%s,%s\n", server_context->scheduler_host, server_context->scheduler_port);
+    memcpy((void *) &(scheduler_addr->sin_addr), hp->h_addr_list[0], hp->h_length);
+
+    if (connect(my_fd, (struct sockaddr *)scheduler_addr, sizeof(struct sockaddr)) <0){
+        perror("connect failed");
+        close(my_fd);
+        return;
+    }
 
 
+    memset(response,0, 16);
 
+    memset((char *)&debug_ctx, 0, sizeof(debug_ctx));
+    strcpy(debug_ctx.status,"close");
+    strcpy(debug_ctx.job_id, my_param->job_id);
+    send(my_fd, (char *)&debug_ctx, sizeof(struct debug_context_t), 0);
+    recv(my_fd, response, 16, 0);
+    //printf("response from schduler: %s\n", response);
+    return;
 
-
-    return NULL;
 }
 
 int on_server_setup_event(struct rdma_cm_event *event, void * server_context ){
