@@ -25,6 +25,7 @@ __attribute__((section("__versions"))) = {
 	{ 0x4c4fef19, __VMLINUX_SYMBOL_STR(kernel_stack) },
 	{ 0xda3e43d1, __VMLINUX_SYMBOL_STR(_raw_spin_unlock) },
 	{ 0x349cba85, __VMLINUX_SYMBOL_STR(strchr) },
+	{ 0x51eafc8e, __VMLINUX_SYMBOL_STR(param_ops_int) },
 	{ 0xd8e484f0, __VMLINUX_SYMBOL_STR(register_chrdev_region) },
 	{ 0xf1ce5bc0, __VMLINUX_SYMBOL_STR(boot_cpu_data) },
 	{ 0xe6e42485, __VMLINUX_SYMBOL_STR(device_destroy) },
@@ -66,4 +67,4 @@ __attribute__((section(".modinfo"))) =
 
 MODULE_ALIAS("pci:v00001014d00003555sv*sd*bc*sc*i*");
 
-MODULE_INFO(srcversion, "F5DDAE1D5F6FCE1DE5BC1CB");
+MODULE_INFO(srcversion, "DDA58E95E43B292A994B7BF");

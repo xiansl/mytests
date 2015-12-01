@@ -244,21 +244,39 @@ class FpgaScheduler(object):
                         return
             return
 
+    def pick_idle_node(self, node_lists):
+        mutex.acquire()
+        idle_node = None
+        c_secs = 0
+        for node in node_lists:
+            if node.if_fpga_available == True:
+                idle_secs = 0
+                for sec_id in node.section_list:
+                    if self.section_list[sec_id].if_idle == True:
+                        idle_secs += 1
+                if idle_secs > c_secs:
+                    idle_node = node.node_ip
+                    c_secs = idle_secs
+        mutex.release()
+        return idle_node
+
+    def pick_idle_section(self, node_ip):
+        mutex.acquire()
+        for sec_id in self.node_list[node_ip].section_list:
+            if self.section_list[sec_id].if_idle == True:
+                return sec_id
+        mutex.release()
+        return None
+
 
     def conduct_fifo_scheduling(self, job_id, event_type):
         if event_type == "JOB_ARRIVAL":
             job_node_ip = self.job_list[job_id].job_node_ip
-            idle_section_list = list()
-            for section_id, section in self.section_list.items():
-                if section.if_idle == True:
-                    idle_section_list.append(section_id)
-
-            if len(idle_section_list):
-                id_index = random.randint(0, len(idle_section_list) - 1)
-                section_id = idle_section_list[id_index]
+            node_ip = self.pick_idle_node(self.node_list)
+            if node_ip != None:
+                section_id = self.pick_idle_section(node_ip)
                 self.trigger_new_job(job_id, section_id)
                 return
-
             self.add_job_to_wait_queue(job_id)
 
         elif event_type == "JOB_COMPLETE":
@@ -281,27 +299,15 @@ class FpgaScheduler(object):
             job_node_ip = self.job_list[job_id].job_node_ip
 
             if self.node_list[job_node_ip].if_fpga_available == True:
-                idle_section_list = list()
-                for section_id in self.node_list[job_node_ip].section_list:
-                    if self.section_list[section_id].if_idle == True:
-                        idle_section_list.append(section_id)
-
-                if len(idle_section_list):
-                    section_id = random.sample(idle_section_list,1)[0]
+                section_id = self.pick_idle_section(job_node_ip)
+                if section_id != None:
                     self.trigger_new_job(job_id, section_id)
                     return
 
             else:
-                idle_section_list = list()
-                for section_id, section in self.section_list.items():
-                    if section.if_idle == True:
-                        idle_section_list.append(section_id)
-
-                if len(idle_section_list):
-                    #print "section len = %r ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" %(len(idle_section_list))
-                    id_index = random.randint(0, len(idle_section_list) - 1)
-                    # print "id_index %r" %id_index
-                    section_id = idle_section_list[id_index]
+                node_ip = self.pick_idle_node(self.node_list)
+                if node_ip != None:
+                    section_id = self.pick_idle_section(node_ip)
                     self.trigger_new_job(job_id, section_id)
                     return
 
@@ -515,7 +521,6 @@ def run_scheduler(port, algorithm, mode, input_file):
     server = Server(address, MyRequestHandler)
     try:
         server.serve_forever()
-
     except KeyboardInterrupt:
         print 'Existing ...'
         server.server_close()
