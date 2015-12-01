@@ -1,4 +1,5 @@
 #include <linux/module.h>
+#include <linux/moduleparam.h>
 #include <linux/init.h>
 #include <linux/fs.h>
 #include <linux/kernel.h>
@@ -51,8 +52,12 @@ struct bw_control_t {
 } __attribute__ ((aligned (64)));
 
 spinlock_t host_trylock;
-// host_span = (46K/1600M)*1000000 us
-#define host_span 18UL
+
+// sim_schedule_block is 32 KByte
+#define sim_schedule_block 32
+// host_span = (sim_schedule_block KB/1600 MB)*1000000 us
+static int dma_bw = 1600;
+static int host_span = 18UL;
 unsigned long host_stamp = 0;
 
 struct bw_control_t bw_control_array [4];
@@ -616,7 +621,7 @@ ssize_t fpgacom_ioctl_acc_open(struct file *filp, struct ioctl_acc_open __user *
 		op.acc_id = accp->acc_info->acc_id;
 
 		bw_control_array [op.port_id].bandwidth = accp->acc_info->max_bw;
-		bw_control_array [op.port_id].ticket_span = (1000000*32/1024/bw_control_array [op.port_id].bandwidth);
+		bw_control_array [op.port_id].ticket_span = (1000000*sim_schedule_block/1024/bw_control_array [op.port_id].bandwidth);
 		printk ("tick span on port %d is %ld us. bandwidth = %ld\n", op.port_id, bw_control_array [op.port_id].ticket_span, bw_control_array [op.port_id].bandwidth);
 
 		if (wukong.fpga_load->port_status[accp->port_id].acc_id != accp->acc_info->acc_id) {
@@ -901,8 +906,8 @@ ssize_t fpgacom_ioctl_acc_wdes(struct fpgacom_private_t * fpgacom_private, struc
 				for (i = 0; i < 4; i ++) {
 					if ((bw_control_array [bw_control_priority].working) && (timetrap > bw_control_array [bw_control_priority].last_stamp)) {
 						bw_control_array [bw_control_priority].last_stamp = timetrap + bw_control_array [bw_control_priority].ticket_span - 10;
-						pass_len += (32*1024);
-						bw_control_array [bw_control_priority].port_credit_left -= (32*1024);
+						pass_len += (sim_schedule_block*1024);
+						bw_control_array [bw_control_priority].port_credit_left -= (sim_schedule_block*1024);
 						bw_control_priority ++;
 						bw_control_priority %= 4;
 						break;
@@ -1274,6 +1279,7 @@ int fpgacom_register_test (void)
 /* Module housekeeping */
 static int __init fpgacom_init(void){
 	int ret;
+	host_span = sim_schedule_block*1000000/1024/dma_bw - 1;
 	dev_t dev = MKDEV( fpgacom_major, fpgacom_minor );
 
 	/* alloc the major	device number dynamicly */
@@ -1365,3 +1371,5 @@ static void __exit fpgacom_exit(void){
 module_init(fpgacom_init);
 
 module_exit(fpgacom_exit);
+
+module_param (dma_bw, int, S_IRUGO);

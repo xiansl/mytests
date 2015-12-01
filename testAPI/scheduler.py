@@ -77,14 +77,13 @@ class MyRequestHandler(BRH):
 
 
 class PowerNode(object):
-    def __init__(self, node_id, node_ip, server_port, pcie_bw, if_fpga_available, section_num, roce_bw):
+    def __init__(self, node_id, node_ip, server_port, pcie_bw, if_fpga_available, section_num):
         self.node_id = node_id
         self.node_ip = node_ip
         self.pcie_bw = pcie_bw
         self.node_port = server_port
         self.if_fpga_available = if_fpga_available
         self.section_num = section_num
-        self.roce_bw = roce_bw
         self.section_list = list()
         self.job_waiting_list = dict()
 
@@ -179,8 +178,8 @@ class FpgaScheduler(object):
                 section_num = 4
             else:
                 section_num = 0
-            roce_bw = float(node_info[4] * 1024)
-            self.node_list[node_ip] = PowerNode(node_id, node_ip, server_port, pcie_bw, if_fpga_available, section_num, roce_bw)
+            network_bw = node_info[4]
+            self.node_list[node_ip] = PowerNode(node_id, node_ip, server_port, pcie_bw, if_fpga_available, section_num)
             if if_fpga_available == 1:
                 for i in range(section_num):
                     section_id = node_ip + ":section" + str(i)
