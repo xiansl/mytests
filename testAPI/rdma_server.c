@@ -193,8 +193,8 @@ void * rdma_server_data_transfer(void * server_param){
         TEST_NZ(rdma_listen(rdma_context->listener, 10));
 
         rdma_context->port = ntohs(rdma_get_src_port(rdma_context->listener));
-        char interface = get_server_ip_addr(INTERFACE);
-        strcpy(my_param->ipaddr, interface);
+        //char interface = get_server_ip_addr(INTERFACE);
+        //strcpy(my_param->ipaddr, interface);
 
         printf("listening on port %d.\n", rdma_context->port);
         write(my_param->pipe[1], &(status), sizeof(int));
