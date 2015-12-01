@@ -31,8 +31,8 @@ int main(int argc, char **argv)
 
 	acc_name = argv[1];
 	count = atoi(argv[2]);
-    	host = argv[3];
-    	port = atoi(argv[4]);
+    host = argv[3];
+    port = atoi(argv[4]);
 	in_buf_size = count * sysconf(_SC_PAGESIZE);
 	out_buf_size = count * sysconf(_SC_PAGESIZE);
 	

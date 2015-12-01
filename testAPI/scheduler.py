@@ -77,14 +77,13 @@ class MyRequestHandler(BRH):
 
 
 class PowerNode(object):
-    def __init__(self, node_id, node_ip, server_port, pcie_bw, if_fpga_available, section_num, roce_bw):
+    def __init__(self, node_id, node_ip, server_port, rdma_host, if_fpga_available, section_num):
         self.node_id = node_id
         self.node_ip = node_ip
-        self.pcie_bw = pcie_bw
         self.node_port = server_port
+        self.rdma_host = rdma_host
         self.if_fpga_available = if_fpga_available
         self.section_num = section_num
-        self.roce_bw = roce_bw
         self.section_list = list()
         self.job_waiting_list = dict()
 
@@ -139,7 +138,7 @@ class FpgaJob(object):
 
 
 class FpgaScheduler(object):
-    def __init__(self, port, algorithm):
+    def __init__(self, port, algorithm, mode):
         self.current_job_count = 0
         self.recv_size = 16 * 6
         self.recv_fmt = "!16s16s16s16s16s16s"
@@ -149,6 +148,7 @@ class FpgaScheduler(object):
         self.recv_from_server_size = 1024
         self.port = port
         self.scheduling_algorithm = algorithm
+        self.mode = mode
         self.section_list = dict()
         self.acc_type_list = dict()  # <acc_name:acc_bw>
         self.node_list = dict()  # <node_ip: PowerNode>
@@ -163,8 +163,8 @@ class FpgaScheduler(object):
         for i, name in enumerate(acc_names):
             self.acc_type_list[name] = acc_bws[i]
 
-    def initiate_node_status(self):
-        f = open("/home/tian/testAPI/fpga_node.txt", "r")
+    def initiate_node_status(self,input_file):
+        f = open(input_file, "r")
         lines = f.readlines()
         f.close()
         lines.pop(0)
@@ -173,14 +173,13 @@ class FpgaScheduler(object):
             node_id = i
             node_ip = node_info[0]
             server_port = node_info[1]
-            pcie_bw = float(node_info[2])
+            rdma_host = node_info[2]
             if_fpga_available = int(node_info[3])
             if if_fpga_available == 1:
                 section_num = 4
             else:
                 section_num = 0
-            roce_bw = float(node_info[4] * 1024)
-            self.node_list[node_ip] = PowerNode(node_id, node_ip, server_port, pcie_bw, if_fpga_available, section_num, roce_bw)
+            self.node_list[node_ip] = PowerNode(node_id, node_ip, server_port, rdma_host, if_fpga_available, section_num)
             if if_fpga_available == 1:
                 for i in range(section_num):
                     section_id = node_ip + ":section" + str(i)
@@ -195,20 +194,89 @@ class FpgaScheduler(object):
                     compatible_acc_list = ["AES", "EC", "DTW", "FFT", "SHA"]
                     self.section_list[section_id] = FpgaSection(section_id, port_id, node_ip, compatible_acc_list)
 
-    def initiate_system_status(self):
+    def initiate_system_status(self, input_file):
         print "[0]Begin to load system infomation ..."
         self.initiate_acc_type_list()
-        self.initiate_node_status()
+        self.initiate_node_status(input_file)
         self.initiate_section_status()
         print "[1] Information loaded. Begin running simulator ..."
 
     def execute_scheduling(self, job_id, event_type):
-        if self.scheduling_algorithm == "FIFO":
-            self.conduct_fifo_scheduling(job_id, event_type)
-        else:
-            self.conduct_locality_scheduling(job_id, event_type)
+        if self.mode == "Local":
+            self.conduct_local_scheduling(job_id, event_type)
 
-    def conduct_locality_scheduling(self, job_id, event_type):
+        else:
+            if self.scheduling_algorithm == "FIFO":
+                self.conduct_fifo_scheduling(job_id, event_type)
+            else:
+                self.conduct_locality_priority_scheduling(job_id, event_type)
+
+    def conduct_local_scheduling(self, job_id, event_type):
+        if event_type == "JOB_ARRIVAL":
+            job_node_ip = self.job_list[job_id].job_node_ip
+            idle_section_list = list()
+            for section_id in self.node_list[job_node_ip].section_list:
+                if self.section_list[section_id].if_idle == True:
+                    idle_section_list.append(section_id)
+
+            if len(idle_section_list):
+                section_id = random.sample(idle_section_list,1)[0]
+                self.trigger_new_job(job_id, section_id)
+                return
+
+            self.add_job_to_wait_queue(job_id)
+
+        elif event_type == "JOB_COMPLETE":
+            section_id = self.job_list[job_id].job_current_section_id
+            section = self.section_list[section_id]
+            section_node_ip = section.node_ip
+            node = self.node_list[section_node_ip]
+            self.section_list[section_id].if_idle = True
+
+            if len(self.job_waiting_list):
+                sorted_list = sorted(self.job_waiting_list.items(), lambda x, y: cmp(x[1], y[1]))
+                for i in range(len(sorted_list)):
+                    job_id = sorted_list[i][0]
+                    job_node_ip = self.job_list[job_id].job_node_ip
+                    if section_node_ip == job_node_ip:
+                        self.trigger_new_job(job_id, section_id)
+                        self.remove_job_from_wait_queue(job_id)
+                        return
+            return
+
+
+    def conduct_fifo_scheduling(self, job_id, event_type):
+        if event_type == "JOB_ARRIVAL":
+            job_node_ip = self.job_list[job_id].job_node_ip
+            idle_section_list = list()
+            for section_id, section in self.section_list.items():
+                if section.if_idle == True:
+                    idle_section_list.append(section_id)
+
+            if len(idle_section_list):
+                id_index = random.randint(0, len(idle_section_list) - 1)
+                section_id = idle_section_list[id_index]
+                self.trigger_new_job(job_id, section_id)
+                return
+
+            self.add_job_to_wait_queue(job_id)
+
+        elif event_type == "JOB_COMPLETE":
+            section_id = self.job_list[job_id].job_current_section_id
+            section = self.section_list[section_id]
+            section_node_ip = section.node_ip
+            node = self.node_list[section_node_ip]
+            self.section_list[section_id].if_idle = True
+
+            if len(self.job_waiting_list):
+                sorted_list = sorted(self.job_waiting_list.items(), lambda x, y: cmp(x[1], y[1]))
+                job_id = sorted_list[0][0]
+                sefl.trigger_new_job(job_id, section_id)
+                self.remove_job_from_wait_queue(job_id)
+                return
+
+
+    def conduct_locality_priority_scheduling(self, job_id, event_type):
         if event_type == "JOB_ARRIVAL":
             job_node_ip = self.job_list[job_id].job_node_ip
 
@@ -248,7 +316,7 @@ class FpgaScheduler(object):
 
             if len(self.job_waiting_list):
                 sorted_list = sorted(self.job_waiting_list.items(), lambda x, y: cmp(x[1], y[1]))
-                default_job_id = sorted_list[-1][0]
+                default_job_id = sorted_list[0][0]
                 for i in range(len(sorted_list)):
                     job_id = sorted_list[i][0]
                     job_node_ip = self.job_list[job_id].job_node_ip
@@ -284,7 +352,7 @@ class FpgaScheduler(object):
 
         else:
             self.job_list[job_id].job_status = "0"
-            if RDMA_FLAG == 1:
+            if self.mode == "RDMA":
                 self.job_list[job_id].job_status = "2"
             self.job_list[job_id].job_if_local = False
 
@@ -388,6 +456,7 @@ class FpgaScheduler(object):
         #print "begin to launch [job %r]" % current_job_id
         section_id = self.job_list[current_job_id].job_current_section_id
         fpga_node_ip = self.job_list[current_job_id].job_server_ip
+        server_rdma_host = self.node_list[fpga_node_ip].rdma_host
         fpga_section_id = self.job_list[current_job_id].job_fpga_port
         fpga_node_port = self.node_list[fpga_node_ip].node_port
         fpga_status = self.job_list[current_job_id].job_status
@@ -422,8 +491,10 @@ class FpgaScheduler(object):
 
             if fpga_status == "0":
                 host = server_host
+
             elif fpga_status == "2":
-                host = response["ip"]
+                host = server_rdma_host
+
             port = response["port"]
             section_id = fpga_section_id
             status = response["ifuse"]
@@ -435,11 +506,10 @@ class FpgaScheduler(object):
         return ret
 
 
-def run_scheduler(port, algorithm):
+def run_scheduler(port, algorithm, mode, input_file):
     global scheduler
-    scheduler = FpgaScheduler(port, algorithm)
-    print type(scheduler)
-    scheduler.initiate_system_status()
+    scheduler = FpgaScheduler(port, algorithm, mode)
+    scheduler.initiate_system_status(input_file)
     host = ''
     address = (host, port)
     server = Server(address, MyRequestHandler)
@@ -452,13 +522,30 @@ def run_scheduler(port, algorithm):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print "Usage: ", sys.argv[0], "<port> <algorithm>"
-        print "Example: ./scheduler 9000 FIFO"
+    if len(sys.argv) != 5:
+        print "Usage: ", sys.argv[0], "<port> <algorithm> <mode> <fpga_info_file>"
+        print "Example: ./scheduler 9000 FIFO Local fpga_node.txt"
+        print "Example: ./scheduler 9000 FIFO TCP /home/zdzhu/fpga_node.txt"
+        print "Example: ./scheduler 9000 FIFO RDMA /home/zdzhu/fpga_node.txt"
     else:
         algorithm = sys.argv[2]
+        mode = ""
         if algorithm == "FIFO":
             print "Using algorithm FIFO ...."
         else:
             print "Using algorithm LOCALITY Sensitive ...."
-        run_scheduler(int(sys.argv[1]), algorithm)
+
+        if sys.argv[3] == "Local":
+            mode == "Local"
+
+        elif sys.argv[3] == "TCP":
+            mode = "TCP"
+
+        elif sys.argv[3] == "RDMA":
+            mode = "RDMA"
+
+        else:
+            print "Wrong mode. Mode should be Local, TCP, RDMA or Hybrid"
+            exit(0)
+        input_file = sys.argv[4]
+        run_scheduler(int(sys.argv[1]), algorithm, mode, input_file)
