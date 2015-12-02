@@ -19,9 +19,7 @@ exe() {
 	fi
 }
 
-cmd="./set_real_job.py $job_num $mean $node"
+cmd="/home/tian/testAPI/deamon.py 5000 tian01 9000 &" 
 exe "$cmd"
-cmd="/home/tian/testAPI/deamon.py 5000 &" 
-exe "$cmd"
-cmd="./execute_job.sh $node &" 
+cmd="./execute_job.sh $node tian01 &" 
 exe "$cmd"

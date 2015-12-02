@@ -1,6 +1,6 @@
 .PHONY: clean
 
-APPS    := accServicelayer.so acc_monitor.so test_bench
+APPS    := accServicelayer.so acc_monitor.so fpga-benchmark
 
 CLIENT_CFLAGS := -I/usr/include
 CLIENT_LIBS := -L/usr/lib/x86_64-linux-gnu
@@ -14,11 +14,8 @@ accServicelayer.so: acc_servicelayer.c tcp_transfer.c rdma_client.c fpga-sim/dri
 	sudo cp libaccServicelayer.so /lib/
 	sudo cp libaccServicelayer.so /usr/local/lib/
 
-test_bench: test_bench.c
-	$(CC) $(CFLAGS) -o test_bench test_bench.c -laccServicelayer 
-
-hybrid-job: hybrid-job.c software-service.c
-	$(CC) $(CFLAGS) -o hybrid-job hybrid-job.c software-service.c -laccServicelayer
+fpga-benchmark: fpga-benchmark.c
+	$(CC) $(CFLAGS) -o fpga-benchmark fpga-benchmark.c -laccServicelayer 
 
 acc_monitor.so: acc_monitor.c 
 	python setup.py build 

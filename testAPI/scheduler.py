@@ -248,14 +248,14 @@ class FpgaScheduler(object):
         mutex.acquire()
         idle_node = None
         c_secs = 0
-        for node in node_lists:
+        for node_ip, node in node_lists.items():
             if node.if_fpga_available == True:
                 idle_secs = 0
                 for sec_id in node.section_list:
                     if self.section_list[sec_id].if_idle == True:
                         idle_secs += 1
                 if idle_secs > c_secs:
-                    idle_node = node.node_ip
+                    idle_node = node_ip
                     c_secs = idle_secs
         mutex.release()
         return idle_node
@@ -264,6 +264,7 @@ class FpgaScheduler(object):
         mutex.acquire()
         for sec_id in self.node_list[node_ip].section_list:
             if self.section_list[sec_id].if_idle == True:
+                mutex.release()
                 return sec_id
         mutex.release()
         return None
@@ -289,7 +290,7 @@ class FpgaScheduler(object):
             if len(self.job_waiting_list):
                 sorted_list = sorted(self.job_waiting_list.items(), lambda x, y: cmp(x[1], y[1]))
                 job_id = sorted_list[0][0]
-                sefl.trigger_new_job(job_id, section_id)
+                self.trigger_new_job(job_id, section_id)
                 self.remove_job_from_wait_queue(job_id)
                 return
 
@@ -297,8 +298,7 @@ class FpgaScheduler(object):
     def conduct_locality_priority_scheduling(self, job_id, event_type):
         if event_type == "JOB_ARRIVAL":
             job_node_ip = self.job_list[job_id].job_node_ip
-
-            if self.node_list[job_node_ip].if_fpga_available == True:
+            if self.node_list[job_node_ip].if_fpga_available == 1:
                 section_id = self.pick_idle_section(job_node_ip)
                 if section_id != None:
                     self.trigger_new_job(job_id, section_id)
@@ -535,10 +535,7 @@ if __name__ == "__main__":
     else:
         algorithm = sys.argv[2]
         mode = ""
-        if algorithm == "FIFO":
-            print "Using algorithm FIFO ...."
-        else:
-            print "Using algorithm LOCALITY Sensitive ...."
+        print "Using algorithm %r ...." %algorithm
 
         if sys.argv[3] == "Local":
             mode == "Local"

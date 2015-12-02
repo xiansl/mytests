@@ -34,6 +34,11 @@ read_conf() {
 	else 
 		algorithm=$ALGORITHM
 	fi
+	if [ -z "$MODE" ]; then
+		mode="TCP"
+	else 
+		mode=$MODE
+    fi
 	if [ -z "$MEAN" ]; then
 		mean="500"
 	else 
@@ -54,14 +59,14 @@ read_conf() {
 	else 
 		other_nodes=$OTHER_NODES
 	fi
-	echo "  Config: $pattern, $algorithm, $mean, $job_num, $fpga_nodes, $other_nodes"
+	echo "  Config: $pattern, $algorithm, $mode, $mean, $job_num, $fpga_nodes, $other_nodes"
 }
 
 # start scheduler on SCHEDULE_NODE, 
 # start server and tests based on PATTERN
 test_start() {
 	# run scheduler on current node 
-	run_scheduler $pattern $algorithm $mean 
+	run_scheduler $pattern $algorithm $mode $mean 
 }
 
 # check scheduler and server status
@@ -114,29 +119,30 @@ exe() {
 run_scheduler() {
 	pattern=$1
 	algorithm=$2
-	mean=$3
+    mode=$3
+	mean=$4
 	
-	echo "  scheduler is using ${algorithm}, mean = ${mean}, pattern = ${pattern}"
+	echo "  scheduler is using ${algorithm}, mode = ${mode}, pattern = ${pattern}"
 	datetime=`date +"%Y%m%d-%H%M"`
-	cmd="/home/tian/testAPI/scheduler.py 9000 ${algorithm} >> $pattern-f$mean-${algorithm}-$datetime.log &"
+	cmd="/home/tian/mytests/testAPI/scheduler.py 9000 ${algorithm} ${mode} fpga_node.txt >> $pattern-f$mean-${algorithm}-$datetime.log &"
 	exe "$cmd"
 	echo "  pattern=$pattern"
 	
 	if [[ $pattern = "Local" ]]; then
 		cmd="pdsh -w $fpga_nodes \"cd $path; ./fpga_node.sh &\""
-		echo "$cmd"; eval "$cmd"
+        exe "$cmd"
 
 	elif [[ $pattern = "Remote" ]]; then
-		cmd="pdsh -w $fpga_nodes \"cd /home/tian/testAPI; ./deamon.py 5000 &\""
-		echo "$cmd"; eval "$cmd"
+		cmd="pdsh -w $fpga_nodes \"cd /home/tian/mytests/testAPI; ./deamon.py 5000 tian01 9000 &\""
+        exe "$cmd"
 		cmd="pdsh -w $other_nodes \"cd $path; ./other_node.sh &\""
-		echo "$cmd"; eval "$cmd"
+        exe "$cmd"
 		
 	else
 		cmd="pdsh -w $fpga_nodes \"cd $path; ./fpga_node.sh &\""
-		echo "$cmd"; eval "$cmd"
+        exe "$cmd"
 		cmd="pdsh -w $other_nodes \"cd $path; ./other_node.sh &\""
-		echo "$cmd"; eval "$cmd"
+        exe "$cmd"
 	fi
 }
 
