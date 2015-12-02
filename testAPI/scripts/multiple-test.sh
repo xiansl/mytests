@@ -15,7 +15,6 @@
 
 # show usage info
 
-path="/home/tian/testAPI/scripts/"
 
 usage() {
 	echo "Usage: test_fpga.sh [start|status|stop]"
@@ -24,52 +23,57 @@ usage() {
 read_conf() {
 	echo "Reading config ..." >&2
 	. ./fpga.cfg
-	if [ -z "$Mode" ]; then
+	if [ -z "$MODE" ]; then
 		Mode="CPU"
 	else 
-		Mode=$Mode
+		Mode=$MODE
 	fi
-	if [ -z "$JobPattern" ]; then
+	if [ -z "$JOBPATTERN" ]; then
         JobPattern="Small"
 	else 
-        JobPattern=$JobPattern
+        JobPattern=$JOBPATTERN
 	fi
-	if [ -z "$Algorithm" ]; then
+	if [ -z "$ALGORITHM" ]; then
         Algorithm="Local"
 	else 
-        Algorithm=$Algorithm
+        Algorithm=$ALGORITHM
 	fi
-	if [ -z "$SchedulerHost" ]; then
+	if [ -z "$SCHEDULER_HOST" ]; then
         SchedulerHost="n1"
 	else 
-        SchedulerHost=$SchedulerHost
+        SchedulerHost=$SCHEDULER_HOST
 	fi
-	if [ -z "$SchedulerPort" ]; then
+	if [ -z "$SCHEDULER_PORT" ]; then
         SchedulerPort="9000"
 	else 
-        SchedulerPort=$SchedulerPort
+        SchedulerPort=$SCHEDULER_PORT
 	fi
-	if [ -z "$DaemonPort" ]; then
-        DaemonPort="9000"
+	if [ -z "$DAEMON_PORT" ]; then
+        DaemonPort="5000"
 	else 
-        DaemonPort=$DaemonPort
+        DaemonPort=$DAEMON_PORT
 	fi
-	if [ -z "$FPGANodes" ]; then
+	if [ -z "$FPGA_NODES" ]; then
         FPGANodes="node1,node2"
 	else 
-        FPGANodes=$FPGANodes
+        FPGANodes=$FPGA_NODES
 	fi
-	if [ -z "$OtherNodes" ]; then
+	if [ -z "$OTHER_NODES" ]; then
         OtherNodes="node1,node2"
 	else 
-        OtherNodes=$OtherNodes
+        OtherNodes=$OTHER_NODES
 	fi
+    if [ -z "$PATH" ]; then
+        Path="$PWD"
+    else
+        Path=$PATH
+    fi
     
-    echo " Confi:   $Mode, $JobPattern, $Algorithm, $SchedulerHost, $SchedulerPort, $DaemonPort, $FPGANodes, $OtherNodes "
+    echo "Config:   $Mode, $JobPattern, $Algorithm, $SchedulerHost, $SchedulerPort, $DaemonPort, $FPGANodes, $OtherNodes $Path "
 }
 
 # start scheduler on SchedulerHost, 
-# start server and tests based on Mode
+# start server and tests based on MODE
 
 test_start() {
 	# run scheduler on current node 
@@ -79,18 +83,36 @@ test_start() {
 # check scheduler and server status
 test_status() {
 	ps aux | grep "/home/tian/testAPI/" | grep "scheduler"
-	if [[ $pattern = "Local" ]]; then
-		echo "Working patter: $pattern"
-		pdsh -w $fpga_nodes 'ps aux | egrep "[d]eamon.py|[e]xecute_job"'
+	echo "Scheduler Mode: $Mode"
 
-	elif [[ $pattern = "Remote" ]]; then
-		echo "Working patter: $pattern"
-		pdsh -w $fpga_nodes 'ps aux | egrep "[d]eamon.py"'
-		pdsh -w $other_nodes 'ps aux | egrep "[e]xecute_job"'
-	else
-		echo "Working patter: $pattern"
-		pdsh -w $fpga_nodes 'ps aux | egrep "[d]eamon.py"'
-		pdsh -w $allnodes 'ps aux | egrep "[e]xecute_job"'
+	if [[ $Mode = "CPU" ]]; then
+		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
+		pdsh -w $AllNodes 'ps aux | egrep "[A]ES-benchmark"'
+		pdsh -w $AllNodes 'ps aux | egrep "[F]FT-benchmark"'
+
+	elif [[ $Mode = "Local" ]]; then
+		pdsh -w $FPGANodes 'ps aux | egrep "[s]cheduler.py"'
+
+		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
+		pdsh -w $FPGANodes 'ps aux | egrep "[f]pga-benchmark"'
+		pdsh -w $OtherNodes 'ps aux | egrep "[A]ES-benchmark"'
+		pdsh -w $OtherNodes 'ps aux | egrep "[F]FT-benchmark"'
+
+    elif [[$Mode = "Hybrid"]]; then  #TCP, RDMA
+		pdsh -w $SchedulerHost 'ps aux | egrep "[s]cheduler.py"'
+		pdsh -w $FPGANodes 'ps aux | egrep "[d]eamon.py"'
+
+		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
+		pdsh -w $AllNodes 'ps aux | egrep "[f]pga-benchmark"'
+		pdsh -w $AllNodes 'ps aux | egrep "[A]ES-benchmark"'
+		pdsh -w $AllNodes 'ps aux | egrep "[F]FT-benchmark"'
+
+	else  #TCP, RDMA
+		pdsh -w $SchedulerHost 'ps aux | egrep "[s]cheduler.py"'
+		pdsh -w $FPGANodes 'ps aux | egrep "[d]eamon.py"'
+
+		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
+		pdsh -w $AllNodes 'ps aux | egrep "[f]pga-benchmark"'
 	fi
 }
 
