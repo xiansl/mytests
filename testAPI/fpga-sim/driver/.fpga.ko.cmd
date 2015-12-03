@@ -1,1 +1,0 @@
-cmd_/home/tian/mytests/testAPI/fpga-sim/driver/fpga.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/tian/mytests/testAPI/fpga-sim/driver/fpga.ko /home/tian/mytests/testAPI/fpga-sim/driver/fpga.o /home/tian/mytests/testAPI/fpga-sim/driver/fpga.mod.o
