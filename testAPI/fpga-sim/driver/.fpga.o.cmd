@@ -1,1 +1,1 @@
-cmd_/home/tian/mytests/testAPI/fpga-sim/driver/fpga.o := ld -m elf_x86_64   -r -o /home/tian/mytests/testAPI/fpga-sim/driver/fpga.o /home/tian/mytests/testAPI/fpga-sim/driver/fpgacom.o /home/tian/mytests/testAPI/fpga-sim/driver/fpgadev.o 
+cmd_/home/900/lxs900/zzd/testAPI/fpga-sim/driver/fpga.o := ld -m elf_x86_64   -r -o /home/900/lxs900/zzd/testAPI/fpga-sim/driver/fpga.o /home/900/lxs900/zzd/testAPI/fpga-sim/driver/fpgacom.o /home/900/lxs900/zzd/testAPI/fpga-sim/driver/fpgadev.o ; scripts/mod/modpost /home/900/lxs900/zzd/testAPI/fpga-sim/driver/fpga.o
