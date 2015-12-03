@@ -76,11 +76,36 @@ read_conf() {
 # start server and tests based on MODE
 
 test_start() {
-	# run scheduler on current node 
-	run_scheduler $pattern $algorithm $mode $mean 
 	if [[ $Mode = "CPU" ]]; then
-	elif [[ $Mode = "Local" ]]; then
-    elif [[$Mode = "Hybrid"]]; then  #TCP, RDMA
+        #execute_job
+        node=
+        cmd="pdsh -w $FPGANodes \"cd $Path/scripts; ./execute_job.sh `hostname` 1 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
+        exe "$cmd"
+        cmd="pdsh -w $OtherNodes \"cd $Path/scripts; ./execute_job.sh `hostname` 0 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
+        exe "$cmd"
+
+    else 
+	    # run scheduler on current node 
+        echo " Scheduler is using ${Algorithm}, Mode ${Mode}, JobPattern ${JobPattern} "
+	    datetime=`date +"%Y%m%d-%H%M"`
+        cmd="${Path}/scheduler.py $SchedulerPort $Algorithm $Mode $Path/fpga_node.txt >>logfile/Scheduler-${Mode}-{JobPattern}-{Algorithm}-${datetime}.log &"
+	    exe "$cmd"
+
+	    if [[ $Mode = "Local" ]]; then
+            cmd="pdsh -w $AllNodes \"cd $Path/scripts; ./execute_job.sh `hostname` 1 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
+            exe "$cmd"
+
+        elif [[$Mode = "Hybrid"]]; then  #TCP, RDMA
+            cmd="pdsh -w $FPGANodes \"cd $Path; ./deamon.py $DaemonPort $SchedulerHost $SchedulerPort &\""
+            exe "$cmd"
+
+            cmd="pdsh -w $FPGANodes \"cd $Path/scripts; ./execute_job.sh `hostname` 1 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
+            exe "$cmd"
+
+            cmd="pdsh -w $OtherNodes \"cd $Path/scripts; ./execute_job.sh `hostname` 0 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
+            exe "$cmd"
+        fi
+    fi
 }
 
 # check scheduler and server status
@@ -89,19 +114,17 @@ test_status() {
 	echo "Scheduler Mode: $Mode"
 
 	if [[ $Mode = "CPU" ]]; then
-		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
-        pdsh -w $AllNodes 'ps aux | egrep "[j]ob-testbench"'
-		#pdsh -w $AllNodes 'ps aux | egrep "[A]ES-benchmark"'
-		#pdsh -w $AllNodes 'ps aux | egrep "[F]FT-benchmark"'
+		cmd="pdsh -w $AllNodes \"ps aux | egrep [e]xecute_job \""
+		cmd="pdsh -w $AllNodes \"ps aux | egrep [e]xecute_job \""
+        exe "$cmd"
+        cmd="pdsh -w $AllNodes \"ps aux | egrep [j]ob-testbench \""
+        exe "$cmd"
 
 	elif [[ $Mode = "Local" ]]; then
 		pdsh -w $FPGANodes 'ps aux | egrep "[s]cheduler.py"'
-
-		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
-        pdsh -w $AllNodes 'ps aux | egrep "[j]ob-testbench"'
-		pdsh -w $FPGANodes 'ps aux | egrep "[f]pga-benchmark"'
-		#pdsh -w $OtherNodes 'ps aux | egrep "[A]ES-benchmark"'
-		#pdsh -w $OtherNodes 'ps aux | egrep "[F]FT-benchmark"'
+		#cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job'\""
+        #pdsh -w $AllNodes 'ps aux | egrep [j]ob-testbench'
+		#pdsh -w $FPGANodes 'ps aux | egrep [f]pga-benchmark'
 
     elif [[$Mode = "Hybrid"]]; then  #TCP, RDMA
 		pdsh -w $SchedulerHost 'ps aux | egrep "[s]cheduler.py"'
@@ -126,17 +149,11 @@ test_status() {
 # kill scheduler on SCHEDULE_NODE, 
 # kill server and tests based on all nodes 
 test_stop() {
-	pkill -9 -f scheduler
-	pdsh -w $fpga_nodes 'pkill -9 -f deamon'
-	if [[ $pattern = "Local" ]]; then
-		pdsh -w $fpganodes 'pkill -9 -f execute_job'
-
-	elif [[ $pattern = "Remote" ]]; then
-		pdsh -w $other_nodes 'pkill -9 -f execute_job'
-		
-	else
-		pdsh -w $allnodes 'pkill -9 -f execute_job'
-
+    if [[ $Mode = "CPU" ]]; then
+        pdsh -w $AllNodes 'pkill -9 -f execute_job'
+    else
+	    pkill -9 -f scheduler
+	    pdsh -w $FPGANodes 'pkill -9 -f deamon'
 	fi
 }
 
@@ -152,38 +169,8 @@ exe() {
 	fi
 }
 
-run_scheduler() {
-	pattern=$1
-	algorithm=$2
-    mode=$3
-	mean=$4
-	
-	echo "  scheduler is using ${algorithm}, mode = ${mode}, pattern = ${pattern}"
-	datetime=`date +"%Y%m%d-%H%M"`
-	cmd="/home/tian/mytests/testAPI/scheduler.py 9000 ${algorithm} ${mode} fpga_node.txt >> $pattern-f$mean-${algorithm}-$datetime.log &"
-	exe "$cmd"
-	echo "  pattern=$pattern"
-	
-	if [[ $pattern = "Local" ]]; then
-		cmd="pdsh -w $fpga_nodes \"cd $path; ./fpga_node.sh &\""
-        exe "$cmd"
-
-	elif [[ $pattern = "Remote" ]]; then
-		cmd="pdsh -w $fpga_nodes \"cd /home/tian/mytests/testAPI; ./deamon.py 5000 tian01 9000 &\""
-        exe "$cmd"
-		cmd="pdsh -w $other_nodes \"cd $path; ./other_node.sh &\""
-        exe "$cmd"
-		
-	else
-		cmd="pdsh -w $fpga_nodes \"cd $path; ./fpga_node.sh &\""
-        exe "$cmd"
-		cmd="pdsh -w $other_nodes \"cd $path; ./other_node.sh &\""
-        exe "$cmd"
-	fi
-}
-
 #read_conf
-Mode="CPU"                  #one of the following: CPU, Local, TCP, RDMA, Hybrid
+Mode="Local"                  #one of the following: CPU, Local, TCP, RDMA, Hybrid
 JobPattern="Small"          #one of the following: Small, Median, Large, Mixed
 Algorithm="Local"           #one of the following: Local, FIFO, Priority
                             #(Local is only used for the mode Local, 
@@ -193,8 +180,8 @@ Algorithm="Local"           #one of the following: Local, FIFO, Priority
 SchedulerHost="0.0.0.0"     #change it to fit your own setting 
 SchedulerPort="9000"
 DAEMON_PORT="5000"
-FPGANodes="tian011,tian02"     #no space between
-OtherNodes="tian03"            #no space between 
+FPGANodes="tian01"     #no space between
+OtherNodes="tian02"            #no space between 
 Path="/home/tian/mytests/testAPI/"
 
 AllNodes="$FPGANodes,$OtherNodes"
