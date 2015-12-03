@@ -163,9 +163,9 @@ void create_acc_list (void) {
 	unsigned long long acc_id;
 	char * head, * tail, * buf = NULL;
 
-	filp=filp_open ("/etc/wukong.conf", O_RDONLY, 0);
+	filp=filp_open ("/home/900/lxs900/zzd/testAPI/fpga-sim/driver/wukong.conf", O_RDONLY, 0);
 	if (IS_ERR (filp)) {
-		printk ("Warning: /etc/wukong.conf is not found. No ACC will be enable.\n");
+		printk ("Warning: /home/900/lxs900/zzd/testAPI/fpga-sim/driver/wukong.conf is not found. No ACC will be enable.\n");
 		return;
 	}
 
