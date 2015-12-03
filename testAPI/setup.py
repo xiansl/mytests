@@ -8,7 +8,7 @@ module1 = Extension('acc_monitor',
                 'pthread',
                 'ibverbs',
                 'fpga'],
-                    library_dirs = ['/usr/lib'] )
+                    library_dirs = ['/usr/lib', '/home/900/lxs900/zzd/testAPI/fpga-sim/driver'] )
 setup (name = 'PackageName',
        version = '1.0',
        description = 'This is a fpga server package',
