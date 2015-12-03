@@ -16,7 +16,7 @@
 #include <memory.h>
 #define DEBUG 1
 #define BACKLOG 5
-#define MTU 4096
+#define MTU (sysconf(_SC_PAGE_SIZE))
 #define MIN(a, b) ((a)>(b)?(b):(a))
 #define MAX_BUFFER_SIZE (1024 * sysconf(_SC_PAGE_SIZE))
 
@@ -76,7 +76,7 @@ int socket_server_open(void *server_param); /*return 0 on success */
 void * tcp_server_data_transfer(void * server_param);
 
 int tcp_local_fpga_open(void * server_param);
-unsigned long tcp_local_fpga_do_job(void * server_context);
+unsigned long tcp_local_fpga_do_job(void * server_context, unsigned int len);
 void tcp_local_fpga_close(void * server_context);
 void server_report_to_scheduler(void * server_context);
 size_t send_msg(int fd, void *buffer, size_t len, size_t chunk);

@@ -12,7 +12,7 @@ processLine(){
   	arg2=$(echo $line | awk '{ print $2 }')
     arg3=$(echo $line | awk '{ print $3 }')
 
-	#sleep $arg3
+	sleep $arg3
 
     ./job-testbench.sh $arg1 $arg2 $SchedulerHost $SchedulerPort $Mode $ifFPGA &
 }
@@ -44,7 +44,8 @@ if [[ "$#" -eq "6" ]]; then
     trap "exit" INT
     while read -r line
     do
-        processLine $line -e
+        #processLine $line -e >>$write_log
+        processLine $line -e 
     done
     exec 0<&3
     #kill $SHELLPID

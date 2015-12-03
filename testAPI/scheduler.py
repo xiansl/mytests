@@ -109,12 +109,14 @@ class FpgaJob(object):
     def __init__(self,
                  job_id,
                  job_node_ip,
+                 real_in_buf_size,
                  job_in_buf_size,
                  job_out_buf_size,
                  job_acc_name,
                  job_arrival_time):
         self.job_id = 0
         self.job_node_ip = job_node_ip
+        self.real_in_buf_size = real_in_buf_size
         self.job_in_buf_size = job_in_buf_size
         self.job_out_buf_size = job_out_buf_size
         self.job_acc_name = job_acc_name
@@ -400,7 +402,7 @@ class FpgaScheduler(object):
         print "[job %r] ARRIVES after %.0f micro-secs, from %r, %r" % (current_job_id, interval, client_addr[0], client_addr[1])
         job_acc_bw = self.acc_type_list[acc_name]
         job_execution_time = (10 ** 6) * float(real_in_buffer_size) / float(job_acc_bw) / (2 ** 20)
-        self.job_list[current_job_id] = FpgaJob(current_job_id, job_node_ip, in_buffer_size, out_buffer_size, acc_name,
+        self.job_list[current_job_id] = FpgaJob(current_job_id, job_node_ip, real_in_buffer_size, in_buffer_size, out_buffer_size, acc_name,
                                                 job_arrival_time)
         self.job_list[current_job_id].job_execution_time = job_execution_time
 
@@ -486,6 +488,7 @@ class FpgaScheduler(object):
             s_data["job_id"] = str(current_job_id)
             s_data["status"] = fpga_status
             s_data["section_id"] = fpga_section_id
+            s_data["real_in_buf_size"]=str(self.job_list[current_job_id].real_in_buf_size)
             s_data["in_buf_size"] = str(self.job_list[current_job_id].job_in_buf_size)
             s_data["out_buf_size"] = str(self.job_list[current_job_id].job_out_buf_size)
             s_data["acc_name"] = self.job_list[current_job_id].job_acc_name

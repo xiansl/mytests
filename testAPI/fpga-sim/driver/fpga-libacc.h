@@ -230,6 +230,7 @@ struct server_param_t {
     char scheduler_host[16];
     char scheduler_port[16];
     int pipe[2];
+    unsigned int real_in_buf_size;
     unsigned int in_buf_size;
     unsigned int out_buf_size;
 };

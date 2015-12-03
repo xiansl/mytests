@@ -6,19 +6,41 @@
 #
 # prerequisite:
 # 1. modify fpga_node.txt with node information
-# 2. modify fpga.cfg for your environment
-#
-# usage: ./multiple-test.sh [start|stop|status]
+# 2. modify paramters in this scipt for your environment
 #
 
-# read node list from fpga_node.txt
-
-# show usage info
-
+Mode="Local"                    #one of the following: CPU, Local, TCP, RDMA, Hybrid
+JobPattern="Small"              #one of the following: Small, Median, Large, Mixed
+Algorithm="Local"               #one of the following: Local, FIFO, Priority
+                                #(Local is only used for the mode Local, 
+                                #don't set it when you use a different mode; 
+                                #Local means the scheduler is running locally, 
+                                #and only receives jobs from the same node)
+SchedulerHost="0.0.0.0"         #change it to fit your own setting 
+SchedulerPort="9000"
+DAEMON_PORT="5000"
+FPGANodes="tian01"              #no space between
+OtherNodes="tian02"             #no space between 
+Path="/home/tian/mytests/testAPI/"
 
 usage() {
+    echo ""
+    echo "**************"
+    echo "mutiple-test.sh"
+    echo "for performance testing"
+    echo "Prerequisite: "
+    echo "1. Modify fpga_node.txt with node information"
+    echo "2. Please edit this script and set proper variables before you run it."
+    echo "   Variables needing to be moddified are at the beginning of the codes"
+    echo ""
+    echo "After that, you can run this script with one of the following paramters:"
+    echo ""
 	echo "Usage: test_fpga.sh [start|status|stop]"
+    echo ""
+    echo "**************"
+    echo ""
 }
+
 
 read_conf() {
 	echo "Reading config ..." >&2
@@ -110,26 +132,27 @@ test_start() {
 
 # check scheduler and server status
 test_status() {
-	ps aux | grep "$Path" | grep "scheduler"
+	cmd="ps aux | grep \"$Path\" | grep \"scheduler\""
+    exe "$cmd"
 	echo "Scheduler Mode: $Mode"
 
 	if [[ $Mode = "CPU" ]]; then
 		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job\" \""
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"execute_job\" \""
+		cmd="pdsh -w $AllNodes \"ps aux | grep sh| egrep \"execute_job\" \""
         exe "$cmd"
         cmd="pdsh -w $AllNodes \"ps aux | egrep \"[j]ob-testbench\" \""
         cmd="pdsh -w $AllNodes \"ps aux | egrep \"job-testbench\" \""
         exe "$cmd"
 
 	elif [[ $Mode = "Local" ]]; then
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[s]cheduler.py\"\""
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"scheduler.py\"\""
+		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"[s]cheduler.py\"\""
+		cmd="pdsh -w $AllNodes \"ps aux | grep python| egrep  \"scheduler.py\"\""
         exe "$cmd"
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job'\""
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"execute_job'\""
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job\"\""
+		cmd="pdsh -w $AllNodes \"ps aux | grep sh| egrep \"execute_job\"\""
         exe "$cmd"
 
-    elif [[$Mode = "Hybrid"]]; then  #TCP, RDMA
+    elif [[$Mode = "Hybrid"]]; then  #TCP
 		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"[s]cheduler.py\"\""
 		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"scheduler.py\"\""
         exe "$cmd"
@@ -152,11 +175,16 @@ test_status() {
 
 	else  #TCP, RDMA
 		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"[s]cheduler.py\"\""
-		pdsh -w $FPGANodes 'ps aux | egrep "[d]eamon.py"'
+		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"scheduler.py\"\""
+        exe "$cmd"
 
-		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
-        pdsh -w $AllNodes 'ps aux | egrep "[j]ob-testbench"'
-		pdsh -w $AllNodes 'ps aux | egrep "[f]pga-benchmark"'
+		cmd="pdsh -w $FPGANodes \"ps aux | egrep \"[d]eamon.py\"\""
+		cmd="pdsh -w $FPGANodes \"ps aux | egrep \"deamon.py\"\""
+        exe "$cmd"
+
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job\"\""
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"execute_job\"\""
+        exe "$cmd"
 	fi
 }
 
@@ -164,10 +192,14 @@ test_status() {
 # kill server and tests based on all nodes 
 test_stop() {
     if [[ $Mode = "CPU" ]]; then
-        pdsh -w $AllNodes 'pkill -9 -f execute_job'
+        cmd="pdsh -w $allnodes \"pkill -9 -f execute_job\"\""
+        exe "$cmd"
     else
-	    pkill -9 -f scheduler
-	    pdsh -w $FPGANodes 'pkill -9 -f deamon'
+	    cmd="pkill -9 -f scheduler"
+        exe "$cmd"
+
+	    cmd="pdsh -w $FPGANodes \"pkill -9 -f deamon\""
+        exe "$cmd"
 	fi
 }
 
@@ -184,19 +216,6 @@ exe() {
 }
 
 #read_conf
-Mode="Local"                  #one of the following: CPU, Local, TCP, RDMA, Hybrid
-JobPattern="Small"          #one of the following: Small, Median, Large, Mixed
-Algorithm="Local"           #one of the following: Local, FIFO, Priority
-                            #(Local is only used for the mode Local, 
-                            #don't set it when you use a different mode; 
-                            #Local means the scheduler is running locally, 
-                            #and only receives jobs from the same node)
-SchedulerHost="0.0.0.0"     #change it to fit your own setting 
-SchedulerPort="9000"
-DAEMON_PORT="5000"
-FPGANodes="tian01"     #no space between
-OtherNodes="tian02"            #no space between 
-Path="/home/tian/mytests/testAPI/"
 
 AllNodes="$FPGANodes,$OtherNodes"
 

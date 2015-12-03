@@ -7,22 +7,27 @@ size_t send_msg(int fd, void *buffer, size_t len, size_t chunk)
     char *c_ptr = (char *) buffer;
     size_t block = chunk, left_block = len, sent_block = 0;
 
-    if (len < chunk){ 
-        //printf("send small message ........\n");
+    if (len <= chunk){ 
+        printf("send small message ........\n");
         return send(fd, buffer, len, 0);
     }
 
     while(sent_block < len) {
-        //printf("send.....\n");
         block = send(fd, c_ptr, chunk, 0);
-        if (block <= 0){
-            //printf("nothing to send\n");
+        if (block < 0){
+            printf("Fail to send");
+            printf("sent block =%d\n", block);
+        }
+        if (block == 0){
+            printf("nothing to send\n");
             break;
         }
         sent_block += block;
         left_block -= block;
         chunk = left_block > chunk ? chunk : left_block;
         c_ptr += block;
+        printf("sent block =%d\n", sent_block);
+
     }
     return sent_block; 
 }
@@ -31,6 +36,7 @@ size_t recv_msg(int fd, void *buffer, size_t len, size_t chunk)
 {
     char *c_ptr = buffer;
     size_t block = chunk, left_block = len, recv_block = 0;
+    int stop_flag = 0;
 
     if (len <= chunk){ 
         //printf("recv small message ........\n");
@@ -40,15 +46,16 @@ size_t recv_msg(int fd, void *buffer, size_t len, size_t chunk)
     while (recv_block < len) {
         //printf("recv.....\n");
         block = recv(fd, c_ptr, chunk, 0);
-        if (block <= 0){
+        if (block == 0){
             //printf("nothing to recv\n");
             break;
         }
-        //printf("recv block %zu\n", block);
-        recv_block += chunk;
-        left_block -= chunk;
+
+        recv_block += block;
+        left_block -= block;
         chunk = left_block > chunk ? chunk : left_block;
         c_ptr += block;
+        printf("recv block %zu\n", recv_block);
     }
     return recv_block; 
 }
@@ -125,13 +132,13 @@ int build_connection_to_tcp_server(void *acc_ctx) {
 
 
 unsigned int remote_tcp_do_job(void *acc_ctx, const char *param, unsigned int job_len, void ** result_buf) {
+    printf("job_len = %d\n", job_len);
     struct acc_context_t *acc_context = (struct acc_context_t *) acc_ctx;
     struct tcp_client_context_t *tcp_ctx = (struct tcp_client_context_t *)acc_context->tcp_context;
     unsigned int recv_buf_size;
     *result_buf = tcp_ctx->out_buf;
     char *in_buf = (char *)tcp_ctx->in_buf;
     int fd = tcp_ctx->to_server_fd;
-    //printf("job_len = %d\n", job_len);
     size_t len = send_msg(fd, in_buf, job_len, MTU); 
     //printf("send to remote server...\n");
     recv_buf_size = recv_msg(fd, *result_buf, job_len, MTU);
@@ -203,12 +210,13 @@ void * tcp_server_data_transfer(void * server_param) {
     strcpy(server_context.scheduler_port, my_param->scheduler_port);
     server_context.in_buf_size = my_param->in_buf_size;
     server_context.out_buf_size = my_param->out_buf_size;
+    unsigned int real_buf_size = my_param->real_in_buf_size;
     //printf("my_param->in_buf_size=%u, out_buf_size=%u\n",my_param->in_buf_size, my_param->out_buf_size);
 
 
     int status = tcp_local_fpga_open((void *)&server_context);
     sprintf(my_param->status, "%d", status);
-    if (status) {
+    if (status != 0) {
         printf("Fail to open %s.\n", my_param->acc_name);
         write(my_param->pipe[1], &status, sizeof(int));
         return NULL;
@@ -267,7 +275,6 @@ void * tcp_server_data_transfer(void * server_param) {
     char *recv_buff = (char *)memset(malloc(recv_len),0, recv_len); //buffer
 
     while (1) {
-    
         if( (recv_size = recv_msg(rqst_fd, recv_buff, recv_len, MTU)) < 0){
             printf("fail to receive\n");
             exit(1);
@@ -279,16 +286,22 @@ void * tcp_server_data_transfer(void * server_param) {
             break;
         }
         /*do jo*/ 
-        memcpy(server_context.in_buf, recv_buff, recv_len);
-        unsigned long ret = tcp_local_fpga_do_job((void *)&server_context);
-        //printf("ret = %lu\n", ret);
-        memcpy(send_buff, server_context.out_buf, send_len);
+        printf("recv size =%ld\n", recv_size);
+        memcpy(server_context.in_buf, recv_buff, recv_size);
+        unsigned long ret = tcp_local_fpga_do_job((void *)&server_context, recv_size);
+        printf("ret = %lu\n", ret);
+        memcpy(send_buff, server_context.out_buf, ret);
         
-        if ( (send_size = send_msg(rqst_fd, send_buff, send_len, MTU))< 0){
+        if ( (send_size = send_msg(rqst_fd, send_buff, ret, MTU))< 0){
             printf("fail to send\n");
             exit(1);
         }
-        //printf("send size from server:%zu\n", send_size);
+        printf("send size from server:%zu\n", send_size);
+        real_buf_size -= recv_len;
+        recv_len = real_buf_size > recv_len ? recv_len : real_buf_size;
+        if (recv_len == 0)
+            recv_len += 1;
+    
     }
 
     close(rqst_fd);
@@ -311,19 +324,19 @@ int tcp_local_fpga_open(void * server_context){
     my_context->in_buf = pri_acc_open((struct acc_handler_t *)(my_context->acc_handler), my_context->acc_name, my_context->in_buf_size, my_context->out_buf_size, section_id);
     if(my_context->in_buf == NULL){
         printf("open %s fails.\n", my_context->acc_name);
-        return 1;
+        return -1;
     }
     printf("open %s successfully\n", my_context->acc_name);
 
     return 0;//return status;
 }
 
-unsigned long tcp_local_fpga_do_job(void * server_context){
+unsigned long tcp_local_fpga_do_job(void * server_context, unsigned int len){
     struct tcp_server_context_t * my_context = (struct tcp_server_context_t *)server_context;
     char param[16];
     param[0]=0x24;
     void *result_buf = NULL;
-    long ret = acc_do_job((struct acc_handler_t *)(my_context->acc_handler), param, my_context->in_buf_size, &(result_buf));
+    long ret = acc_do_job((struct acc_handler_t *)(my_context->acc_handler), param, len, &(result_buf));
     my_context->out_buf = result_buf;
     printf("do job finished\n");
     return ret;

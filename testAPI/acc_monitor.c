@@ -20,9 +20,9 @@
 static PyObject* start_service(PyObject *self, PyObject *args)
 {
     PyObject * ret;
-    const char *job_id, *status, *section_id, *c_in_buf_size, *c_out_buf_size, *c_acc_name, *scheduler_host, *scheduler_port;
+    const char *job_id, *status, *section_id, *c_real_in_buf_size, *c_in_buf_size, *c_out_buf_size, *c_acc_name, *scheduler_host, *scheduler_port;
 
-    if (!PyArg_ParseTuple(args, "ssssssss", &job_id, &status, &section_id, &c_in_buf_size, &c_out_buf_size, &c_acc_name, &scheduler_host, &scheduler_port)){
+    if (!PyArg_ParseTuple(args, "sssssssss", &job_id, &status, &section_id, &c_real_in_buf_size, &c_in_buf_size, &c_out_buf_size, &c_acc_name, &scheduler_host, &scheduler_port)){
     	return NULL;
     }
 
@@ -31,6 +31,7 @@ static PyObject* start_service(PyObject *self, PyObject *args)
 
     strcpy(server_param.job_id, job_id);
     strcpy(server_param.section_id, section_id); 
+    server_param.real_in_buf_size = atoi(c_real_in_buf_size);
     server_param.in_buf_size = atoi(c_in_buf_size);
     server_param.out_buf_size = atoi(c_out_buf_size);
     strcpy(server_param.acc_name, c_acc_name);
