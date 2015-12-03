@@ -114,30 +114,44 @@ test_status() {
 	echo "Scheduler Mode: $Mode"
 
 	if [[ $Mode = "CPU" ]]; then
-		cmd="pdsh -w $AllNodes \"ps aux | egrep [e]xecute_job \""
-		cmd="pdsh -w $AllNodes \"ps aux | egrep [e]xecute_job \""
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job\" \""
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"execute_job\" \""
         exe "$cmd"
-        cmd="pdsh -w $AllNodes \"ps aux | egrep [j]ob-testbench \""
+        cmd="pdsh -w $AllNodes \"ps aux | egrep \"[j]ob-testbench\" \""
+        cmd="pdsh -w $AllNodes \"ps aux | egrep \"job-testbench\" \""
         exe "$cmd"
 
 	elif [[ $Mode = "Local" ]]; then
-		pdsh -w $FPGANodes 'ps aux | egrep "[s]cheduler.py"'
-		#cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job'\""
-        #pdsh -w $AllNodes 'ps aux | egrep [j]ob-testbench'
-		#pdsh -w $FPGANodes 'ps aux | egrep [f]pga-benchmark'
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[s]cheduler.py\"\""
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"scheduler.py\"\""
+        exe "$cmd"
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job'\""
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"execute_job'\""
+        exe "$cmd"
 
     elif [[$Mode = "Hybrid"]]; then  #TCP, RDMA
-		pdsh -w $SchedulerHost 'ps aux | egrep "[s]cheduler.py"'
-		pdsh -w $FPGANodes 'ps aux | egrep "[d]eamon.py"'
+		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"[s]cheduler.py\"\""
+		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"scheduler.py\"\""
+        exe "$cmd"
 
-		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
-        pdsh -w $AllNodes 'ps aux | egrep "[j]ob-testbench"'
-		pdsh -w $AllNodes 'ps aux | egrep "[f]pga-benchmark"'
-		#pdsh -w $AllNodes 'ps aux | egrep "[A]ES-benchmark"'
-		#pdsh -w $AllNodes 'ps aux | egrep "[F]FT-benchmark"'
+		cmd="pdsh -w $FPGANodes \"ps aux | egrep \"[d]eamon.py\"\""
+		cmd="pdsh -w $FPGANodes \"ps aux | egrep \"deamon.py\"\""
+        exe "$cmd"
+
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job\"\""
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"execute_job\"\""
+        exe "$cmd"
+
+        cmd="pdsh -w $AllNodes \"ps aux | egrep \"[j]ob-testbench\"\""
+        cmd="pdsh -w $AllNodes \"ps aux | egrep \"job-testbench\"\""
+        exe "$cmd"
+
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[f]pga-benchmark\"\""
+		cmd="pdsh -w $AllNodes \"ps aux | egrep \"fpga-benchmark\"\""
+        exe "$cmd"
 
 	else  #TCP, RDMA
-		pdsh -w $SchedulerHost 'ps aux | egrep "[s]cheduler.py"'
+		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"[s]cheduler.py\"\""
 		pdsh -w $FPGANodes 'ps aux | egrep "[d]eamon.py"'
 
 		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'

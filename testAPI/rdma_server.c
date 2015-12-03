@@ -414,15 +414,14 @@ void post_receive_for_msg(struct connection_t *connection){
 }
 void build_context(struct ibv_context *verbs, void * rdma_ctx){
     struct rdma_context_t * rdma_context = (struct rdma_context_t *)rdma_ctx;
-    struct cq_context_t *s_ctx = rdma_context->s_ctx;
-    if (s_ctx) {
-      if (s_ctx->ctx != verbs)
+    if (rdma_context->s_ctx) {
+      if (rdma_context->s_ctx->ctx != verbs)
         die("cannot handle events in more than one context.");
 
       return;
     }
-
-    s_ctx = (struct cq_context_t *)malloc(sizeof(struct cq_context_t));
+    rdma_context->s_ctx = (struct cq_context_t *)malloc(sizeof(struct cq_context_t));
+    struct cq_context_t *s_ctx = rdma_context->s_ctx;
 
     s_ctx->ctx = verbs;
 
