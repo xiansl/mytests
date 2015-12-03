@@ -1,3 +1,9 @@
 mbedtls-2.2.0*
-test_platform/*.o
-test_platform/build/*/*.o
+*.o
+*/*.o
+*/*/*.o
+*/*/*/*.o
+test_platform/*
+!*/*.o
+!*/*.so
+
