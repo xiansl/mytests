@@ -37,7 +37,7 @@ struct message
   } data;
 };
 
-struct cq_context_t{
+struct context_t{
   struct ibv_context *ctx;
   struct ibv_pd *pd;
   struct ibv_cq *cq;
@@ -74,7 +74,6 @@ struct rdma_context_t {
     struct rdma_cm_id *listener;
     struct rdma_event_channel *ec;
     struct connection_t *connection;
-    struct cq_context_t *s_ctx;
 };
 
 
@@ -90,7 +89,7 @@ struct rdma_server_context_t {
     void * acc_handler;
 };
 
-
+struct context_t *s_ctx = NULL;
 
 void die(const char *reason);
 
@@ -310,8 +309,6 @@ void build_connection(struct rdma_cm_id *id, void *server_context){
 
     struct connection_t *connection = rdma_context->connection;
 
-    struct cq_context_t *s_ctx = rdma_context->s_ctx;
-    s_ctx = NULL;
     id->context = connection;
     connection->id = id;
     connection->qp = id->qp;
@@ -341,7 +338,6 @@ void build_qp_attr(struct ibv_qp_init_attr *qp_attr, void *server_context){
     struct rdma_server_context_t *server_ctx = (struct rdma_server_context_t *)server_context;
 
     struct rdma_context_t * rdma_context = (struct rdma_context_t *)server_ctx->rdma_context;
-    struct cq_context_t * s_ctx = rdma_context->s_ctx;
     memset(qp_attr, 0, sizeof(*qp_attr));
 
     qp_attr->send_cq = s_ctx->cq;
@@ -370,25 +366,25 @@ void register_memory(void *server_ctx){
     connection->send_msg = malloc(sizeof(struct message));
     connection->recv_msg = malloc(sizeof(struct message));
     TEST_Z(connection->send_region_mr = ibv_reg_mr(
-      rdma_context->s_ctx->pd, 
+      s_ctx->pd, 
       connection->send_region, 
       send_buf_size, 
       IBV_ACCESS_LOCAL_WRITE));
 
     TEST_Z(connection->recv_region_mr = ibv_reg_mr(
-      rdma_context->s_ctx->pd, 
+      s_ctx->pd, 
       connection->recv_region, 
       recv_buf_size, 
       IBV_ACCESS_LOCAL_WRITE | IBV_ACCESS_REMOTE_WRITE));
 
     TEST_Z(connection->send_msg_mr = ibv_reg_mr(
-      rdma_context->s_ctx->pd, 
+      s_ctx->pd, 
       connection->send_msg, 
       sizeof(struct message), 
       IBV_ACCESS_LOCAL_WRITE));
 
     TEST_Z(connection->recv_msg_mr = ibv_reg_mr(
-      rdma_context->s_ctx->pd, 
+      s_ctx->pd, 
       connection->recv_msg, 
       sizeof(struct message), 
       IBV_ACCESS_LOCAL_WRITE | IBV_ACCESS_REMOTE_WRITE));
@@ -414,15 +410,13 @@ void post_receive_for_msg(struct connection_t *connection){
 }
 void build_context(struct ibv_context *verbs, void * rdma_ctx){
     struct rdma_context_t * rdma_context = (struct rdma_context_t *)rdma_ctx;
-    if (rdma_context->s_ctx) {
-      if (rdma_context->s_ctx->ctx != verbs)
+    if (s_ctx) {
+      if (s_ctx->ctx != verbs)
         die("cannot handle events in more than one context.");
 
       return;
     }
-    rdma_context->s_ctx = (struct cq_context_t *)malloc(sizeof(struct cq_context_t));
-    struct cq_context_t *s_ctx = rdma_context->s_ctx;
-
+    s_ctx = (struct context_t *)malloc(sizeof(struct context_t));
     s_ctx->ctx = verbs;
 
     TEST_Z(s_ctx->pd = ibv_alloc_pd(s_ctx->ctx));
@@ -441,7 +435,6 @@ void poll_cq(struct rdma_server_context_t *server_context){
     void *ctx = NULL;
 
     struct rdma_context_t *rdma_context = server_context->rdma_context;
-    struct cq_context_t * s_ctx = rdma_context->s_ctx;
     while (1) {
       TEST_NZ(ibv_get_cq_event(s_ctx->comp_channel, &cq, &ctx));
       ibv_ack_cq_events(cq, 1);

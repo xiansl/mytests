@@ -67,10 +67,9 @@ struct rdma_client_context_t {
     void * acc_handler;
     struct rdma_cm_id *id;
     struct rdma_event_channel *ec;
-    struct context_t *s_ctx;
 };
 
-//struct context_t *s_ctx = NULL;
+struct context_t *s_ctx = NULL;
 const int TIMEOUT_IN_MS = 500; /* ms */
 
 //int build_connection_to_rdma_server(void *acc_ctx);
@@ -119,7 +118,6 @@ void build_rdma_client_context(void * acc_ctx){
 
     struct scheduler_context_t * scheduler_ctx = (struct scheduler_context_t *)(acc_context->scheduler_context);
 
-    rdma_context->s_ctx = NULL;
 
     strcpy(rdma_context->ipaddr, scheduler_ctx->server_host);
 
@@ -262,7 +260,6 @@ void build_connection(struct rdma_cm_id *id, void *acc_ctx){
 
     struct rdma_client_context_t * rdma_context = (struct rdma_client_context_t *)(acc_context->rdma_context);
 
-    struct context_t *s_ctx = rdma_context->s_ctx;
 
     struct ibv_qp_init_attr qp_attr;
     struct connection_t *conn;
@@ -287,7 +284,6 @@ void build_context(struct ibv_context *verbs, void * acc_ctx){
 
     struct rdma_client_context_t * rdma_context = (struct rdma_client_context_t *)(acc_context->rdma_context);
 
-    struct context_t *s_ctx = rdma_context->s_ctx;
     if (s_ctx) {
         if (s_ctx->ctx != verbs)
             die("cannot handle events in more than one context.");
@@ -310,7 +306,6 @@ void register_memory(struct connection_t *conn, void *acc_ctx){
 
     struct rdma_client_context_t * rdma_context = (struct rdma_client_context_t *)(acc_context->rdma_context);
 
-    struct context_t *s_ctx = rdma_context->s_ctx;
 
     unsigned int send_buf_size = rdma_context->in_buf_size;
     unsigned int recv_buf_size = rdma_context->out_buf_size;
@@ -461,7 +456,6 @@ void poll_cq(void *ctx, void *acc_ctx)
 
     struct rdma_client_context_t * rdma_context = (struct rdma_client_context_t *)(acc_context->rdma_context);
 
-    struct context_t *s_ctx = rdma_context->s_ctx;
 
   struct ibv_cq *cq;
   struct ibv_wc wc;
@@ -567,7 +561,6 @@ void build_qp_attr(struct ibv_qp_init_attr *qp_attr, void *acc_ctx){
 
     struct rdma_client_context_t * rdma_context = (struct rdma_client_context_t *)(acc_context->rdma_context);
 
-    struct context_t *s_ctx = rdma_context->s_ctx;
     memset(qp_attr, 0, sizeof(*qp_attr));
 
     qp_attr->send_cq = s_ctx->cq;
