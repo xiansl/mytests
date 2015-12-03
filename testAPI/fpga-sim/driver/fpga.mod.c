@@ -4,60 +4,61 @@
 
 MODULE_INFO(vermagic, VERMAGIC_STRING);
 
-__visible struct module __this_module
+struct module __this_module
 __attribute__((section(".gnu.linkonce.this_module"))) = {
-	.name = KBUILD_MODNAME,
-	.init = init_module,
+ .name = KBUILD_MODNAME,
+ .init = init_module,
 #ifdef CONFIG_MODULE_UNLOAD
-	.exit = cleanup_module,
+ .exit = cleanup_module,
 #endif
-	.arch = MODULE_ARCH_INIT,
+ .arch = MODULE_ARCH_INIT,
 };
 
 static const struct modversion_info ____versions[]
 __used
 __attribute__((section("__versions"))) = {
-	{ 0x3e11a5cc, __VMLINUX_SYMBOL_STR(module_layout) },
-	{ 0xea2b5c03, __VMLINUX_SYMBOL_STR(cdev_del) },
-	{ 0xf4b8d8f0, __VMLINUX_SYMBOL_STR(kmalloc_caches) },
-	{ 0xd2b09ce5, __VMLINUX_SYMBOL_STR(__kmalloc) },
-	{ 0x9d6ef12e, __VMLINUX_SYMBOL_STR(cdev_init) },
-	{ 0x4c4fef19, __VMLINUX_SYMBOL_STR(kernel_stack) },
-	{ 0xda3e43d1, __VMLINUX_SYMBOL_STR(_raw_spin_unlock) },
-	{ 0x349cba85, __VMLINUX_SYMBOL_STR(strchr) },
-	{ 0x51eafc8e, __VMLINUX_SYMBOL_STR(param_ops_int) },
-	{ 0xd8e484f0, __VMLINUX_SYMBOL_STR(register_chrdev_region) },
-	{ 0xf1ce5bc0, __VMLINUX_SYMBOL_STR(boot_cpu_data) },
-	{ 0xe6e42485, __VMLINUX_SYMBOL_STR(device_destroy) },
-	{ 0xe288e1f8, __VMLINUX_SYMBOL_STR(filp_close) },
-	{ 0x7485e15e, __VMLINUX_SYMBOL_STR(unregister_chrdev_region) },
-	{ 0x91715312, __VMLINUX_SYMBOL_STR(sprintf) },
-	{ 0x4f8b5ddb, __VMLINUX_SYMBOL_STR(_copy_to_user) },
-	{ 0x3c80c06c, __VMLINUX_SYMBOL_STR(kstrtoull) },
-	{ 0x6db7ad0c, __VMLINUX_SYMBOL_STR(current_task) },
-	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
-	{ 0xe15f42bb, __VMLINUX_SYMBOL_STR(_raw_spin_trylock) },
-	{ 0x4c9d28b0, __VMLINUX_SYMBOL_STR(phys_base) },
-	{ 0x9166fada, __VMLINUX_SYMBOL_STR(strncpy) },
-	{ 0x5a921311, __VMLINUX_SYMBOL_STR(strncmp) },
-	{ 0x7b734bad, __VMLINUX_SYMBOL_STR(device_create) },
-	{ 0xc5fdef94, __VMLINUX_SYMBOL_STR(call_usermodehelper) },
-	{ 0x376e4b6a, __VMLINUX_SYMBOL_STR(cdev_add) },
-	{ 0x5944d015, __VMLINUX_SYMBOL_STR(__cachemode2pte_tbl) },
-	{ 0x93fca811, __VMLINUX_SYMBOL_STR(__get_free_pages) },
-	{ 0xdb7305a1, __VMLINUX_SYMBOL_STR(__stack_chk_fail) },
-	{ 0xbdfb6dbb, __VMLINUX_SYMBOL_STR(__fentry__) },
-	{ 0x42ef5893, __VMLINUX_SYMBOL_STR(kmem_cache_alloc_trace) },
-	{ 0xd52bf1ce, __VMLINUX_SYMBOL_STR(_raw_spin_lock) },
-	{ 0x4302d0eb, __VMLINUX_SYMBOL_STR(free_pages) },
-	{ 0x4f68e5c9, __VMLINUX_SYMBOL_STR(do_gettimeofday) },
-	{ 0x37a0cba, __VMLINUX_SYMBOL_STR(kfree) },
-	{ 0x12a91227, __VMLINUX_SYMBOL_STR(remap_pfn_range) },
-	{ 0xd37222c9, __VMLINUX_SYMBOL_STR(class_destroy) },
-	{ 0x4f6b400b, __VMLINUX_SYMBOL_STR(_copy_from_user) },
-	{ 0x9ddce636, __VMLINUX_SYMBOL_STR(__class_create) },
-	{ 0x29537c9e, __VMLINUX_SYMBOL_STR(alloc_chrdev_region) },
-	{ 0x881352a9, __VMLINUX_SYMBOL_STR(filp_open) },
+	{ 0x14522340, "module_layout" },
+	{ 0x42e80c19, "cdev_del" },
+	{ 0x4f1939c7, "per_cpu__current_task" },
+	{ 0x5a34a45c, "__kmalloc" },
+	{ 0x7ee91c1d, "_spin_trylock" },
+	{ 0xc45a9f63, "cdev_init" },
+	{ 0x4d71232a, "call_usermodehelper_setfns" },
+	{ 0xcde6aeae, "call_usermodehelper_exec" },
+	{ 0x349cba85, "strchr" },
+	{ 0x6980fe91, "param_get_int" },
+	{ 0xd8e484f0, "register_chrdev_region" },
+	{ 0xd691cba2, "malloc_sizes" },
+	{ 0xdd822018, "boot_cpu_data" },
+	{ 0x973873ab, "_spin_lock" },
+	{ 0x7edc1537, "device_destroy" },
+	{ 0x6f0154d3, "filp_close" },
+	{ 0x7485e15e, "unregister_chrdev_region" },
+	{ 0xff964b25, "param_set_int" },
+	{ 0x3c2c5af5, "sprintf" },
+	{ 0x60ea2d6, "kstrtoull" },
+	{ 0xea147363, "printk" },
+	{ 0x7ec9bfbc, "strncpy" },
+	{ 0x85f8a266, "copy_to_user" },
+	{ 0xb4390f9a, "mcount" },
+	{ 0x85abc85f, "strncmp" },
+	{ 0x6dcaeb88, "per_cpu__kernel_stack" },
+	{ 0x2d2cf7d, "device_create" },
+	{ 0xa6d1bdca, "cdev_add" },
+	{ 0x93fca811, "__get_free_pages" },
+	{ 0xf0fdf6cb, "__stack_chk_fail" },
+	{ 0x2044fa9e, "kmem_cache_alloc_trace" },
+	{ 0xe52947e7, "__phys_addr" },
+	{ 0x4302d0eb, "free_pages" },
+	{ 0xdeac3097, "call_usermodehelper_setup" },
+	{ 0x1d2e87c6, "do_gettimeofday" },
+	{ 0x37a0cba, "kfree" },
+	{ 0xc911f7f0, "remap_pfn_range" },
+	{ 0xe06bb002, "class_destroy" },
+	{ 0xa2654165, "__class_create" },
+	{ 0x3302b500, "copy_from_user" },
+	{ 0x29537c9e, "alloc_chrdev_region" },
+	{ 0x371af43, "filp_open" },
 };
 
 static const char __module_depends[]
@@ -68,3 +69,9 @@ __attribute__((section(".modinfo"))) =
 MODULE_ALIAS("pci:v00001014d00003555sv*sd*bc*sc*i*");
 
 MODULE_INFO(srcversion, "DDA58E95E43B292A994B7BF");
+
+static const struct rheldata _rheldata __used
+__attribute__((section(".rheldata"))) = {
+	.rhel_major = 6,
+	.rhel_minor = 6,
+};
