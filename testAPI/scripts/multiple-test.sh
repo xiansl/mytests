@@ -78,40 +78,47 @@ read_conf() {
 test_start() {
 	# run scheduler on current node 
 	run_scheduler $pattern $algorithm $mode $mean 
+	if [[ $Mode = "CPU" ]]; then
+	elif [[ $Mode = "Local" ]]; then
+    elif [[$Mode = "Hybrid"]]; then  #TCP, RDMA
 }
 
 # check scheduler and server status
 test_status() {
-	ps aux | grep "/home/tian/testAPI/" | grep "scheduler"
+	ps aux | grep "$Path" | grep "scheduler"
 	echo "Scheduler Mode: $Mode"
 
 	if [[ $Mode = "CPU" ]]; then
 		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
-		pdsh -w $AllNodes 'ps aux | egrep "[A]ES-benchmark"'
-		pdsh -w $AllNodes 'ps aux | egrep "[F]FT-benchmark"'
+        pdsh -w $AllNodes 'ps aux | egrep "[j]ob-testbench"'
+		#pdsh -w $AllNodes 'ps aux | egrep "[A]ES-benchmark"'
+		#pdsh -w $AllNodes 'ps aux | egrep "[F]FT-benchmark"'
 
 	elif [[ $Mode = "Local" ]]; then
 		pdsh -w $FPGANodes 'ps aux | egrep "[s]cheduler.py"'
 
 		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
+        pdsh -w $AllNodes 'ps aux | egrep "[j]ob-testbench"'
 		pdsh -w $FPGANodes 'ps aux | egrep "[f]pga-benchmark"'
-		pdsh -w $OtherNodes 'ps aux | egrep "[A]ES-benchmark"'
-		pdsh -w $OtherNodes 'ps aux | egrep "[F]FT-benchmark"'
+		#pdsh -w $OtherNodes 'ps aux | egrep "[A]ES-benchmark"'
+		#pdsh -w $OtherNodes 'ps aux | egrep "[F]FT-benchmark"'
 
     elif [[$Mode = "Hybrid"]]; then  #TCP, RDMA
 		pdsh -w $SchedulerHost 'ps aux | egrep "[s]cheduler.py"'
 		pdsh -w $FPGANodes 'ps aux | egrep "[d]eamon.py"'
 
 		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
+        pdsh -w $AllNodes 'ps aux | egrep "[j]ob-testbench"'
 		pdsh -w $AllNodes 'ps aux | egrep "[f]pga-benchmark"'
-		pdsh -w $AllNodes 'ps aux | egrep "[A]ES-benchmark"'
-		pdsh -w $AllNodes 'ps aux | egrep "[F]FT-benchmark"'
+		#pdsh -w $AllNodes 'ps aux | egrep "[A]ES-benchmark"'
+		#pdsh -w $AllNodes 'ps aux | egrep "[F]FT-benchmark"'
 
 	else  #TCP, RDMA
 		pdsh -w $SchedulerHost 'ps aux | egrep "[s]cheduler.py"'
 		pdsh -w $FPGANodes 'ps aux | egrep "[d]eamon.py"'
 
 		pdsh -w $AllNodes 'ps aux | egrep "[e]xecute_job"'
+        pdsh -w $AllNodes 'ps aux | egrep "[j]ob-testbench"'
 		pdsh -w $AllNodes 'ps aux | egrep "[f]pga-benchmark"'
 	fi
 }
@@ -175,8 +182,22 @@ run_scheduler() {
 	fi
 }
 
-read_conf
-allnodes="$fpga_nodes,$other_nodes"
+#read_conf
+Mode="CPU"                  #one of the following: CPU, Local, TCP, RDMA, Hybrid
+JobPattern="Small"          #one of the following: Small, Median, Large, Mixed
+Algorithm="Local"           #one of the following: Local, FIFO, Priority
+                            #(Local is only used for the mode Local, 
+                            #don't set it when you use a different mode; 
+                            #Local means the scheduler is running locally, 
+                            #and only receives jobs from the same node)
+SchedulerHost="0.0.0.0"     #change it to fit your own setting 
+SchedulerPort="9000"
+DAEMON_PORT="5000"
+FPGANodes="tian011,tian02"     #no space between
+OtherNodes="tian03"            #no space between 
+Path="/home/tian/mytests/testAPI/"
+
+AllNodes="$FPGANodes,$OtherNodes"
 
 if [[ "$#" -eq "1" ]]; then
 	if  [[ "$1" = "start" ]]; then
