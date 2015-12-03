@@ -2,8 +2,8 @@
 
 usage() {
     echo "usage: execute_job.sh [local_node  if_fpga_available  schedule_mode  job_pattern scheduler_host scheduler_port]"
-    echo "Example: execute_job.sh n1 1 Small tian01 9000"
-    echo "Example: execute_job.sh n0 0 Mixed tian01 9000"
+    echo "Example: execute_job.sh n1 1 TCP Small tian01 9000"
+    echo "Example: execute_job.sh n0 0 RDMA Mixed tian01 9000"
 }
 
 processLine(){

@@ -58,7 +58,7 @@ int main(int argc, char **argv)
         memset(in_buffer, 0, chunk_size);
         while(sent_block_size < in_buf_size){
             ret = fpga_acc_do_job(&my_context, param, chunk_size, &result_buf);
-            printf("ret=%ld\n", ret);
+            //printf("ret=%ld\n", ret);
             sent_block_size += ret;
             left_block_size -= ret;
             chunk_size = left_block_size > chunk_size ? chunk_size: left_block_size;

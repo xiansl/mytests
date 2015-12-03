@@ -536,9 +536,15 @@ if __name__ == "__main__":
         print "Example: ./scheduler 9000 FIFO TCP /home/zdzhu/fpga_node.txt"
         print "Example: ./scheduler 9000 FIFO RDMA /home/zdzhu/fpga_node.txt"
     else:
-        algorithm = sys.argv[2]
+        algorithm=""
         mode = ""
-        print "Using algorithm %r ...." %algorithm
+        if sys.argv[2] == "FIFO" or sys.argv[2] == "Local" or sys.argv[2] == "Priority":
+            algorithm = sys.argv[2]
+            print "Using algorithm %r ...." %algorithm
+        else:
+            print "Wrong Scheduler name. Scheduler should be Local, FIFO, or Priority."
+            exit(0)
+
 
         if sys.argv[3] == "Local":
             mode == "Local"
@@ -548,6 +554,9 @@ if __name__ == "__main__":
 
         elif sys.argv[3] == "RDMA":
             mode = "RDMA"
+
+        elif sys.argv[3] == "Hybrid":
+            mode = "Hybrid"
 
         else:
             print "Wrong mode. Mode should be Local, TCP, RDMA or Hybrid"

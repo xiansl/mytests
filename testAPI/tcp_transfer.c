@@ -8,7 +8,7 @@ size_t send_msg(int fd, void *buffer, size_t len, size_t chunk)
     size_t block = chunk, left_block = len, sent_block = 0;
 
     if (len <= chunk){ 
-        printf("send small message ........\n");
+        //printf("send small message ........\n");
         return send(fd, buffer, len, 0);
     }
 
@@ -26,7 +26,7 @@ size_t send_msg(int fd, void *buffer, size_t len, size_t chunk)
         left_block -= block;
         chunk = left_block > chunk ? chunk : left_block;
         c_ptr += block;
-        printf("sent block =%d\n", sent_block);
+        //printf("sent block =%d\n", sent_block);
 
     }
     return sent_block; 
@@ -55,7 +55,7 @@ size_t recv_msg(int fd, void *buffer, size_t len, size_t chunk)
         left_block -= block;
         chunk = left_block > chunk ? chunk : left_block;
         c_ptr += block;
-        printf("recv block %zu\n", recv_block);
+        //printf("recv block %zu\n", recv_block);
     }
     return recv_block; 
 }
@@ -132,7 +132,7 @@ int build_connection_to_tcp_server(void *acc_ctx) {
 
 
 unsigned int remote_tcp_do_job(void *acc_ctx, const char *param, unsigned int job_len, void ** result_buf) {
-    printf("job_len = %d\n", job_len);
+    //printf("job_len = %d\n", job_len);
     struct acc_context_t *acc_context = (struct acc_context_t *) acc_ctx;
     struct tcp_client_context_t *tcp_ctx = (struct tcp_client_context_t *)acc_context->tcp_context;
     unsigned int recv_buf_size;
@@ -289,7 +289,7 @@ void * tcp_server_data_transfer(void * server_param) {
         printf("recv size =%ld\n", recv_size);
         memcpy(server_context.in_buf, recv_buff, recv_size);
         unsigned long ret = tcp_local_fpga_do_job((void *)&server_context, recv_size);
-        printf("ret = %lu\n", ret);
+        //printf("ret = %lu\n", ret);
         memcpy(send_buff, server_context.out_buf, ret);
         
         if ( (send_size = send_msg(rqst_fd, send_buff, ret, MTU))< 0){
@@ -300,7 +300,7 @@ void * tcp_server_data_transfer(void * server_param) {
         real_buf_size -= recv_len;
         recv_len = real_buf_size > recv_len ? recv_len : real_buf_size;
         if (recv_len == 0)
-            recv_len += 1;
+            recv_len += MTU;
     
     }
 

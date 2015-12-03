@@ -24,10 +24,10 @@ class JobInitiator(object):
         self.target = open("job-pattern/"+node+"-"+pattern+".txt",'a')
 
     def generate_job(self, job_num):
-        default_size = 256      #1M
-        s_size = 1024*10        #40MB
-        m_size = 1024*1024      #4GB
-        l_size = 256*1024*10    #10GB
+        default_size = 256      #1MB
+        s_size = 256*8          #8MB
+        m_size = 512*1024       #2GB
+        l_size = 2*1024*1024    #8GB
 
         mixed = {"small":0.3, "median":0.3, "large":0.4}
         job_list = [i for i in range(job_num)]

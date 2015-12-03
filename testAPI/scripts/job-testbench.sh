@@ -5,7 +5,7 @@ usage(){
 }
 
 function exe {
-	echo $1
+	#echo $1
 	eval $1
 }
 

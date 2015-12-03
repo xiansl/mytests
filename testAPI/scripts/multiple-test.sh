@@ -9,14 +9,14 @@
 # 2. modify paramters in this scipt for your environment
 #
 
-Mode="Local"                    #one of the following: CPU, Local, TCP, RDMA, Hybrid
+Mode="TCP"                    #one of the following: CPU, Local, TCP, RDMA, Hybrid
 JobPattern="Small"              #one of the following: Small, Median, Large, Mixed
 Algorithm="Local"               #one of the following: Local, FIFO, Priority
                                 #(Local is only used for the mode Local, 
                                 #don't set it when you use a different mode; 
                                 #Local means the scheduler is running locally, 
                                 #and only receives jobs from the same node)
-SchedulerHost="0.0.0.0"         #change it to fit your own setting 
+SchedulerHost="p01"         #change it to fit your own setting 
 SchedulerPort="9000"
 DAEMON_PORT="5000"
 FPGANodes="tian01"              #no space between
@@ -108,16 +108,16 @@ test_start() {
 
     else 
 	    # run scheduler on current node 
-        echo " Scheduler is using ${Algorithm}, Mode ${Mode}, JobPattern ${JobPattern} "
+        echo " Scheduler is using ${Algorithm}, Mode: ${Mode}, JobPattern: ${JobPattern} "
 	    datetime=`date +"%Y%m%d-%H%M"`
-        cmd="${Path}/scheduler.py $SchedulerPort $Algorithm $Mode $Path/fpga_node.txt >>logfile/Scheduler-${Mode}-{JobPattern}-{Algorithm}-${datetime}.log &"
+        cmd="${Path}/scheduler.py $SchedulerPort $Algorithm $Mode $Path/fpga_node.txt >>logfile/Scheduler-${Mode}-${JobPattern}-${Algorithm}-${datetime}.log &"
 	    exe "$cmd"
 
 	    if [[ $Mode = "Local" ]]; then
             cmd="pdsh -w $AllNodes \"cd $Path/scripts; ./execute_job.sh `hostname` 1 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
             exe "$cmd"
 
-        elif [[$Mode = "Hybrid"]]; then  #TCP, RDMA
+        elif [[ $Mode = "Hybrid" ]]; then  #TCP, RDMA
             cmd="pdsh -w $FPGANodes \"cd $Path; ./deamon.py $DaemonPort $SchedulerHost $SchedulerPort &\""
             exe "$cmd"
 
