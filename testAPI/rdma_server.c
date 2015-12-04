@@ -196,7 +196,8 @@ void * rdma_server_data_transfer(void * server_param){
         //strcpy(my_param->ipaddr, interface);
 
         printf("listening on port %d.\n", rdma_context->port);
-        write(my_param->pipe[1], &(status), sizeof(int));
+        sprintf(my_param->port, "%d", rdma_context->port);
+		write(my_param->pipe[1], &(status), sizeof(int));
 
         while (rdma_get_cm_event(rdma_context->ec, &(rdma_context->event)) == 0) {
             struct rdma_cm_event event_copy;
@@ -288,6 +289,7 @@ int on_connect_request(struct rdma_cm_id *id, void *server_context){
     printf("received connection request.\n");
     struct rdma_conn_param cm_params;
     printf("building connection......\n");
+    printf("building connection......\n");
     build_connection(id, server_context);
     printf("building param......\n");
     build_params(&cm_params);
@@ -301,28 +303,21 @@ int rdma_local_fpga_open(void *server_ctx){
 }
 
 void build_connection(struct rdma_cm_id *id, void *server_context){
-    struct rdma_server_context_t *server_ctx = (struct rdma_server_context_t *)server_context;
+    struct ibv_qp_init_attr qp_attr;
+    struct connection_t *connection;
+    struct rdma_context_t * rdma_context = ((struct rdma_server_context_t *)server_context)->rdma_context;
+    build_context(id->verbs, rdma_context); 
+    build_qp_attr(&qp_attr, server_context); 
+	TEST_NZ(rdma_create_qp(id, s_ctx->pd, &qp_attr));
+    
+    id->context = connection = (struct connection_t *)malloc(sizeof(struct connection_t));
 
-    struct rdma_context_t * rdma_context = (struct rdma_context_t *)server_ctx->rdma_context;
-
-    rdma_context->connection = (struct connection_t *)malloc(sizeof(struct connection_t));
-
-    struct connection_t *connection = rdma_context->connection;
-
-    id->context = connection;
+    rdma_context->connection = connection;
     connection->id = id;
     connection->qp = id->qp;
 
-    struct ibv_qp_init_attr qp_attr;
-    build_context(id->verbs, rdma_context);
-    build_qp_attr(&qp_attr, server_context);
-
-    TEST_NZ(rdma_create_qp(id, s_ctx->pd, &qp_attr));
-
-
     register_memory(server_context);
-    post_receive_for_msg(connection);
-
+    post_receive_for_msg(connection); 
     return;
 }
 
