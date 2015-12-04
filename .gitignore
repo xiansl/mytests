@@ -4,6 +4,6 @@ mbedtls-2.2.0*
 */*/*.o
 */*/*/*.o
 test_platform/*
-!*/*.o
-!*/*.so
+testAPI/*.o
+testAPI/*.so
 
