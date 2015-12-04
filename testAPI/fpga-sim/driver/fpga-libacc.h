@@ -232,6 +232,7 @@ struct server_param_t {
     int pipe[2];
     unsigned int in_buf_size;
     unsigned int out_buf_size;
+    unsigned int real_in_buf_size;
 };
 
 int __acc_open(struct acc_handler_t * acc_handler, int port_id);
