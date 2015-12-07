@@ -81,6 +81,9 @@ struct rdma_server_context_t {
     char section_id[16];
     char status[16];
     char acc_name[64];
+    char scheduler_host[16];
+    char scheduler_port[16];
+    char job_id[16];
     unsigned int in_buf_size;
     unsigned int out_buf_size;
     void * in_buf;
@@ -165,10 +168,18 @@ void rdma_server_open(void *server_param){
 void * rdma_server_data_transfer(void * server_param){
     	struct      server_param_t * my_param = (struct server_param_t *)server_param;
         struct rdma_server_context_t server_context;
+        struct acc_handler_t acc_handler;
+        memset(&acc_handler, 0, sizeof(acc_handler));
         memset((void *)&server_context, 0, sizeof(server_context));
+
+	    server_context.acc_handler = &(acc_handler);
         strcpy(server_context.section_id, my_param->section_id);
         strcpy(server_context.status, my_param->status);
         strcpy(server_context.acc_name, my_param->acc_name);
+        strcpy(server_context.job_id, my_param->job_id);
+        strcpy(server_context.scheduler_host, my_param->scheduler_host);
+        strcpy(server_context.scheduler_port, my_param->scheduler_port);
+
         server_context.in_buf_size = my_param->in_buf_size;
         server_context.out_buf_size = my_param->out_buf_size;
 
@@ -219,14 +230,14 @@ void * rdma_server_data_transfer(void * server_param){
         }
         printf("Disconnect ... \n");
         rdma_destroy_event_channel(rdma_context->ec);
-        report_to_scheduler(server_param);
+        report_to_scheduler(&(server_context));
         return NULL;
 }
 
-void report_to_scheduler(void *server_param){
+void report_to_scheduler(void *server_ctx){
     struct debug_context_t debug_ctx;
+    struct rdma_server_context_t * server_context = (struct rdma_server_context_t *)server_ctx;
     char response[16];
-    struct server_param_t *my_param = server_param;
     struct hostent *hp;	/* host information */
 
     struct sockaddr_in *my_addr = (struct sockaddr_in *)malloc(sizeof(struct sockaddr_in));
@@ -249,8 +260,8 @@ void report_to_scheduler(void *server_param){
 
     memset((char *)scheduler_addr, 0, sizeof(struct sockaddr));
     scheduler_addr->sin_family = AF_INET;
-    scheduler_addr->sin_port = htons(atoi(my_param->scheduler_port));
-    hp = gethostbyname(my_param->scheduler_host);
+    scheduler_addr->sin_port = htons(atoi(server_context->scheduler_port));
+    hp = gethostbyname(server_context->scheduler_host);
     //printf("scheduler host, port:%s,%s\n", server_context->scheduler_host, server_context->scheduler_port);
     memcpy((void *) &(scheduler_addr->sin_addr), hp->h_addr_list[0], hp->h_length);
 
@@ -265,7 +276,7 @@ void report_to_scheduler(void *server_param){
 
     memset((char *)&debug_ctx, 0, sizeof(debug_ctx));
     strcpy(debug_ctx.status,"close");
-    strcpy(debug_ctx.job_id, my_param->job_id);
+    strcpy(debug_ctx.job_id, server_context->job_id);
     send(my_fd, (char *)&debug_ctx, sizeof(struct debug_context_t), 0);
     recv(my_fd, response, 16, 0);
     //printf("response from schduler: %s\n", response);
@@ -289,7 +300,6 @@ int on_connect_request(struct rdma_cm_id *id, void *server_context){
     printf("received connection request.\n");
     struct rdma_conn_param cm_params;
     printf("building connection......\n");
-    printf("building connection......\n");
     build_connection(id, server_context);
     printf("building param......\n");
     build_params(&cm_params);
@@ -299,7 +309,24 @@ int on_connect_request(struct rdma_cm_id *id, void *server_context){
 
 
 int rdma_local_fpga_open(void *server_ctx){
-    return 2;
+    struct rdma_server_context_t*  server_context = (struct rdma_server_context_t *) server_ctx;
+    int section_id = atoi(server_context->section_id);
+    int return_flag = 0;
+
+printf("debug %s %d %d %d\n", server_context->acc_name, server_context->in_buf_size, server_context->out_buf_size, section_id);
+
+    server_context->in_buf = pri_acc_open((struct acc_handler_t * )(server_context->acc_handler), server_context->acc_name, server_context->in_buf_size, server_context->out_buf_size, section_id);
+
+    if (server_context->in_buf == NULL){
+        printf("Open %s fail\n", server_context->acc_name);
+
+        return_flag = -1;
+    }
+    else
+        return_flag = 2;
+    sprintf(server_context->status, "%d", return_flag);
+    return return_flag;
+
 }
 
 void build_connection(struct rdma_cm_id *id, void *server_context){
@@ -332,7 +359,6 @@ void build_params(struct rdma_conn_param *params){
 void build_qp_attr(struct ibv_qp_init_attr *qp_attr, void *server_context){
     struct rdma_server_context_t *server_ctx = (struct rdma_server_context_t *)server_context;
 
-    struct rdma_context_t * rdma_context = (struct rdma_context_t *)server_ctx->rdma_context;
     memset(qp_attr, 0, sizeof(*qp_attr));
 
     qp_attr->send_cq = s_ctx->cq;
@@ -404,7 +430,6 @@ void post_receive_for_msg(struct connection_t *connection){
     return;
 }
 void build_context(struct ibv_context *verbs, void * rdma_ctx){
-    struct rdma_context_t * rdma_context = (struct rdma_context_t *)rdma_ctx;
     if (s_ctx) {
       if (s_ctx->ctx != verbs)
         die("cannot handle events in more than one context.");
@@ -429,7 +454,6 @@ void poll_cq(struct rdma_server_context_t *server_context){
 
     void *ctx = NULL;
 
-    struct rdma_context_t *rdma_context = server_context->rdma_context;
     while (1) {
       TEST_NZ(ibv_get_cq_event(s_ctx->comp_channel, &cq, &ctx));
       ibv_ack_cq_events(cq, 1);
@@ -472,7 +496,7 @@ int on_completion(struct ibv_wc *wc, struct rdma_server_context_t *server_contex
 	        return 1;
         }
 
-        else {
+        else { 
 		    //copy input data from RDMA to FPGA
         	memcpy(server_context->in_buf, connection->recv_region, server_context->in_buf_size);
 
@@ -483,7 +507,7 @@ int on_completion(struct ibv_wc *wc, struct rdma_server_context_t *server_contex
 		    memcpy(connection->send_region, server_context->out_buf, server_context->out_buf_size);
             post_receive(connection);
             server_write_remote(connection, (uint32_t) server_context->out_buf_size);
-        } 
+        }  
     }
     return 0;
 }
@@ -597,14 +621,21 @@ int on_disconnect(struct rdma_cm_id *id, struct rdma_server_context_t *server_co
   return 1; /* exit event loop */
 }
 void local_fpga_close(void *server_ctx){
-
     struct rdma_server_context_t *server_context = (struct rdma_server_context_t *)server_ctx;
     acc_close(server_context->acc_handler);
     printf("Close acc successfully.\n");
     return;
 }
 void local_fpga_do_job(struct rdma_server_context_t * server_context){
-    printf("do job");
+    struct rdma_server_context_t* server_ctx = (struct rdma_server_context_t *)server_context;
+    char param[16];
+    param[0]=0x24;
+    void *result_buf = NULL;
+    unsigned int len = server_context->in_buf_size;
+    long ret = acc_do_job((struct acc_handler_t *)(server_ctx->acc_handler),param, len, &(result_buf));
+    server_context->out_buf = result_buf;
+    //server_context->out_buf = malloc(server_context->in_buf_size);
+    return;
 };
 
 char * get_server_ip_addr(char * interface){

@@ -9,6 +9,7 @@ function exe {
 	eval $1
 }
 
+source ../env.sh
 
 if [[ "$#" -eq "6" ]]; then
     acc_name=$1;

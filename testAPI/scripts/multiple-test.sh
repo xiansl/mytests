@@ -16,12 +16,12 @@ Algorithm="Local"               #one of the following: Local, FIFO, Priority
                                 #don't set it when you use a different mode; 
                                 #Local means the scheduler is running locally, 
                                 #and only receives jobs from the same node)
-SchedulerHost="p01"         #change it to fit your own setting 
+SchedulerHost="r2"         #change it to fit your own setting 
 SchedulerPort="9000"
-DAEMON_PORT="5000"
-FPGANodes="tian01"              #no space between
-OtherNodes="tian02"             #no space between 
-Path="/home/tian/mytests/testAPI/"
+DaemonPort="5000"
+FPGANodes="r2"              #no space between
+OtherNodes="r3"             #no space between 
+Path="/home/900/lxs900/zzd/testAPI"
 
 usage() {
     echo ""
@@ -40,7 +40,6 @@ usage() {
     echo "**************"
     echo ""
 }
-
 
 read_conf() {
 	echo "Reading config ..." >&2
@@ -85,10 +84,10 @@ read_conf() {
 	else 
         OtherNodes=$OTHER_NODES
 	fi
-    if [ -z "$PATH" ]; then
+    if [ -z "$CODEPATH" ]; then
         Path="$PWD"
     else
-        Path=$PATH
+        Path=$CODEPATH
     fi
     
     echo "Config:   $Mode, $JobPattern, $Algorithm, $SchedulerHost, $SchedulerPort, $DaemonPort, $FPGANodes, $OtherNodes $Path "
@@ -100,10 +99,7 @@ read_conf() {
 test_start() {
 	if [[ $Mode = "CPU" ]]; then
         #execute_job
-        node=
-        cmd="pdsh -w $FPGANodes \"cd $Path/scripts; ./execute_job.sh `hostname` 1 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
-        exe "$cmd"
-        cmd="pdsh -w $OtherNodes \"cd $Path/scripts; ./execute_job.sh `hostname` 0 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
+        cmd="pdsh -w $AllNodes cd $Path/scripts; ./other_node.sh" 
         exe "$cmd"
 
     else 
@@ -114,17 +110,14 @@ test_start() {
 	    exe "$cmd"
 
 	    if [[ $Mode = "Local" ]]; then
-            cmd="pdsh -w $AllNodes \"cd $Path/scripts; ./execute_job.sh `hostname` 1 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
+            cmd="pdsh -w $AllNodes cd $Path/scripts; ./other_node_1.sh" 
             exe "$cmd"
 
-        elif [[ $Mode = "Hybrid" ]]; then  #TCP, RDMA
-            cmd="pdsh -w $FPGANodes \"cd $Path; ./deamon.py $DaemonPort $SchedulerHost $SchedulerPort &\""
+        else  #TCP, RDMA
+            cmd="pdsh -w $FPGANodes cd $Path/scripts; ./fpga_node.sh" 
             exe "$cmd"
 
-            cmd="pdsh -w $FPGANodes \"cd $Path/scripts; ./execute_job.sh `hostname` 1 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
-            exe "$cmd"
-
-            cmd="pdsh -w $OtherNodes \"cd $Path/scripts; ./execute_job.sh `hostname` 0 $Mode $JobPattern $SchedulerHost $SchedulerPort &\"" 
+            cmd="pdsh -w $OtherNodes cd $Path/scripts; ./other_node.sh" 
             exe "$cmd"
         fi
     fi
@@ -137,53 +130,41 @@ test_status() {
 	echo "Scheduler Mode: $Mode"
 
 	if [[ $Mode = "CPU" ]]; then
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job\" \""
-		cmd="pdsh -w $AllNodes \"ps aux | grep sh| egrep \"execute_job\" \""
+		cmd="pdsh -w $AllNodes ps aux | egrep \"[e]xecute_job\" "
         exe "$cmd"
-        cmd="pdsh -w $AllNodes \"ps aux | egrep \"[j]ob-testbench\" \""
-        cmd="pdsh -w $AllNodes \"ps aux | egrep \"job-testbench\" \""
+        cmd="pdsh -w $AllNodes ps aux | egrep \"[j]ob-testbench\" "
         exe "$cmd"
 
 	elif [[ $Mode = "Local" ]]; then
-		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"[s]cheduler.py\"\""
-		cmd="pdsh -w $AllNodes \"ps aux | grep python| egrep  \"scheduler.py\"\""
+		cmd="pdsh -w $SchedulerHost ps aux | egrep \"[s]cheduler.py\""
         exe "$cmd"
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job\"\""
-		cmd="pdsh -w $AllNodes \"ps aux | grep sh| egrep \"execute_job\"\""
+		cmd="pdsh -w $AllNodes ps aux | egrep \"[e]xecute_job\""
         exe "$cmd"
 
-    elif [[$Mode = "Hybrid"]]; then  #TCP
-		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"[s]cheduler.py\"\""
-		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"scheduler.py\"\""
+    elif [[ $Mode = "Hybrid" ]]; then  #TCP
+		cmd="pdsh -w $SchedulerHost ps aux | egrep \"[s]cheduler.py\""
         exe "$cmd"
 
-		cmd="pdsh -w $FPGANodes \"ps aux | egrep \"[d]eamon.py\"\""
-		cmd="pdsh -w $FPGANodes \"ps aux | egrep \"deamon.py\"\""
+		cmd="pdsh -w $FPGANodes ps aux | egrep \"[d]eamon.py\""
         exe "$cmd"
 
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job\"\""
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"execute_job\"\""
+		cmd="pdsh -w $AllNodes ps aux | egrep \"[e]xecute_job\""
         exe "$cmd"
 
-        cmd="pdsh -w $AllNodes \"ps aux | egrep \"[j]ob-testbench\"\""
-        cmd="pdsh -w $AllNodes \"ps aux | egrep \"job-testbench\"\""
+        cmd="pdsh -w $AllNodes ps aux | egrep \"[j]ob-testbench\""
         exe "$cmd"
 
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[f]pga-benchmark\"\""
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"fpga-benchmark\"\""
+		cmd="pdsh -w $AllNodes ps aux | egrep \"[f]pga-benchmark\""
         exe "$cmd"
 
 	else  #TCP, RDMA
-		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"[s]cheduler.py\"\""
-		cmd="pdsh -w $SchedulerHost \"ps aux | egrep \"scheduler.py\"\""
+		cmd="pdsh -w $SchedulerHost ps aux | egrep \"[s]cheduler.py\""
         exe "$cmd"
 
-		cmd="pdsh -w $FPGANodes \"ps aux | egrep \"[d]eamon.py\"\""
-		cmd="pdsh -w $FPGANodes \"ps aux | egrep \"deamon.py\"\""
+		cmd="pdsh -w $FPGANodes ps aux | egrep \"[d]eamon.py\""
         exe "$cmd"
 
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"[e]xecute_job\"\""
-		cmd="pdsh -w $AllNodes \"ps aux | egrep \"execute_job\"\""
+		cmd="pdsh -w $AllNodes ps aux | egrep \"[e]xecute_job\""
         exe "$cmd"
 	fi
 }
@@ -192,7 +173,7 @@ test_status() {
 # kill server and tests based on all nodes 
 test_stop() {
     if [[ $Mode = "CPU" ]]; then
-        cmd="pdsh -w $allnodes \"pkill -9 -f execute_job\"\""
+        cmd="pdsh -w $allnodes \"pkill -9 -f execute_job\""
         exe "$cmd"
     else
 	    cmd="pkill -9 -f scheduler"
@@ -215,7 +196,7 @@ exe() {
 	fi
 }
 
-#read_conf
+read_conf
 
 AllNodes="$FPGANodes,$OtherNodes"
 
