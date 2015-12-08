@@ -173,13 +173,16 @@ test_status() {
 # kill server and tests based on all nodes 
 test_stop() {
     if [[ $Mode = "CPU" ]]; then
-        cmd="pdsh -w $allnodes \"pkill -9 -f execute_job\""
+        cmd="pdsh -w $AllNodes \"pkill -9 -f execute_job\""
         exe "$cmd"
     else
 	    cmd="pkill -9 -f scheduler"
         exe "$cmd"
 
 	    cmd="pdsh -w $FPGANodes \"pkill -9 -f deamon\""
+        exe "$cmd"
+        
+		cmd="pdsh -w $AllNodes \"pkill -9 -f execute_job\""
         exe "$cmd"
 	fi
 }

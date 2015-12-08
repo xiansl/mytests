@@ -1,8 +1,6 @@
-#!/bin/bash
+#! /bin/bash
 # run on fpga node
 #
-
-source ../env.sh
 
 read_conf() {
 	echo "Reading config ..." >&2
@@ -70,6 +68,6 @@ exe() {
 
 read_conf
 
-cmd="./execute_job.sh `hostname` 0 $Mode $JobPattern $SchedulerHost $SchedulerPort &" 
+cmd="./execute_job.sh `hostname` 1 $Mode $JobPattern $SchedulerHost $SchedulerPort &" 
 exe "$cmd"
 

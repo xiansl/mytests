@@ -1,0 +1,64 @@
+['/home/900/lxs900/zzd/testAPI/scheduler.py', '9000', 'Priority', 'TCP', '/home/900/lxs900/zzd/testAPI/fpga_node.txt']
+Using algorithm 'Priority' ....
+[0]Begin to load system infomation ...
+[1] Information loaded. Begin running simulator ...
+[job 1] ARRIVES after -1447669654 micro-secs, from '10.9.1.1', 33485
+[job 1] TRIGGERED on ['10.9.1.1:section0']:
+[job 1] COMPLETES
+[job 2] ARRIVES after 546200 micro-secs, from '10.9.1.1', 51856
+[job 2] TRIGGERED on ['10.9.1.1:section0']:
+[job 2] COMPLETES
+[job 3] ARRIVES after 702143 micro-secs, from '10.9.1.1', 58545
+[job 3] TRIGGERED on ['10.9.1.1:section0']:
+[job 3] COMPLETES
+[job 4] ARRIVES after 547130 micro-secs, from '10.9.1.1', 60013
+[job 4] TRIGGERED on ['10.9.1.1:section0']:
+[job 4] COMPLETES
+[job 5] ARRIVES after 700496 micro-secs, from '10.9.1.1', 55117
+[job 5] TRIGGERED on ['10.9.1.1:section0']:
+[job 5] COMPLETES
+[job 6] ARRIVES after 546789 micro-secs, from '10.9.1.1', 49269
+[job 6] TRIGGERED on ['10.9.1.1:section0']:
+[job 6] COMPLETES
+[job 7] ARRIVES after 709167 micro-secs, from '10.9.1.1', 43067
+[job 7] TRIGGERED on ['10.9.1.1:section0']:
+[job 7] COMPLETES
+[job 8] ARRIVES after 537057 micro-secs, from '10.9.1.1', 47911
+[job 8] TRIGGERED on ['10.9.1.1:section0']:
+[job 8] COMPLETES
+[job 9] ARRIVES after 713751 micro-secs, from '10.9.1.1', 40012
+[job 9] TRIGGERED on ['10.9.1.1:section0']:
+[job 9] COMPLETES
+[job 10] ARRIVES after 542424 micro-secs, from '10.9.1.1', 59644
+[job 10] TRIGGERED on ['10.9.1.1:section0']:
+[job 10] COMPLETES
+[job 11] ARRIVES after 710216 micro-secs, from '10.9.1.1', 49089
+[job 11] TRIGGERED on ['10.9.1.1:section0']:
+[job 11] COMPLETES
+[job 12] ARRIVES after 542457 micro-secs, from '10.9.1.1', 59446
+[job 12] TRIGGERED on ['10.9.1.1:section0']:
+[job 12] COMPLETES
+[job 13] ARRIVES after 699884 micro-secs, from '10.9.1.1', 57619
+[job 13] TRIGGERED on ['10.9.1.1:section0']:
+[job 13] COMPLETES
+[job 14] ARRIVES after 541563 micro-secs, from '10.9.1.1', 42737
+[job 14] TRIGGERED on ['10.9.1.1:section0']:
+[job 14] COMPLETES
+[job 15] ARRIVES after 710002 micro-secs, from '10.9.1.1', 39693
+[job 15] TRIGGERED on ['10.9.1.1:section0']:
+[job 15] COMPLETES
+[job 16] ARRIVES after 539924 micro-secs, from '10.9.1.1', 40834
+[job 16] TRIGGERED on ['10.9.1.1:section0']:
+[job 16] COMPLETES
+[job 17] ARRIVES after 707166 micro-secs, from '10.9.1.1', 37385
+[job 17] TRIGGERED on ['10.9.1.1:section0']:
+[job 17] COMPLETES
+[job 18] ARRIVES after 532026 micro-secs, from '10.9.1.1', 38536
+[job 18] TRIGGERED on ['10.9.1.1:section0']:
+[job 18] COMPLETES
+[job 19] ARRIVES after 718095 micro-secs, from '10.9.1.1', 38829
+[job 19] TRIGGERED on ['10.9.1.1:section0']:
+[job 19] COMPLETES
+[job 20] ARRIVES after 531278 micro-secs, from '10.9.1.1', 35760
+[job 20] TRIGGERED on ['10.9.1.1:section0']:
+[job 20] COMPLETES

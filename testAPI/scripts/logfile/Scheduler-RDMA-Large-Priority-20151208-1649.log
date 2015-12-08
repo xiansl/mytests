@@ -1,0 +1,40 @@
+['/home/900/lxs900/zzd/testAPI/scheduler.py', '9000', 'Priority', 'RDMA', '/home/900/lxs900/zzd/testAPI/fpga_node.txt']
+Using algorithm 'Priority' ....
+[0]Begin to load system infomation ...
+[1] Information loaded. Begin running simulator ...
+[job 1] ARRIVES after -1447699032 micro-secs, from '10.9.1.1', 59207
+[job 1] TRIGGERED on ['10.9.1.1:section0']:
+[job 2] ARRIVES after 557662 micro-secs, from '10.9.1.1', 54639
+[job 2] TRIGGERED on ['10.9.1.1:section1']:
+[job 3] ARRIVES after 1195980 micro-secs, from '10.9.1.1', 55570
+[job 3] TRIGGERED on ['10.9.1.1:section2']:
+[job 4] ARRIVES after 1197594 micro-secs, from '10.9.1.1', 46876
+[job 4] TRIGGERED on ['10.9.1.1:section3']:
+[job 1] COMPLETES
+[job 5] ARRIVES after 1275861 micro-secs, from '10.9.1.1', 43795
+[job 5] TRIGGERED on ['10.9.1.1:section0']:
+[job 5] COMPLETES
+[job 6] ARRIVES after 2368391 micro-secs, from '10.9.1.1', 32785
+[job 6] TRIGGERED on ['10.9.1.1:section0']:
+[job 4] COMPLETES
+[job 7] ARRIVES after 8653764 micro-secs, from '10.9.1.1', 35314
+[job 7] TRIGGERED on ['10.9.1.1:section3']:
+[job 7] COMPLETES
+[job 8] ARRIVES after 3250691 micro-secs, from '10.9.1.1', 60361
+[job 8] TRIGGERED on ['10.9.1.1:section3']:
+[job 8] COMPLETES
+[job 9] ARRIVES after 3741646 micro-secs, from '10.9.1.1', 38448
+[job 9] TRIGGERED on ['10.9.1.1:section3']:
+[job 9] COMPLETES
+[job 10] ARRIVES after 3511859 micro-secs, from '10.9.1.1', 35105
+[job 10] TRIGGERED on ['10.9.1.1:section3']:
+[job 10] COMPLETES
+[job 11] ARRIVES after 2232145 micro-secs, from '10.9.1.1', 46684
+[job 11] TRIGGERED on ['10.9.1.1:section3']:
+[job 11] COMPLETES
+[job 12] ARRIVES after 3365750 micro-secs, from '10.9.1.1', 36793
+[job 12] TRIGGERED on ['10.9.1.1:section3']:
+[job 12] COMPLETES
+[job 13] ARRIVES after 2347279 micro-secs, from '10.9.1.1', 59875
+[job 13] TRIGGERED on ['10.9.1.1:section3']:
+[job 13] COMPLETES

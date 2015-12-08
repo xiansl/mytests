@@ -1,0 +1,46 @@
+job_size = 3708996 K bytes, result_size=3708996 K bytes.
+open a LOCAL Acc...
+Open EC fail. The reason is :
+	ACC port conflicts on the specified port.
+Open EC fail.
+job_size = 1515584 K bytes, result_size=1515584 K bytes.
+open a LOCAL Acc...
+Open FFT fail. The reason is :
+	ACC port conflicts on the specified port.
+Open FFT fail.
+job_size = 1515584 K bytes, result_size=1515584 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[378896 Kbytes]: [OPEN]: 49767 [EXE]: 1128831 [CLOSE]: 889
+job_size = 1712216 K bytes, result_size=1712216 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[428054 Kbytes]: [OPEN]: 50016 [EXE]: 11057301 [CLOSE]: 921
+job_size = 2546752 K bytes, result_size=2546752 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[636688 Kbytes]: [OPEN]: 49842 [EXE]: 2012116 [CLOSE]: 945
+job_size = 3430888 K bytes, result_size=3430888 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[857722 Kbytes]: [OPEN]: 45747 [EXE]: 2505007 [CLOSE]: 1006
+job_size = 3021200 K bytes, result_size=3021200 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[755300 Kbytes]: [OPEN]: 51132 [EXE]: 2271399 [CLOSE]: 917
+job_size = 1295152 K bytes, result_size=1295152 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[323788 Kbytes]: [OPEN]: 49788 [EXE]: 995806 [CLOSE]: 920
+job_size = 2745912 K bytes, result_size=2745912 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[686478 Kbytes]: [OPEN]: 45727 [EXE]: 2129686 [CLOSE]: 904
+job_size = 1501840 K bytes, result_size=1501840 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[375460 Kbytes]: [OPEN]: 49740 [EXE]: 1111096 [CLOSE]: 939
+job_size = 3825300 K bytes, result_size=3825300 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[956325 Kbytes]: [OPEN]: 49867 [EXE]: 3036838 [CLOSE]: 892

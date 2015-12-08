@@ -1,7 +1,8 @@
 #!/bin/bash
 # run on fpga node
 #
-. ./fpga.cfg
+
+source ../env.sh
 
 read_conf() {
 	echo "Reading config ..." >&2

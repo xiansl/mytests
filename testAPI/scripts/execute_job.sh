@@ -44,8 +44,9 @@ if [[ "$#" -eq "6" ]]; then
     trap "exit" INT
     while read -r line
     do
+        processLine $line -e | tee -a $write_log
         #processLine $line -e >>$write_log
-        processLine $line -e 
+        #processLine $line -e 
     done
     exec 0<&3
     #kill $SHELLPID

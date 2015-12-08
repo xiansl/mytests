@@ -1,0 +1,76 @@
+job_size = 444 K bytes, result_size=444 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[111 Kbytes]: [OPEN]: 45032 [EXE]: 365 [CLOSE]: 413
+job_size = 1024 K bytes, result_size=1024 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[256 Kbytes]: [OPEN]: 54818 [EXE]: 865 [CLOSE]: 473
+job_size = 1024 K bytes, result_size=1024 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[256 Kbytes]: [OPEN]: 45337 [EXE]: 865 [CLOSE]: 542
+job_size = 1152 K bytes, result_size=1152 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[288 Kbytes]: [OPEN]: 49267 [EXE]: 7507 [CLOSE]: 484
+job_size = 1152 K bytes, result_size=1152 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[288 Kbytes]: [OPEN]: 45455 [EXE]: 7472 [CLOSE]: 580
+job_size = 2076 K bytes, result_size=2076 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[519 Kbytes]: [OPEN]: 45463 [EXE]: 13819 [CLOSE]: 736
+job_size = 2076 K bytes, result_size=2076 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[519 Kbytes]: [OPEN]: 45459 [EXE]: 13883 [CLOSE]: 713
+job_size = 2608 K bytes, result_size=2608 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[652 Kbytes]: [OPEN]: 49494 [EXE]: 2432 [CLOSE]: 717
+job_size = 2608 K bytes, result_size=2608 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[652 Kbytes]: [OPEN]: 45372 [EXE]: 2433 [CLOSE]: 729
+job_size = 1092 K bytes, result_size=1092 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[273 Kbytes]: [OPEN]: 45335 [EXE]: 965 [CLOSE]: 514
+job_size = 1092 K bytes, result_size=1092 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[273 Kbytes]: [OPEN]: 45414 [EXE]: 872 [CLOSE]: 475
+job_size = 3844 K bytes, result_size=3844 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[961 Kbytes]: [OPEN]: 50047 [EXE]: 3558 [CLOSE]: 929
+job_size = 3844 K bytes, result_size=3844 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[961 Kbytes]: [OPEN]: 45619 [EXE]: 3465 [CLOSE]: 938
+job_size = 592 K bytes, result_size=592 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[148 Kbytes]: [OPEN]: 49094 [EXE]: 511 [CLOSE]: 380
+job_size = 592 K bytes, result_size=592 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[148 Kbytes]: [OPEN]: 45158 [EXE]: 493 [CLOSE]: 375
+job_size = 2872 K bytes, result_size=2872 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[718 Kbytes]: [OPEN]: 49736 [EXE]: 2595 [CLOSE]: 712
+job_size = 2872 K bytes, result_size=2872 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[718 Kbytes]: [OPEN]: 45640 [EXE]: 2577 [CLOSE]: 714
+job_size = 272 K bytes, result_size=272 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[68 Kbytes]: [OPEN]: 49138 [EXE]: 231 [CLOSE]: 421
+job_size = 272 K bytes, result_size=272 K bytes.
+open a LOCAL Acc...
+close LOCAL acc
+[68 Kbytes]: [OPEN]: 45035 [EXE]: 216 [CLOSE]: 346
